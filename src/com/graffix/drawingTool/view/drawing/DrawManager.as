@@ -13,6 +13,7 @@ package com.graffix.drawingTool.view.drawing
 	import flashx.textLayout.conversion.ConversionType;
 	import flashx.textLayout.conversion.TextConverter;
 	
+	import mx.core.UIComponent;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
@@ -20,7 +21,7 @@ package com.graffix.drawingTool.view.drawing
 	
 	public class DrawManager
 	{
-		public function DrawManager(drawArea:Group)
+		public function DrawManager(drawArea:UIComponent)
 		{
 			_drawArea = drawArea;
 			_drawArea.addEventListener(MouseEvent.CLICK, onMouseClick );
@@ -60,10 +61,10 @@ package com.graffix.drawingTool.view.drawing
 		{
 			currentTool = null;
 			selectedShape = null;
-			_drawArea.removeAllElements();
+			//_drawArea.;
 		}
 		
-		private var _drawArea:Group;
+		private var _drawArea:UIComponent;
 		
 		private var _operationType:int = SelectTool.TRANSFORM_TOOL;
 		public function get operationType():int
@@ -167,7 +168,7 @@ package com.graffix.drawingTool.view.drawing
 			tool.x = _startPoint.x;
 			tool.y = _startPoint.y;
 			tool.startDraw();
-			_drawArea.addElement( tool );
+			_drawArea.addChild( tool );
 			currentTool = tool;
 		}
 		
