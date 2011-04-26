@@ -1,0 +1,16 @@
+bin-debug/
+.metadata/
+.metadata/*
+.metadata/**/*
+.settings/
+.settings/*
+.settings/**/*
+html-template/
+bin-release/*
+build/*
+bin/*
+release/*
+.actionScriptProperties
+.flexProperties
+.project
+.FlexUnitSettings/

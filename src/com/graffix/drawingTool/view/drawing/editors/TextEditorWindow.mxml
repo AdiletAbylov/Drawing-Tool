@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:tlf="net.asciiworks.tlf.*"
+		 
+		 width="476" height="222" close="titlewindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import flashx.textLayout.conversion.TextConverter;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				//richTextEditor.textFlow = null;
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function setText(flow:String):void
+			{
+				richTextEditor.textFlow = TextConverter.importToFlow(flow,  TextConverter.TEXT_LAYOUT_FORMAT );
+			}
+
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<tlf:TLFTextEditor id="richTextEditor"
+					   
+					   left="0" top="0" right="0" bottom="0">
+	</tlf:TLFTextEditor>
+</s:TitleWindow>
