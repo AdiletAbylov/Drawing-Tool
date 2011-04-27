@@ -9,7 +9,7 @@
 		<s:State name="TextState"/>
 	</s:states>
 	<fx:Declarations>
-		<s:Parallel id="transitionEffect" targets="{[lineControls, fillControls, this]}">
+		<s:Parallel id="transitionEffect" targets="{[lineControls, fillControls, this, layoutControls]}">
 			<s:Fade/>
 			<s:Resize/>
 		</s:Parallel>
@@ -124,6 +124,24 @@
 				}
 			}
 
+
+			protected function layoutUpButton_clickHandler(event:MouseEvent):void
+			{
+				if(_currentTool)
+				{
+					(currentTool as BaseTool).changeOrder( "up" );
+				}
+			}
+
+
+			protected function layoutBottomButton_clickHandler(event:MouseEvent):void
+			{
+				if(_currentTool)
+				{
+					(currentTool as BaseTool).changeOrder( "down" );
+				}
+			}
+
 		]]>
 	</fx:Script>
 	<s:layout>
@@ -165,5 +183,9 @@
 		<s:Label text="Fill color:"/>
 		<mx:ColorPicker enabled="{fillCheckbox.selected}" selectedColor="{_currentTool.fillColor}" id="fillColorPicker" change="fillColorPicker_changeHandler(event)"/>		
 	</s:HGroup>
-	
+	<mx:VRule height="80%" />
+	<s:HGroup id="layoutControls" verticalAlign="middle">
+		<s:Button id="layoutUpButton" label="Up" click="layoutUpButton_clickHandler(event)"/>
+		<s:Button id="layoutBottomButton" label="Down" click="layoutBottomButton_clickHandler(event)"/>
+	</s:HGroup>
 </s:BorderContainer>

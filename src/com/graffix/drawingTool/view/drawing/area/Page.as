@@ -1,6 +1,7 @@
 package com.graffix.drawingTool.view.drawing.area
 {
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
+	import com.graffix.drawingTool.view.drawing.events.ShapeLayoutEvent;
 	import com.graffix.drawingTool.view.drawing.tools.BaseTool;
 	
 	import flash.events.MouseEvent;
@@ -10,6 +11,7 @@ package com.graffix.drawingTool.view.drawing.area
 	import flashx.textLayout.formats.WhiteSpaceCollapse;
 	
 	import mx.controls.Label;
+	import mx.core.IVisualElement;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
@@ -45,7 +47,6 @@ package com.graffix.drawingTool.view.drawing.area
 		{
 			_background = new UIComponent();
 			addElement(_background);
-			
 		}
 		
 		private function onMouseClick(event:MouseEvent):void
@@ -99,6 +100,8 @@ package com.graffix.drawingTool.view.drawing.area
 		{
 			while(numElements > 1)
 			{
+				var shape:IVisualElement = getElementAt(1);
+				shape.removeEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
 				removeElementAt(1);
 			}
 		}
@@ -108,5 +111,32 @@ package com.graffix.drawingTool.view.drawing.area
 			clear();
 		}
 		
+		private function onLayoutEvent(event:ShapeLayoutEvent):void
+		{
+			var shape:IVisualElement = event.shape;
+			var shapeIndex:int = getElementIndex( shape );
+			if(event.direction == "up")
+			{
+				if( shapeIndex < numElements - 1)
+				{
+					shapeIndex++;
+					setElementIndex(shape, shapeIndex);
+				}
+			}else
+			{
+				if(shapeIndex > 1)
+				{
+					shapeIndex--;
+					setElementIndex(shape, shapeIndex);
+				}
+			}
+			
+		}
+		
+		override public function addElement(element:IVisualElement):IVisualElement
+		{
+			element.addEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
+			return super.addElement(element);
+		}
 	}
 }

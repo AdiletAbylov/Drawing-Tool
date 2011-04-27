@@ -3,6 +3,7 @@ package com.graffix.drawingTool.view.drawing.tools
 	import com.graffix.drawingTool.view.drawing.IDrawable;
 	import com.graffix.drawingTool.view.drawing.IPropertyChangable;
 	import com.graffix.drawingTool.view.drawing.ISelectable;
+	import com.graffix.drawingTool.view.drawing.events.ShapeLayoutEvent;
 	import com.graffix.drawingTool.view.drawing.events.ToolSelectEvent;
 	import com.senocular.display.TransformTool;
 	
@@ -163,6 +164,13 @@ package com.graffix.drawingTool.view.drawing.tools
 		private function dispatchSelectEvent():void
 		{
 			dispatchEvent(new ToolSelectEvent(ToolSelectEvent.TOOL_SELECT));
-		}	
+		}
+		
+		
+		public function changeOrder(direction:String):void
+		{
+			var event:ShapeLayoutEvent = new ShapeLayoutEvent(ShapeLayoutEvent.LAYOUT_EVENT, this, direction);
+			dispatchEvent(event);
+		}
 	}
 }
