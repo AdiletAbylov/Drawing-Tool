@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 creationComplete="init()"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="com.graffix.drawingTool.view.drawing.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
+			import com.graffix.drawingTool.view.drawing.DrawManager;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var _drawManager:DrawManager;
+			
+			protected function init():void
+			{
+				_drawManager = new DrawManager( drawArea );
+			}
+			
+			
+			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
+			{
+				_drawManager.operationType = event.toolType;
+				toolProperties.toolType = event.toolType;
+			}
+			
+			
+			protected function clearButton_clickHandler(event:MouseEvent):void
+			{
+				drawArea.currentPage.clear();
+			}
+			
+			[Embed("com/graffix/drawingTool/view/assets/remove.png")]
+			protected const ICON:Class;
+			
+			protected function addPageButton_clickHandler(event:MouseEvent):void
+			{
+				drawArea.addPage();
+			}
+			
+			
+			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
+			{
+				drawArea.selectPage( pagesBar.selectedIndex );
+			}
+			
+
+			protected function removePageButton_clickHandler(event:MouseEvent):void
+			{
+				drawArea.removeCurrentPage();
+			}
+
+
+			protected function screenshotButton_clickHandler(event:MouseEvent):void
+			{
+				drawArea.currentPage.makeScreenshot();
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer left="48" right="2" top="2" bottom="2">
+		<area:DrawArea left="2" right="2" top="2" bottom="2" id="drawArea" drawGrid="true" />
+	</s:BorderContainer>
+	
+	<drawing:ToolsView id="toolbar" left="10" top="10"
+					   TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
+	</drawing:ToolsView>
+	<s:HGroup left="55" top="5">
+		<s:Button id="clearButton" 
+				 click="clearButton_clickHandler(event)"
+				  label="Clear"
+				  icon="{ICON}"/>
+		<s:Button id="screenshotButton"
+				  label="Snapshot"
+				  click="screenshotButton_clickHandler(event)"
+				  />
+		<drawing:ToolPropertiesView id="toolProperties" left="130" top="10"
+									currentTool="{_drawManager.selectedShape}">
+		</drawing:ToolPropertiesView>
+		
+		
+	</s:HGroup>
+	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>
+	<s:Button id="removePageButton"
+			  enabled="{drawArea.pages.length > 1}"
+			  right="75" bottom="5" label="- Page" click="removePageButton_clickHandler(event)"/>
+	<s:ButtonBar
+		id="pagesBar"
+		selectedItem="{drawArea.currentPage}"
+		left="50" bottom="5" 
+		dataProvider="{drawArea.pages}" labelField="label" change="buttonbar1_changeHandler(event)">
+	</s:ButtonBar>
+</s:Group>

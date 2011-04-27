@@ -7,7 +7,7 @@ package com.graffix.drawingTool.view.drawing.tools
 	 * @author adiletabylov
 	 * 
 	 */	
-	public class ClosedFigure extends AbstractTool
+	public class ClosedFigure extends BaseTool
 	{
 		public function ClosedFigure(type:int)
 		{
@@ -66,6 +66,11 @@ package com.graffix.drawingTool.view.drawing.tools
 				draw();
 				_fillColorChanged = false;
 			}
+			if(_drawDataChanged)
+			{
+				draw();
+				_drawDataChanged = false;
+			}
 		}
 		
 		override public function setPoints(startPoint:Point, endPoint:Point):void
@@ -74,6 +79,8 @@ package com.graffix.drawingTool.view.drawing.tools
 			var rectHeight:Number = endPoint.y - startPoint.y;
 			var rectStartPoint:Point = findTopLeftCorner(startPoint, endPoint);
 			_drawData = new Rectangle(rectStartPoint.x, rectStartPoint.y, Math.abs(rectWidth), Math.abs(rectHeight));
+			_drawDataChanged = true;
+			invalidateDisplayList();
 		}
 		
 		protected function findTopLeftCorner(startPoint:Point, endPoint:Point):Point

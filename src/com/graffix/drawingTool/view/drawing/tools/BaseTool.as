@@ -15,14 +15,14 @@ package com.graffix.drawingTool.view.drawing.tools
 	
 	import spark.primitives.Rect;
 
-	public class AbstractTool extends UIComponent implements IDrawable, ISelectable
+	public class BaseTool extends UIComponent implements IDrawable, ISelectable
 	{
 		public static const PROPERTY_LINE_SIZE:String = "lineSize";
 		public static const PROPERTY_LINE_COLOR:String = "lineColor";
 		public static const PROPERTY_FILL_ENABLED:String = "hasFill";
 		public static const PROPERTY_FILL_COLOR:String = "fillColor";
 		
-		public function AbstractTool(type:int)
+		public function BaseTool(type:int)
 		{
 			_type = type;
 			_transformTool = new TransformTool();
@@ -39,6 +39,7 @@ package com.graffix.drawingTool.view.drawing.tools
 		
 		protected var _spriteToDraw:Sprite;
 		protected var _drawData:Object;
+		protected var _drawDataChanged:Boolean;
 		
 		protected var _type:int;
 		public function get type():int
@@ -99,7 +100,11 @@ package com.graffix.drawingTool.view.drawing.tools
 		public function setPoints(startPoint:Point, endPoint:Point):void
 		{
 			_drawData = {startPoint:startPoint, endPoint:endPoint};
+			_drawDataChanged = true;
+			invalidateDisplayList();
 		}
+		
+		
 		
 		public function draw():void
 		{/*override in childs*/}
@@ -118,7 +123,6 @@ package com.graffix.drawingTool.view.drawing.tools
 		}
 
 		
-		
 		//
 		// TRANSFORM AND SELECTION
 		//
@@ -129,6 +133,7 @@ package com.graffix.drawingTool.view.drawing.tools
 		{
 			showTransform();
 		}
+		
 		protected function showTransform():void
 		{
 			_transformTool.target = _spriteToDraw;
@@ -145,6 +150,7 @@ package com.graffix.drawingTool.view.drawing.tools
 			_transformTool.target = null;
 			_transforming = false;
 		}
+		
 		protected function onMouseClick(event:MouseEvent):void
 		{
 			//

@@ -26,14 +26,14 @@ package com.graffix.drawingTool.view.drawing.tools
 			_commands[_commands.length] = 2;
 			_coords[_coords.length] = endPoint.x;
 			_coords[_coords.length] = endPoint.y;
+			_drawDataChanged = true;
+			invalidateDisplayList();
 		}
 		
 		override public function draw():void
 		{	
 			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
 			_spriteToDraw.graphics.drawPath(_commands, _coords);
-			//_spriteToDraw.graphics.dra
-			//_spriteToDraw.graphics.lineTo( _drawData[_drawData.length - 1].x, _drawData[_drawData.length - 1].y); 
 		}
 	}
 }

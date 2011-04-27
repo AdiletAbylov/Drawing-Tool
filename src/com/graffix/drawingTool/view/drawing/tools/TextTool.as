@@ -18,7 +18,7 @@ package com.graffix.drawingTool.view.drawing.tools
 	import spark.components.RichText;
 	
 	
-	public class TextTool extends AbstractTool
+	public class TextTool extends BaseTool
 	{
 		public static const TEXT_TOOL:int = 6;
 		private var _label:RichText;

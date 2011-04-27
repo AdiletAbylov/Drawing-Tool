@@ -1,6 +1,6 @@
 package com.graffix.drawingTool.view.drawing
 {
-	import com.graffix.drawingTool.view.drawing.tools.AbstractTool;
+	import com.graffix.drawingTool.view.drawing.tools.BaseTool;
 	import com.graffix.drawingTool.view.drawing.tools.EllipseTool;
 	import com.graffix.drawingTool.view.drawing.tools.FreehandTool;
 	import com.graffix.drawingTool.view.drawing.tools.LineTool;
@@ -10,7 +10,7 @@ package com.graffix.drawingTool.view.drawing
 
 	public class ToolFactory
 	{
-		public static function createTool(type:int):AbstractTool
+		public static function createTool(type:int):BaseTool
 		{
 			switch(type)
 			{

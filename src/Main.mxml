@@ -5,53 +5,16 @@
 			   xmlns:control="com.graffix.drawingTool.control.*"
 			   xmlns:view="com.graffix.drawingTool.view.*"
 			   xmlns:editors="com.graffix.drawingTool.view.drawing.editors.*"
-			   minWidth="955" minHeight="600" creationComplete="init(event)" xmlns:drawing="com.graffix.drawingTool.view.drawing.*">
+			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.area.*">
 	<fx:Declarations>
 		<control:ApplicationController id="appController"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
-			import com.graffix.drawingTool.view.drawing.DrawManager;
-			
-			import mx.events.FlexEvent;
-			
-			[Bindable]
-			private var _drawManager:DrawManager;
-			
-			protected function init(event:FlexEvent):void
-			{
-				_drawManager = new DrawManager( drawArea );
-			}
-			
-			
-			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
-			{
-				_drawManager.operationType = event.toolType;
-				toolProperties.toolType = event.toolType;
-			}
 			
 
-			protected function clearButton_clickHandler(event:MouseEvent):void
-			{
-				_drawManager.clear();
-			}
-			[Embed("com/graffix/drawingTool/view/assets/remove.png")]
-			protected const ICON:Class;
 		]]>
 	</fx:Script>
 	
-	<s:BorderContainer left="48" right="2" top="2" bottom="2">
-		<drawing:DrawArea left="2" right="2" top="2" bottom="2" id="drawArea" drawGrid="true"/>
-		
-	</s:BorderContainer>
-	
-	<view:ToolsView id="toolbar" left="10" top="10"
-					TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
-	</view:ToolsView>
-	<view:ToolPropertiesView id="toolProperties" left="130" top="10"
-							 currentTool="{_drawManager.selectedShape}">
-	</view:ToolPropertiesView>
-	<s:Button id="clearButton" left="60" top="10" width="65" height="30" label="Clear"
-			  icon="{ICON}"/>
+	<drawing:DrawTool left="5" right="5" top="5" bottom="5"/>
 </s:Application>

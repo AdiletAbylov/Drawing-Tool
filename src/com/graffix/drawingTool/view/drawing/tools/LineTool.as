@@ -2,7 +2,7 @@ package com.graffix.drawingTool.view.drawing.tools
 {
 	import flash.geom.Point;
 
-	public class LineTool extends AbstractTool
+	public class LineTool extends BaseTool
 	{
 		public static const LINE_TOOL:int = 2;
 		
@@ -40,6 +40,11 @@ package com.graffix.drawingTool.view.drawing.tools
 			{
 				draw();
 				_lineColorChanged = false;
+			}
+			if(_drawDataChanged)
+			{
+				draw();
+				_drawDataChanged = false;
 			}
 		}
 		
