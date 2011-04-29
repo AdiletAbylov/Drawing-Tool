@@ -8,6 +8,7 @@ package com.graffix.drawingTool.view.drawing.tools
 	import com.senocular.display.TransformTool;
 	
 	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.utils.setTimeout;
@@ -28,6 +29,7 @@ package com.graffix.drawingTool.view.drawing.tools
 			_type = type;
 			_transformTool = new TransformTool();
 			_spriteToDraw = new Sprite();
+			
 		}
 		
 		override protected function createChildren():void
@@ -141,6 +143,7 @@ package com.graffix.drawingTool.view.drawing.tools
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
 		}
+		
 		public function hideTransformControls():void
 		{
 			hideTransform();
@@ -171,6 +174,25 @@ package com.graffix.drawingTool.view.drawing.tools
 		{
 			var event:ShapeLayoutEvent = new ShapeLayoutEvent(ShapeLayoutEvent.LAYOUT_EVENT, this, direction);
 			dispatchEvent(event);
+		}
+		
+		
+		override protected function keyDownHandler(event:KeyboardEvent):void
+		{
+			if(event.ctrlKey)
+			{
+				if(_transforming)
+				{
+					_transformTool.constrainScale = true;
+				}
+			}
+		}
+		
+		override protected function keyUpHandler(event:KeyboardEvent):void
+		{
+			if(_transformTool.constrainScale){
+				_transformTool.constrainScale = false;
+			}
 		}
 	}
 }

@@ -138,5 +138,11 @@ package com.graffix.drawingTool.view.drawing.area
 			element.addEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
 			return super.addElement(element);
 		}
+		
+		override public function removeElement(element:IVisualElement):IVisualElement
+		{
+			element.removeEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
+			return super.removeElement(element);
+		}
 	}
 }

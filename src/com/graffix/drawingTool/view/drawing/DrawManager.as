@@ -131,7 +131,12 @@ package com.graffix.drawingTool.view.drawing
 		private function onGalleryWindowClose(event:CloseEvent):void
 		{
 			_galleryWindowPopuped = false;
-			currentTool.finishDraw();
+			if( (currentTool as ImageTool).empty )
+			{
+				_drawArea.removeChildFromCurrentPage( currentTool );
+			}else{
+				currentTool.finishDraw();
+			}
 			currentTool = null;
 		}
 		

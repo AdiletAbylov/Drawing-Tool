@@ -33,7 +33,7 @@
 			{
 				var insertEvent:ImageToolEvent = new ImageToolEvent(ImageToolEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
 				dispatchEvent( insertEvent );
-				dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
+				//dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
 			}
 
 		]]>
@@ -42,6 +42,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:List id="imagesList" 
+			selectedIndex="-1"
 			left="5" right="5" top="5" bottom="5" itemRenderer="com.graffix.drawingTool.view.drawing.renderers.ImagesItemRenderer">
 		<s:layout>
 			<s:TileLayout/>

@@ -126,6 +126,14 @@ package com.graffix.drawingTool.view.drawing.area
 			}
 		}
 		
+		public function removeChildFromCurrentPage(child:IVisualElement):void
+		{
+			if(_currentPage)
+			{
+				_currentPage.removeElement(child);
+			}
+		}
+		
 		public function addPage():Page
 		{
 			var page:Page = createPage();

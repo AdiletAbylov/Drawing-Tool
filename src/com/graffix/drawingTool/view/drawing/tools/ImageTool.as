@@ -25,19 +25,15 @@ package com.graffix.drawingTool.view.drawing.tools
 			_image= new Image();
 			addChild(_image);
 		}
-		
-		
-		
-		
-
+		public var empty:Boolean = true;
 		private var _image:Image;
 		public function insertImage(imageSource:Class, width:Number, height:Number):void
 		{
-		
 			_image.source = imageSource;
 			_image.width = width;
 			_image.height = height;
 			setTimeout(resizeImageToFullSize, 200);
+			empty = _image.source ? false : true;
 		}
 		
 		private function resizeImageToFullSize():void
@@ -49,7 +45,6 @@ package com.graffix.drawingTool.view.drawing.tools
 	
 		override protected function showTransform():void
 		{
-			//_transformTool.doubleClickEnabled = true;
 			_transformTool.target = _image;
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
