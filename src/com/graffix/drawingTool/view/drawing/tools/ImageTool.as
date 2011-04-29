@@ -23,8 +23,10 @@ package com.graffix.drawingTool.view.drawing.tools
 		{
 			super.createChildren();
 			_image= new Image();
+			_image.smoothBitmapContent = true;
 			addChild(_image);
 		}
+		
 		public var empty:Boolean = true;
 		private var _image:Image;
 		public function insertImage(imageSource:Class, width:Number, height:Number):void

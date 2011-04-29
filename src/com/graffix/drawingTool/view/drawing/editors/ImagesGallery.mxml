@@ -28,6 +28,11 @@
 			[Bindable]
 			[Embed(source="com/graffix/drawingTool/view/assets/example3.jpg")]
 			private var example3:Class;
+			
+			[Bindable]
+			[Embed(source="com/graffix/drawingTool/view/assets/example4.jpg")]
+			private var example4:Class;
+
 
 			protected function insertButton_clickHandler(event:MouseEvent):void
 			{
@@ -52,12 +57,12 @@
 				<fx:Object source = "{example1}"/>
 				<fx:Object source = "{example2}"/>
 				<fx:Object source = "{example3}"/>
+				<fx:Object source = "{example4}"/>
 			</s:ArrayCollection>
 		</s:dataProvider>
 	</s:List>
 	<s:controlBarContent>
-		<s:Button label="Upload"/>
-		<s:Button label="Delete" enabled="{imagesList.selectedIndex != -1}"/>
+		
 		<s:Button id="insertButton" 
 				  click="insertButton_clickHandler(event)"
 				  label="Insert" enabled="{imagesList.selectedIndex != -1}"/>
