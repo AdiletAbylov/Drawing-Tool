@@ -7,10 +7,11 @@
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.tools.EllipseTool;
 			import com.graffix.drawingTool.view.drawing.tools.FreehandTool;
+			import com.graffix.drawingTool.view.drawing.tools.ImageTool;
 			import com.graffix.drawingTool.view.drawing.tools.LineTool;
 			import com.graffix.drawingTool.view.drawing.tools.RectTool;
-			import com.graffix.drawingTool.view.drawing.tools.TextTool;
 			import com.graffix.drawingTool.view.drawing.tools.SelectTool;
+			import com.graffix.drawingTool.view.drawing.tools.TextTool;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -51,6 +52,8 @@
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/freeform-line.png')"/>
 					<fx:Object label="Insert text" data = "{TextTool.TEXT_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/text.png')"/>
+					<fx:Object label="Insert image" data = "{ImageTool.IMAGE_TOOL}"
+							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>
 		</s:ButtonBar>

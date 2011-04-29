@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   close="closeHandler(event)"
+			   width="706" height="564">
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.view.drawing.events.ImageToolEvent;
+			import com.graffix.drawingTool.view.drawing.renderers.ImagesItemRenderer;
+			
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			protected function closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			[Bindable]
+			[Embed(source="com/graffix/drawingTool/view/assets/example1.jpg")]
+			private var example1:Class;
+			
+			[Bindable]
+			[Embed(source="com/graffix/drawingTool/view/assets/example2.jpg")]
+			private var example2:Class;
+			
+			[Bindable]
+			[Embed(source="com/graffix/drawingTool/view/assets/example3.jpg")]
+			private var example3:Class;
+
+			protected function insertButton_clickHandler(event:MouseEvent):void
+			{
+				var insertEvent:ImageToolEvent = new ImageToolEvent(ImageToolEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
+				dispatchEvent( insertEvent );
+				dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="imagesList" 
+			left="5" right="5" top="5" bottom="5" itemRenderer="com.graffix.drawingTool.view.drawing.renderers.ImagesItemRenderer">
+		<s:layout>
+			<s:TileLayout/>
+		</s:layout>
+		<s:dataProvider>
+			<s:ArrayCollection>
+				<fx:Object source = "{example1}"/>
+				<fx:Object source = "{example2}"/>
+				<fx:Object source = "{example3}"/>
+			</s:ArrayCollection>
+		</s:dataProvider>
+	</s:List>
+	<s:controlBarContent>
+		<s:Button label="Upload"/>
+		<s:Button label="Delete" enabled="{imagesList.selectedIndex != -1}"/>
+		<s:Button id="insertButton" 
+				  click="insertButton_clickHandler(event)"
+				  label="Insert" enabled="{imagesList.selectedIndex != -1}"/>
+	</s:controlBarContent>
+</s:TitleWindow>

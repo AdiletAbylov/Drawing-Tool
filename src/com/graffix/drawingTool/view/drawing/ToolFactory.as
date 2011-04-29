@@ -3,11 +3,12 @@ package com.graffix.drawingTool.view.drawing
 	import com.graffix.drawingTool.view.drawing.tools.BaseTool;
 	import com.graffix.drawingTool.view.drawing.tools.EllipseTool;
 	import com.graffix.drawingTool.view.drawing.tools.FreehandTool;
+	import com.graffix.drawingTool.view.drawing.tools.ImageTool;
 	import com.graffix.drawingTool.view.drawing.tools.LineTool;
 	import com.graffix.drawingTool.view.drawing.tools.RectTool;
-	import com.graffix.drawingTool.view.drawing.tools.TextTool;
 	import com.graffix.drawingTool.view.drawing.tools.SelectTool;
-
+	import com.graffix.drawingTool.view.drawing.tools.TextTool;
+	
 	public class ToolFactory
 	{
 		public static function createTool(type:int):BaseTool
@@ -32,6 +33,9 @@ package com.graffix.drawingTool.view.drawing
 					
 				case TextTool.TEXT_TOOL:
 					return new TextTool(TextTool.TEXT_TOOL);
+					
+				case ImageTool.IMAGE_TOOL:
+					return new ImageTool(ImageTool.IMAGE_TOOL);
 			}
 			
 			return null;
