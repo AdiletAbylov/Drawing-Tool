@@ -28,6 +28,9 @@ package com.graffix.drawingTool.view.drawing.shapes
 					
 				case ImageShape.IMAGE_SHAPE:
 					return new ImageShape();
+					
+				case EraserShape.ERASER_SHAPE:
+					return new EraserShape();
 			}
 			
 			return null;

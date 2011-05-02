@@ -11,8 +11,8 @@ package com.graffix.drawingTool.view.drawing.shapes
 		}
 		public static const FREEHAND_SHAPE:int = 4;
 		
-		private var _commands:Vector.<int>;
-		private var _coords:Vector.<Number>;
+		protected var _commands:Vector.<int>;
+		protected var _coords:Vector.<Number>;
 		
 		override public function setPoints(startPoint:Point, endPoint:Point):void
 		{

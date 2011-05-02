@@ -19,10 +19,10 @@
 	</s:transitions>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.view.drawing.shapes.IPropertyChangable;
 			import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.EllipseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.FreehandShape;
+			import com.graffix.drawingTool.view.drawing.shapes.IPropertyChangable;
 			import com.graffix.drawingTool.view.drawing.shapes.LineShape;
 			import com.graffix.drawingTool.view.drawing.shapes.RectShape;
 			import com.graffix.drawingTool.view.drawing.shapes.SelectTool;

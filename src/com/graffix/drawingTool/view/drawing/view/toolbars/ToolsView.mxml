@@ -6,6 +6,7 @@
 		<![CDATA[
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.shapes.EllipseShape;
+			import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
 			import com.graffix.drawingTool.view.drawing.shapes.FreehandShape;
 			import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
 			import com.graffix.drawingTool.view.drawing.shapes.LineShape;
@@ -53,6 +54,8 @@
 					<fx:Object label="Insert text" data = "{TextShape.TEXT_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/text.png')"/>
 					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_SHAPE}"
+							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>

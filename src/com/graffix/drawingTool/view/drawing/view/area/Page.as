@@ -1,9 +1,11 @@
 package com.graffix.drawingTool.view.drawing.view.area
 {
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
+	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.net.FileReference;
@@ -31,7 +33,39 @@ package com.graffix.drawingTool.view.drawing.view.area
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.CLICK, onMouseClick);
 			addEventListener(ResizeEvent.RESIZE, onResize);
+			addEventListener(EraseEvent.ERASE_EVENT, onEraseEvent);
 		}
+		
+		
+		private function onEraseEvent(event:EraseEvent):void
+		{
+			var objectsToRemove:Vector.<IVisualElement> = findObjectsToErase(event.eraser);
+			for(var i:int = 0; i < objectsToRemove.length; ++i)
+			{
+				removeElement( objectsToRemove[i] );
+			}
+			event.eraser.destroy();
+		}
+		
+		private function findObjectsToErase(eraseObject:DisplayObject):Vector.<IVisualElement>
+		{
+			var objectsToErase:Vector.<IVisualElement> =new Vector.<IVisualElement>();
+			var i:int = 1;
+			var length:int = numElements - 1;
+			var visElement:IVisualElement
+			while(i < length)
+			{
+				visElement = getElementAt( i );
+				
+				if(eraseObject.hitTestObject(visElement as DisplayObject))
+				{
+					objectsToErase[objectsToErase.length] = visElement;
+				}
+				++i;
+			}
+			return objectsToErase;
+		}
+		
 		private var _pageLabel:Label;
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
@@ -132,6 +166,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			}
 			
 		}
+		
 		
 		override public function addElement(element:IVisualElement):IVisualElement
 		{

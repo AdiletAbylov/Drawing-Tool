@@ -9,9 +9,6 @@
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
-			import com.graffix.drawingTool.view.drawing.DrawManager;
-			
-			import mx.events.FlexEvent;
 			
 			import spark.events.IndexChangeEvent;
 			

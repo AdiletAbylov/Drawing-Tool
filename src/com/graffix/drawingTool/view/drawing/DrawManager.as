@@ -1,16 +1,18 @@
 package com.graffix.drawingTool.view.drawing
 {
+	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
+	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
+	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
+	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.ISelectable;
+	import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
+	import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
+	import com.graffix.drawingTool.view.drawing.shapes.ShapesFactory;
+	import com.graffix.drawingTool.view.drawing.shapes.TextShape;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.view.editors.TextEditorWindow;
-	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
-	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
-	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
-	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
-	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
-	import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
-	import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
-	import com.graffix.drawingTool.view.drawing.shapes.TextShape;
 	
 	import flash.geom.Point;
 	
@@ -19,8 +21,6 @@ package com.graffix.drawingTool.view.drawing
 	
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
-	import com.graffix.drawingTool.view.drawing.shapes.ISelectable;
-	import com.graffix.drawingTool.view.drawing.shapes.ShapesFactory;
 	
 	public class DrawManager
 	{
@@ -255,6 +255,5 @@ package com.graffix.drawingTool.view.drawing
 				selectedShape.showTransformControls();
 			}
 		}
-		
 	}
 }
