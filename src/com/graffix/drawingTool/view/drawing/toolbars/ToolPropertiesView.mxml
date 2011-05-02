@@ -19,13 +19,14 @@
 	</s:transitions>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.view.drawing.tools.BaseTool;
-			import com.graffix.drawingTool.view.drawing.tools.EllipseTool;
-			import com.graffix.drawingTool.view.drawing.tools.FreehandTool;
-			import com.graffix.drawingTool.view.drawing.tools.LineTool;
-			import com.graffix.drawingTool.view.drawing.tools.RectTool;
-			import com.graffix.drawingTool.view.drawing.tools.SelectTool;
-			import com.graffix.drawingTool.view.drawing.tools.TextTool;
+			import com.graffix.drawingTool.view.drawing.IPropertyChangable;
+			import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+			import com.graffix.drawingTool.view.drawing.shapes.EllipseShape;
+			import com.graffix.drawingTool.view.drawing.shapes.FreehandShape;
+			import com.graffix.drawingTool.view.drawing.shapes.LineShape;
+			import com.graffix.drawingTool.view.drawing.shapes.RectShape;
+			import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
+			import com.graffix.drawingTool.view.drawing.shapes.TextShape;
 			
 			import mx.events.ColorPickerEvent;
 			
@@ -52,22 +53,22 @@
 			{
 				switch(type)
 				{
-					case LineTool.LINE_TOOL:
+					case LineShape.LINE_TOOL:
 						currentState = "LineState";
 						break;
 					
-					case FreehandTool.FREEHAND_TOOL:
+					case FreehandShape.FREEHAND_TOOL:
 						currentState = "LineState";
 						break;
 					
-					case EllipseTool.ELLIPSE_TOOL:
+					case EllipseShape.ELLIPSE_TOOL:
 						currentState = "ClosedFigureState";
 						break;
 					
-					case RectTool.RECT_TOOL:
+					case RectShape.RECT_TOOL:
 						currentState = "ClosedFigureState";
 						break;
-					case TextTool.TEXT_TOOL:
+					case TextShape.TEXT_TOOL:
 						currentState = "TextState";
 						break;
 				}
@@ -84,7 +85,7 @@
 			{
 				if(_currentTool)
 				{
-					_currentTool.setProperty(BaseTool.PROPERTY_LINE_SIZE, event.newIndex + 2);
+					_currentTool.setProperty(BaseShape.PROPERTY_LINE_SIZE, event.newIndex + 2);
 				}
 			}
 
@@ -93,7 +94,7 @@
 			{
 				if(_currentTool)
 				{
-					_currentTool.setProperty(BaseTool.PROPERTY_LINE_COLOR, event.color);
+					_currentTool.setProperty(BaseShape.PROPERTY_LINE_COLOR, event.color);
 				}
 			}
 
@@ -102,7 +103,7 @@
 			{
 				if(_currentTool)
 				{
-					_currentTool.setProperty(BaseTool.PROPERTY_FILL_COLOR, event.color);
+					_currentTool.setProperty(BaseShape.PROPERTY_FILL_COLOR, event.color);
 				}
 			}
 
@@ -111,7 +112,7 @@
 			{
 				if(_currentTool)
 				{
-					_currentTool.setProperty(BaseTool.PROPERTY_FILL_ENABLED, fillCheckbox.selected);
+					_currentTool.setProperty(BaseShape.PROPERTY_FILL_ENABLED, fillCheckbox.selected);
 				}
 			}
 
@@ -120,7 +121,7 @@
 			{
 				if(_currentTool)
 				{
-					(currentTool as TextTool).editText();
+					(currentTool as TextShape).editText();
 				}
 			}
 
@@ -129,7 +130,7 @@
 			{
 				if(_currentTool)
 				{
-					(currentTool as BaseTool).changeOrder( "up" );
+					(currentTool as BaseShape).changeOrder( "up" );
 				}
 			}
 
@@ -138,7 +139,7 @@
 			{
 				if(_currentTool)
 				{
-					(currentTool as BaseTool).changeOrder( "down" );
+					(currentTool as BaseShape).changeOrder( "down" );
 				}
 			}
 

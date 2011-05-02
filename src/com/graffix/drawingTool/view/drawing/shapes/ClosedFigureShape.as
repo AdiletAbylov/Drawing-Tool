@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -7,9 +7,9 @@ package com.graffix.drawingTool.view.drawing.tools
 	 * @author adiletabylov
 	 * 
 	 */	
-	public class ClosedFigure extends BaseTool
+	public class ClosedFigureShape extends BaseShape
 	{
-		public function ClosedFigure(type:int)
+		public function ClosedFigureShape(type:int)
 		{
 			super(type);
 		}

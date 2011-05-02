@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 creationComplete="init()"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="com.graffix.drawingTool.view.drawing.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" >
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="com.graffix.drawingTool.view.drawing.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:toolbars="com.graffix.drawingTool.view.drawing.toolbars.*" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -69,9 +69,9 @@
 		<area:DrawArea left="2" right="2" top="2" bottom="2" id="drawArea" drawGrid="true" />
 	</s:BorderContainer>
 	
-	<drawing:ToolsView id="toolbar" left="10" top="10"
+	<toolbars:ToolsView id="toolbar" left="10" top="10"
 					   TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
-	</drawing:ToolsView>
+	</toolbars:ToolsView>
 	<s:HGroup left="55" top="5">
 		<s:Button id="clearButton" 
 				 click="clearButton_clickHandler(event)"
@@ -81,9 +81,9 @@
 				  label="Snapshot"
 				  click="screenshotButton_clickHandler(event)"
 				  />
-		<drawing:ToolPropertiesView id="toolProperties" left="130" top="10"
+		<toolbars:ToolPropertiesView id="toolProperties" left="130" top="10"
 									currentTool="{_drawManager.selectedShape}">
-		</drawing:ToolPropertiesView>
+		</toolbars:ToolPropertiesView>
 		
 		
 	</s:HGroup>

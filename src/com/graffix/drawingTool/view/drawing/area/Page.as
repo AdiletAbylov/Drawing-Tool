@@ -2,7 +2,7 @@ package com.graffix.drawingTool.view.drawing.area
 {
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
 	import com.graffix.drawingTool.view.drawing.events.ShapeLayoutEvent;
-	import com.graffix.drawingTool.view.drawing.tools.BaseTool;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;

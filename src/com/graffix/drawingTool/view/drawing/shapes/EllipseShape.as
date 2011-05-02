@@ -1,11 +1,11 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
-	public class EllipseTool extends ClosedFigure
+	public class EllipseShape extends ClosedFigureShape
 	{
-		public function EllipseTool(type:int)
+		public function EllipseShape(type:int)
 		{
 			super(type);
 		}

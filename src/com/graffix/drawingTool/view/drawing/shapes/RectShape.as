@@ -1,12 +1,12 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.sampler.NewObjectSample;
 
-	public class RectTool extends ClosedFigure
+	public class RectShape extends ClosedFigureShape
 	{
-		public function RectTool(type:int)
+		public function RectShape(type:int)
 		{
 			super(type);
 		}

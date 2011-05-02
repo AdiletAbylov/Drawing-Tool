@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import com.graffix.drawingTool.view.drawing.events.TextEditEvent;
 	
@@ -18,12 +18,12 @@ package com.graffix.drawingTool.view.drawing.tools
 	import spark.components.RichText;
 	
 	
-	public class TextTool extends BaseTool
+	public class TextShape extends BaseShape
 	{
 		public static const TEXT_TOOL:int = 6;
 		private var _label:RichText;
 		
-		public function TextTool(type:int)
+		public function TextShape(type:int)
 		{
 			super(type);
 			this.doubleClickEnabled = true;	

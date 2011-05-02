@@ -1,10 +1,10 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import flash.geom.Point;
 
-	public class FreehandTool extends LineTool
+	public class FreehandShape extends LineShape
 	{
-		public function FreehandTool(type:int)
+		public function FreehandShape(type:int)
 		{
 			super(type);
 		}

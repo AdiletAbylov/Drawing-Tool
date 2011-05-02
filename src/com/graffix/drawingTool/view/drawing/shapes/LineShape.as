@@ -1,12 +1,12 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import flash.geom.Point;
 
-	public class LineTool extends BaseTool
+	public class LineShape extends BaseShape
 	{
 		public static const LINE_TOOL:int = 2;
 		
-		public function LineTool(type:int)
+		public function LineShape(type:int)
 		{
 			super(type);
 		}

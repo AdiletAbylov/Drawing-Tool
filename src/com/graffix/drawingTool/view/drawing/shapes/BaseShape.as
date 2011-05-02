@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {	
 	import com.graffix.drawingTool.view.drawing.IDrawable;
 	import com.graffix.drawingTool.view.drawing.IPropertyChangable;
@@ -17,14 +17,14 @@ package com.graffix.drawingTool.view.drawing.tools
 	
 	import spark.primitives.Rect;
 
-	public class BaseTool extends UIComponent implements IDrawable, ISelectable
+	public class BaseShape extends UIComponent implements IDrawable, ISelectable
 	{
 		public static const PROPERTY_LINE_SIZE:String = "lineSize";
 		public static const PROPERTY_LINE_COLOR:String = "lineColor";
 		public static const PROPERTY_FILL_ENABLED:String = "hasFill";
 		public static const PROPERTY_FILL_COLOR:String = "fillColor";
 		
-		public function BaseTool(type:int)
+		public function BaseShape(type:int)
 		{
 			_type = type;
 			_transformTool = new TransformTool();

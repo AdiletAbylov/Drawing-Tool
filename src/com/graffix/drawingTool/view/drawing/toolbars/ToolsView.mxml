@@ -5,13 +5,13 @@
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
-			import com.graffix.drawingTool.view.drawing.tools.EllipseTool;
-			import com.graffix.drawingTool.view.drawing.tools.FreehandTool;
-			import com.graffix.drawingTool.view.drawing.tools.ImageTool;
-			import com.graffix.drawingTool.view.drawing.tools.LineTool;
-			import com.graffix.drawingTool.view.drawing.tools.RectTool;
-			import com.graffix.drawingTool.view.drawing.tools.SelectTool;
-			import com.graffix.drawingTool.view.drawing.tools.TextTool;
+			import com.graffix.drawingTool.view.drawing.shapes.EllipseShape;
+			import com.graffix.drawingTool.view.drawing.shapes.FreehandShape;
+			import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
+			import com.graffix.drawingTool.view.drawing.shapes.LineShape;
+			import com.graffix.drawingTool.view.drawing.shapes.RectShape;
+			import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
+			import com.graffix.drawingTool.view.drawing.shapes.TextShape;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -42,17 +42,17 @@
 					<fx:Object label="Select" 
 							   data="{SelectTool.TRANSFORM_TOOL}" 
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/select.png')"/>
-					<fx:Object label="Line" data = "{LineTool.LINE_TOOL}"
+					<fx:Object label="Line" data = "{LineShape.LINE_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/line.png')"/>
-					<fx:Object label="Rectangle" data = "{RectTool.RECT_TOOL}"
+					<fx:Object label="Rectangle" data = "{RectShape.RECT_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/rectangle.png')"/>
-					<fx:Object label="Ellipse" data = "{EllipseTool.ELLIPSE_TOOL}"
+					<fx:Object label="Ellipse" data = "{EllipseShape.ELLIPSE_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/circle.png')"/>
-					<fx:Object label="Free Draw" data = "{FreehandTool.FREEHAND_TOOL}"
+					<fx:Object label="Free Draw" data = "{FreehandShape.FREEHAND_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/freeform-line.png')"/>
-					<fx:Object label="Insert text" data = "{TextTool.TEXT_TOOL}"
+					<fx:Object label="Insert text" data = "{TextShape.TEXT_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/text.png')"/>
-					<fx:Object label="Insert image" data = "{ImageTool.IMAGE_TOOL}"
+					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_TOOL}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>

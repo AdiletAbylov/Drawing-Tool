@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.tools
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	import com.graffix.drawingTool.view.drawing.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.events.ImageToolEvent;
@@ -11,10 +11,10 @@ package com.graffix.drawingTool.view.drawing.tools
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 
-	public class ImageTool extends BaseTool
+	public class ImageShape extends BaseShape
 	{
 		public static const IMAGE_TOOL:int = 11;
-		public function ImageTool(type:int)
+		public function ImageShape(type:int)
 		{
 			super(type);
 		}
