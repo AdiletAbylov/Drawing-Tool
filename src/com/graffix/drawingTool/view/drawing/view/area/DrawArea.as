@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.area
+package com.graffix.drawingTool.view.drawing.view.area
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;

@@ -1,12 +1,12 @@
 package com.graffix.drawingTool.view.drawing
 {
-	import com.graffix.drawingTool.view.drawing.area.DrawArea;
-	import com.graffix.drawingTool.view.drawing.editors.ImagesGallery;
-	import com.graffix.drawingTool.view.drawing.editors.TextEditorWindow;
+	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
+	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
+	import com.graffix.drawingTool.view.drawing.view.editors.TextEditorWindow;
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
-	import com.graffix.drawingTool.view.drawing.events.ImageToolEvent;
-	import com.graffix.drawingTool.view.drawing.events.TextEditEvent;
-	import com.graffix.drawingTool.view.drawing.events.ToolSelectEvent;
+	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
+	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
+	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
 	import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
@@ -19,6 +19,8 @@ package com.graffix.drawingTool.view.drawing
 	
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
+	import com.graffix.drawingTool.view.drawing.shapes.ISelectable;
+	import com.graffix.drawingTool.view.drawing.shapes.ShapesFactory;
 	
 	public class DrawManager
 	{
@@ -29,9 +31,9 @@ package com.graffix.drawingTool.view.drawing
 			_drawArea.addEventListener(DrawAreaEvent.MOVE, onMouseMove );
 			_drawArea.addEventListener(DrawAreaEvent.DOWN, onMouseDown );
 			_drawArea.addEventListener( DrawAreaEvent.UP, onMouseUp);
-			_drawArea.addEventListener(ToolSelectEvent.TOOL_SELECT, onToolSelect);
-			_drawArea.addEventListener(TextEditEvent.TEXT_EDIT, onTextEdit);
-			_drawArea.addEventListener(ImageToolEvent.SHOW_GALLERY, onShowGallery);
+			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
+			_drawArea.addEventListener(TextEditorEvent.TEXT_EDIT, onTextEdit);
+			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
 		}
 		
 		//
@@ -45,24 +47,25 @@ package com.graffix.drawingTool.view.drawing
 					//
 					//do nothing
 					return;
-				case TextShape.TEXT_TOOL:
+					
+				case TextShape.TEXT_SHAPE:
 					if(!_textEditorPopuped)
 					{
-						createTool(event.mouseEvent.stageX, event.mouseEvent.stageY);
+						createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
 						showTextEditor();
 					}
 					return;
 					
-				case ImageShape.IMAGE_TOOL:
+				case ImageShape.IMAGE_SHAPE:
 					if(!_galleryWindowPopuped)
 					{
-						createTool(event.mouseEvent.stageX, event.mouseEvent.stageY);
+						createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
 						showGalleryWindow();
 					}
 					return;
 					
 				default:
-					createTool(event.mouseEvent.stageX, event.mouseEvent.stageY);
+					createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
 					break;
 			}
 		}
@@ -85,18 +88,18 @@ package com.graffix.drawingTool.view.drawing
 				//
 				//do nothing
 			}else 
-				if(currentTool)
+				if(currentDrawingShape)
 				{
-					currentTool.setPoints( new Point(0,0), currentTool.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
+					currentDrawingShape.setPoints( new Point(0,0), currentDrawingShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
 				}
 		}
 		
 		protected function onMouseUp(event:DrawAreaEvent):void
 		{
-			if(currentTool && currentTool.type != TextShape.TEXT_TOOL && currentTool.type != ImageShape.IMAGE_TOOL)
+			if(currentDrawingShape && currentDrawingShape.type != TextShape.TEXT_SHAPE && currentDrawingShape.type != ImageShape.IMAGE_SHAPE)
 			{
-				currentTool.finishDraw();
-				currentTool = null;
+				currentDrawingShape.finishDraw();
+				currentDrawingShape = null;
 			}
 		}
 		
@@ -112,35 +115,38 @@ package com.graffix.drawingTool.view.drawing
 			if(_galleryWindow)
 			{
 				PopUpManager.addPopUp( _galleryWindow, _drawArea);
-			}else
+			}
+			else
 			{
 				_galleryWindow = new ImagesGallery();
 				_galleryWindow.addEventListener(CloseEvent.CLOSE, onGalleryWindowClose);
-				_galleryWindow.addEventListener(ImageToolEvent.INSERT_IMAGE, onInsertImage);
+				_galleryWindow.addEventListener(ImageShapeEvent.INSERT_IMAGE, onInsertImage);
 				PopUpManager.addPopUp( _galleryWindow, _drawArea );
 				PopUpManager.centerPopUp( _galleryWindow);
 			}
 			_galleryWindowPopuped = true;
 		}
 		
-		private function onInsertImage(event:ImageToolEvent):void
+		private function onInsertImage(event:ImageShapeEvent):void
 		{
-			(currentTool as ImageShape).insertImage( event.image, event.width, event.height );
+			(currentDrawingShape as ImageShape).insertImage( event.image, event.width, event.height );
 		}
 		
 		private function onGalleryWindowClose(event:CloseEvent):void
 		{
 			_galleryWindowPopuped = false;
-			if( (currentTool as ImageShape).empty )
+			if( (currentDrawingShape as ImageShape).empty )
 			{
-				_drawArea.removeChildFromCurrentPage( currentTool );
-			}else{
-				currentTool.finishDraw();
+				_drawArea.removeChildFromCurrentPage( currentDrawingShape );
 			}
-			currentTool = null;
+			else
+			{
+				currentDrawingShape.finishDraw();
+			}
+			currentDrawingShape = null;
 		}
 		
-		private function onShowGallery(event:ImageToolEvent):void
+		private function onShowGalleryEvent(event:ImageShapeEvent):void
 		{
 			showGalleryWindow();
 		}
@@ -158,7 +164,8 @@ package com.graffix.drawingTool.view.drawing
 			if(_textEditorWindow)
 			{	
 				PopUpManager.addPopUp( _textEditorWindow, _drawArea );
-			}else
+			}
+			else
 			{
 				_textEditorWindow = new TextEditorWindow();
 				_textEditorWindow.addEventListener(CloseEvent.CLOSE, onTextEditorClose);
@@ -173,7 +180,7 @@ package com.graffix.drawingTool.view.drawing
 			}
 		}
 		
-		private function onTextEdit(event:TextEditEvent):void
+		private function onTextEdit(event:TextEditorEvent):void
 		{
 			if( _operationType == SelectTool.TRANSFORM_TOOL)
 			{
@@ -189,11 +196,10 @@ package com.graffix.drawingTool.view.drawing
 		
 		private function onTextEditorClose(event:CloseEvent):void
 		{
-			var ss:String = TextConverter.export(_textEditorWindow.richTextEditor.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			(currentTool as TextShape).setText(ss);
+			var formattedString:String = TextConverter.export(_textEditorWindow.richTextEditor.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
+			(currentDrawingShape as TextShape).setText(formattedString);
 			_textEditorPopuped = false;
-			_textEditorWindow.richTextEditor.textFlow = null;
-			currentTool.finishDraw();
+			currentDrawingShape.finishDraw();
 		}
 		
 		//
@@ -213,29 +219,29 @@ package com.graffix.drawingTool.view.drawing
 			if( selectedShape )
 			{
 				selectedShape.hideTransformControls();
-				currentTool = null;
+				currentDrawingShape = null;
 				selectedShape = null;
 			}
 		}
 		
 		[Bindable]
-		public var currentTool:BaseShape;
+		public var currentDrawingShape:BaseShape;
 		private var _startPoint:Point;
-		private function createTool(stageX:Number, stageY:Number):void
+		private function createShapeToDraw(stageX:Number, stageY:Number):void
 		{
-			var tool:BaseShape = ToolFactory.createTool( _operationType );
+			var tool:BaseShape = ShapesFactory.createTool( _operationType );
 			_startPoint = new Point(stageX, stageY);
 			_startPoint = _drawArea.globalToLocal( _startPoint );
 			tool.x = _startPoint.x;
 			tool.y = _startPoint.y;
 			tool.startDraw();
 			_drawArea.addChildToCurrentPage( tool );
-			currentTool = tool;
+			currentDrawingShape = tool;
 		}
 		
 		[Bindable]
 		public var selectedShape:ISelectable;
-		protected function onToolSelect(event:ToolSelectEvent):void
+		protected function onShapeSelect(event:ShapeSelectEvent):void
 		{
 			if(selectedShape)
 			{
@@ -243,7 +249,7 @@ package com.graffix.drawingTool.view.drawing
 			}
 			
 			selectedShape = event.target as BaseShape;
-			currentTool = event.target as BaseShape;
+			currentDrawingShape = event.target as BaseShape;
 			if( _operationType == SelectTool.TRANSFORM_TOOL && !selectedShape.transforming )
 			{	
 				selectedShape.showTransformControls();

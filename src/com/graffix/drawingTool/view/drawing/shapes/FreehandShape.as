@@ -4,11 +4,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 	public class FreehandShape extends LineShape
 	{
-		public function FreehandShape(type:int)
+		public function FreehandShape()
 		{
-			super(type);
+			super();
+			_type = FREEHAND_SHAPE;
 		}
-		public static const FREEHAND_TOOL:int = 4;
+		public static const FREEHAND_SHAPE:int = 4;
 		
 		private var _commands:Vector.<int>;
 		private var _coords:Vector.<Number>;

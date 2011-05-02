@@ -5,11 +5,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 	public class EllipseShape extends ClosedFigureShape
 	{
-		public function EllipseShape(type:int)
+		public function EllipseShape()
 		{
-			super(type);
+			super();
+			_type=ELLIPSE_SHAPE;
 		}
-		public static const ELLIPSE_TOOL:int = 3;
+		public static const ELLIPSE_SHAPE:int = 3;
 		
 		override public function draw():void
 		{

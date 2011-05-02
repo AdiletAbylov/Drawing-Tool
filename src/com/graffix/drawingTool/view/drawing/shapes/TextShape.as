@@ -1,6 +1,6 @@
 package com.graffix.drawingTool.view.drawing.shapes
 {
-	import com.graffix.drawingTool.view.drawing.events.TextEditEvent;
+	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -20,21 +20,21 @@ package com.graffix.drawingTool.view.drawing.shapes
 	
 	public class TextShape extends BaseShape
 	{
-		public static const TEXT_TOOL:int = 6;
+		public static const TEXT_SHAPE:int = 6;
 		private var _label:RichText;
 		
-		public function TextShape(type:int)
+		public function TextShape()
 		{
-			super(type);
+			super();
 			this.doubleClickEnabled = true;	
-			_label = new RichText();
+			_type = TEXT_SHAPE;
 		}
 		
 		private var textContainer:Group;
 		override protected function createChildren():void
 		{
 			super.createChildren();
-			
+			_label = new RichText();
 			_label.text = "Text Label";
 			_label.percentWidth = 100;
 			_label.percentHeight = 100;
@@ -60,7 +60,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function editText():void
 		{
 			var ss:String = TextConverter.export(_label.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			dispatchEvent( new TextEditEvent(TextEditEvent.TEXT_EDIT, ss ));
+			dispatchEvent( new TextEditorEvent(TextEditorEvent.TEXT_EDIT, ss ));
 		}
 		
 		public function setText(flow:String):void

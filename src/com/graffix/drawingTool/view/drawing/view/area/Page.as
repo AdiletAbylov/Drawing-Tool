@@ -1,7 +1,7 @@
-package com.graffix.drawingTool.view.drawing.area
+package com.graffix.drawingTool.view.drawing.view.area
 {
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
-	import com.graffix.drawingTool.view.drawing.events.ShapeLayoutEvent;
+	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
 	import flash.events.MouseEvent;
@@ -101,7 +101,7 @@ package com.graffix.drawingTool.view.drawing.area
 			while(numElements > 1)
 			{
 				var shape:IVisualElement = getElementAt(1);
-				shape.removeEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
+				shape.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 				removeElementAt(1);
 			}
 		}
@@ -111,7 +111,7 @@ package com.graffix.drawingTool.view.drawing.area
 			clear();
 		}
 		
-		private function onLayoutEvent(event:ShapeLayoutEvent):void
+		private function onLayoutEvent(event:LayoutOrderEvent):void
 		{
 			var shape:IVisualElement = event.shape;
 			var shapeIndex:int = getElementIndex( shape );
@@ -135,13 +135,13 @@ package com.graffix.drawingTool.view.drawing.area
 		
 		override public function addElement(element:IVisualElement):IVisualElement
 		{
-			element.addEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
+			element.addEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 			return super.addElement(element);
 		}
 		
 		override public function removeElement(element:IVisualElement):IVisualElement
 		{
-			element.removeEventListener(ShapeLayoutEvent.LAYOUT_EVENT, onLayoutEvent);
+			element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 			return super.removeElement(element);
 		}
 	}

@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing
+package com.graffix.drawingTool.view.drawing.shapes
 {
 	public interface IPropertyChangable
 	{

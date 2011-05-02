@@ -1,10 +1,7 @@
 package com.graffix.drawingTool.view.drawing.shapes
 {	
-	import com.graffix.drawingTool.view.drawing.IDrawable;
-	import com.graffix.drawingTool.view.drawing.IPropertyChangable;
-	import com.graffix.drawingTool.view.drawing.ISelectable;
-	import com.graffix.drawingTool.view.drawing.events.ShapeLayoutEvent;
-	import com.graffix.drawingTool.view.drawing.events.ToolSelectEvent;
+	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
+	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
 	import com.senocular.display.TransformTool;
 	
 	import flash.display.Sprite;
@@ -24,7 +21,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public static const PROPERTY_FILL_ENABLED:String = "hasFill";
 		public static const PROPERTY_FILL_COLOR:String = "fillColor";
 		
-		public function BaseShape(type:int)
+		public function BaseShape()
 		{
 			_type = type;
 			_transformTool = new TransformTool();
@@ -166,13 +163,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		private function dispatchSelectEvent():void
 		{
-			dispatchEvent(new ToolSelectEvent(ToolSelectEvent.TOOL_SELECT));
+			dispatchEvent(new ShapeSelectEvent(ShapeSelectEvent.SHAPE_SELECT));
 		}
 		
 		
 		public function changeOrder(direction:String):void
 		{
-			var event:ShapeLayoutEvent = new ShapeLayoutEvent(ShapeLayoutEvent.LAYOUT_EVENT, this, direction);
+			var event:LayoutOrderEvent = new LayoutOrderEvent(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, this, direction);
 			dispatchEvent(event);
 		}
 		

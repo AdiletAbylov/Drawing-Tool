@@ -6,12 +6,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 	public class RectShape extends ClosedFigureShape
 	{
-		public function RectShape(type:int)
+		public function RectShape()
 		{
-			super(type);
+			super();
+			_type = RECT_SHAPE;
 		}
 		
-		public static const RECT_TOOL:int = 1;
+		public static const RECT_SHAPE:int = 1;
 		
 		
 		override public function draw():void

@@ -4,12 +4,12 @@ package com.graffix.drawingTool.view.drawing.events
 	
 	import flash.events.Event;
 	
-	public class ShapeLayoutEvent extends Event
+	public class LayoutOrderEvent extends Event
 	{
-		public static const LAYOUT_EVENT:String = "shapeLayoutEvent";
+		public static const CHANGE_LAYOUT_ORDER:String = "changeLayoutOrder";
 		public var shape:BaseShape;
 		public var direction:String;
-		public function ShapeLayoutEvent(type:String, shape:BaseShape, direction:String)
+		public function LayoutOrderEvent(type:String, shape:BaseShape, direction:String)
 		{
 			super(type, bubbles, cancelable);
 			this.shape = shape;

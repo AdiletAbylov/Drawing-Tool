@@ -4,11 +4,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 	public class LineShape extends BaseShape
 	{
-		public static const LINE_TOOL:int = 2;
+		public static const LINE_SHAPE:int = 2;
 		
-		public function LineShape(type:int)
+		public function LineShape()
 		{
-			super(type);
+			super();
+			_type = LINE_SHAPE;
 		}
 		
 		override public function setProperty(name:String, value:Object):void

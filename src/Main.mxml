@@ -4,8 +4,8 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:control="com.graffix.drawingTool.control.*"
 			   xmlns:view="com.graffix.drawingTool.view.*"
-			   xmlns:editors="com.graffix.drawingTool.view.drawing.editors.*"
-			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.area.*">
+			   xmlns:editors="com.graffix.drawingTool.view.drawing.view.editors.*"
+			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*">
 	<fx:Declarations>
 		<control:ApplicationController id="appController"/>
 	</fx:Declarations>

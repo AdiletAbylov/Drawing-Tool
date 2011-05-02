@@ -9,9 +9,9 @@ package com.graffix.drawingTool.view.drawing.shapes
 	 */	
 	public class ClosedFigureShape extends BaseShape
 	{
-		public function ClosedFigureShape(type:int)
+		public function ClosedFigureShape()
 		{
-			super(type);
+			super();
 		}
 		
 		override public function setProperty(name:String, value:Object):void

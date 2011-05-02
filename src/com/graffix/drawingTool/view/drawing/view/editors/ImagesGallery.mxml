@@ -6,8 +6,8 @@
 			   width="706" height="564">
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.view.drawing.events.ImageToolEvent;
-			import com.graffix.drawingTool.view.drawing.renderers.ImagesItemRenderer;
+			import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
+			import com.graffix.drawingTool.view.drawing.view.renderers.ImagesItemRenderer;
 			
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
@@ -36,7 +36,7 @@
 
 			protected function insertButton_clickHandler(event:MouseEvent):void
 			{
-				var insertEvent:ImageToolEvent = new ImageToolEvent(ImageToolEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
+				var insertEvent:ImageShapeEvent = new ImageShapeEvent(ImageShapeEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
 				dispatchEvent( insertEvent );
 				//dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
 			}
@@ -48,7 +48,7 @@
 	</fx:Declarations>
 	<s:List id="imagesList" 
 			selectedIndex="-1"
-			left="5" right="5" top="5" bottom="5" itemRenderer="com.graffix.drawingTool.view.drawing.renderers.ImagesItemRenderer">
+			left="5" right="5" top="5" bottom="5" itemRenderer="com.graffix.drawingTool.view.drawing.view.renderers.ImagesItemRenderer">
 		<s:layout>
 			<s:TileLayout/>
 		</s:layout>

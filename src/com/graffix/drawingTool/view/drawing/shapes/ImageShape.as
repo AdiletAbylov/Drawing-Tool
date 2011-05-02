@@ -1,7 +1,7 @@
 package com.graffix.drawingTool.view.drawing.shapes
 {
-	import com.graffix.drawingTool.view.drawing.editors.ImagesGallery;
-	import com.graffix.drawingTool.view.drawing.events.ImageToolEvent;
+	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
+	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;
@@ -13,10 +13,11 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 	public class ImageShape extends BaseShape
 	{
-		public static const IMAGE_TOOL:int = 11;
-		public function ImageShape(type:int)
+		public static const IMAGE_SHAPE:int = 11;
+		public function ImageShape()
 		{
-			super(type);
+			super();
+			_type = IMAGE_SHAPE;
 		}
 		
 		override protected function createChildren():void

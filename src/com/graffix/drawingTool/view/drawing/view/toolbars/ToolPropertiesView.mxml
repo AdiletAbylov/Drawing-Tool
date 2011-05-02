@@ -19,7 +19,7 @@
 	</s:transitions>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.view.drawing.IPropertyChangable;
+			import com.graffix.drawingTool.view.drawing.shapes.IPropertyChangable;
 			import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.EllipseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.FreehandShape;
@@ -53,22 +53,22 @@
 			{
 				switch(type)
 				{
-					case LineShape.LINE_TOOL:
+					case LineShape.LINE_SHAPE:
 						currentState = "LineState";
 						break;
 					
-					case FreehandShape.FREEHAND_TOOL:
+					case FreehandShape.FREEHAND_SHAPE:
 						currentState = "LineState";
 						break;
 					
-					case EllipseShape.ELLIPSE_TOOL:
+					case EllipseShape.ELLIPSE_SHAPE:
 						currentState = "ClosedFigureState";
 						break;
 					
-					case RectShape.RECT_TOOL:
+					case RectShape.RECT_SHAPE:
 						currentState = "ClosedFigureState";
 						break;
-					case TextShape.TEXT_TOOL:
+					case TextShape.TEXT_SHAPE:
 						currentState = "TextState";
 						break;
 				}
