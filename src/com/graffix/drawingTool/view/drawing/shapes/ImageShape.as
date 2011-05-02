@@ -52,5 +52,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
 		}
+		
+		override public function destroy():void
+		{
+			super.destroy();
+			removeChild(_image);
+			_image.source = null;
+			_image = null;
+		}
 	}
 }

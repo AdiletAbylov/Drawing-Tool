@@ -11,5 +11,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		function clear():void;
 		function startDraw():void;
 		function finishDraw():void;
+		function destroy():void;
 	}
 }

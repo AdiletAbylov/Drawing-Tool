@@ -31,7 +31,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		override protected function createChildren():void
 		{
-			
 			addChild( _spriteToDraw );
 			addChild( _transformTool );
 		}
@@ -190,6 +189,16 @@ package com.graffix.drawingTool.view.drawing.shapes
 			if(_transformTool.constrainScale){
 				_transformTool.constrainScale = false;
 			}
+		}
+		
+		public function destroy():void
+		{
+			clear();
+			removeChild(_spriteToDraw);
+			_spriteToDraw = null;
+			removeChild(_transformTool);
+			_transformTool = null;
+			removeEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 	}
 }
