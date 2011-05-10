@@ -2,7 +2,9 @@ package com.graffix.drawingTool.view.drawing.shapes
 {
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	
+	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import flash.geom.Rectangle;
 
 	public class EraserShape extends FreehandShape
 	{
@@ -40,13 +42,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 			dispatchEvent(new EraseEvent(this));
 		}
 		
+		
+		
 		override public function destroy():void
 		{
 			super.destroy();
 			removeChild(_eraserIcon);
 			_eraserIcon=null;
 		}
-		
-		
 	}
 }

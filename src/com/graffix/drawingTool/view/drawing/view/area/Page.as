@@ -4,10 +4,14 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
 	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.net.FileReference;
 	
 	import flashx.textLayout.formats.WhiteSpaceCollapse;
@@ -22,6 +26,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	
 	import spark.components.BorderContainer;
 	import spark.components.NavigatorContent;
+	import spark.effects.easing.EaseInOutBase;
 	
 	public class Page extends NavigatorContent
 	{
@@ -39,32 +44,48 @@ package com.graffix.drawingTool.view.drawing.view.area
 		
 		private function onEraseEvent(event:EraseEvent):void
 		{
-			var objectsToRemove:Vector.<IVisualElement> = findObjectsToErase(event.eraser);
-			for(var i:int = 0; i < objectsToRemove.length; ++i)
+			for(var i:int = 0; i < _objectsToErase.length; ++i)
 			{
-				removeElement( objectsToRemove[i] );
+				removeElement( _objectsToErase[i] );
 			}
 			event.eraser.destroy();
+			removeElement(event.eraser);
+			_objectsToErase.length = 0;
 		}
 		
-		private function findObjectsToErase(eraseObject:DisplayObject):Vector.<IVisualElement>
+		private var _objectsToErase:Vector.<IVisualElement> = new Vector.<IVisualElement>();;
+		public function detectObjectsToErase(stageMouseCoord:Point):void
 		{
-			var objectsToErase:Vector.<IVisualElement> =new Vector.<IVisualElement>();
-			var i:int = 1;
+			//_objectsToErase = new Vector.<IVisualElement>();
+			stageMouseCoord = globalToLocal( stageMouseCoord);
+			var eraserRect:Rectangle = new Rectangle( stageMouseCoord.x - 20, stageMouseCoord.y - 20, 40, 40);
 			var length:int = numElements - 1;
-			var visElement:IVisualElement
+			var i:int = 1;
+			var visElement:IVisualElement;
+			var objRect:Rectangle;
 			while(i < length)
 			{
 				visElement = getElementAt( i );
-				
-				if(eraseObject.hitTestObject(visElement as DisplayObject))
+				if(!(visElement as BaseShape).toRemove)
 				{
-					objectsToErase[objectsToErase.length] = visElement;
+					objRect = (visElement as DisplayObject).getBounds( this );
+					if(eraserRect.intersects(objRect))
+					{
+						_objectsToErase[_objectsToErase.length] = visElement;
+						(visElement as BaseShape).toRemove = true;
+					}
 				}
 				++i;
 			}
-			return objectsToErase;
 		}
+		
+		private function getBitmapData(source:DisplayObject):BitmapData
+		{
+			var bdata:BitmapData = new BitmapData(source.width, source.height);
+			bdata.draw( source );
+			return bdata;
+		}
+		
 		
 		private var _pageLabel:Label;
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -164,7 +185,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 					setElementIndex(shape, shapeIndex);
 				}
 			}
-			
 		}
 		
 		
@@ -179,5 +199,8 @@ package com.graffix.drawingTool.view.drawing.view.area
 			element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 			return super.removeElement(element);
 		}
+		
+		
+		
 	}
 }

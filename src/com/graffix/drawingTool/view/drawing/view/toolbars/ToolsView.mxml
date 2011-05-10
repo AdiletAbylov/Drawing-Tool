@@ -56,7 +56,7 @@
 					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+							   icon="@Embed(source='com/graffix/drawingTool/view/assets/eraser.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>
 		</s:ButtonBar>

@@ -5,6 +5,7 @@ package com.graffix.drawingTool.view.drawing
 	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
 	import com.graffix.drawingTool.view.drawing.shapes.ISelectable;
 	import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
 	import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
@@ -87,11 +88,18 @@ package com.graffix.drawingTool.view.drawing
 			{
 				//
 				//do nothing
-			}else 
+			}
+			else 
+			{
 				if(currentDrawingShape)
 				{
 					currentDrawingShape.setPoints( new Point(0,0), currentDrawingShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
+					if(_operationType == EraserShape.ERASER_SHAPE)
+					{
+						_drawArea.currentPage.detectObjectsToErase( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY) );
+					}
 				}
+			}
 		}
 		
 		protected function onMouseUp(event:DrawAreaEvent):void

@@ -4,6 +4,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
 	import com.senocular.display.TransformTool;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -200,5 +201,19 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_transformTool = null;
 			removeEventListener(MouseEvent.CLICK, onMouseClick);
 		}
+		
+		
+		private var _toRemove:Boolean;
+
+		public function get toRemove():Boolean
+		{
+			return _toRemove;
+		}
+
+		public function set toRemove(value:Boolean):void
+		{
+			_toRemove = value;
+		}
+
 	}
 }
