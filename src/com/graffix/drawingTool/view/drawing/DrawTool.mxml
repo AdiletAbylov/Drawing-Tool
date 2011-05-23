@@ -12,6 +12,20 @@
 			
 			import spark.events.IndexChangeEvent;
 			
+			private var _so:SharedObject;
+
+			public function get sharedObject():SharedObject
+			{
+				return _so;
+			}
+
+			public function set sharedObject(value:SharedObject):void
+			{
+				_so = value;
+			}
+			
+			
+			
 			[Bindable]
 			private var _drawManager:DrawManager;
 			
