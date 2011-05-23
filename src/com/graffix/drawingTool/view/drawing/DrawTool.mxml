@@ -8,6 +8,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			
 			import spark.events.IndexChangeEvent;
@@ -32,6 +33,8 @@
 			protected function init():void
 			{
 				_drawManager = new DrawManager( drawArea );
+				var initEvent:InitEvent = new InitEvent();
+				initEvent.dispatch();
 			}
 			
 			
