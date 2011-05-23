@@ -6,6 +6,10 @@
 			   xmlns:view="com.graffix.drawingTool.view.*"
 			   xmlns:editors="com.graffix.drawingTool.view.drawing.view.editors.*"
 			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*">
+	<s:states>
+		<s:State name="InitState"/>
+		<s:State name="MainState"/>
+	</s:states>
 	<fx:Declarations>
 		<control:ApplicationController id="appController"/>
 	</fx:Declarations>
@@ -15,6 +19,6 @@
 
 		]]>
 	</fx:Script>
-	
-	<drawing:DrawTool left="5" right="5" top="5" bottom="5"/>
+	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0"/>
+	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5"/>
 </s:Application>
