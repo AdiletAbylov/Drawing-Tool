@@ -1,5 +1,8 @@
 package com.graffix.drawingTool.model
 {
+	import com.graffix.drawingTool.vo.Settings;
+
+	[Bindable]
 	public class ModelLocator
 	{
 		
@@ -20,6 +23,9 @@ package com.graffix.drawingTool.model
 			{
 				throw new Error("Only one instance of model should be instantiated!");
 			}
+			settings = new Settings();
 		}
+		
+		public var settings:Settings;
 	}
 }

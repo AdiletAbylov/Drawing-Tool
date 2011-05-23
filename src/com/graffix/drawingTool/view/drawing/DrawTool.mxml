@@ -23,9 +23,29 @@
 			public function set sharedObject(value:SharedObject):void
 			{
 				_so = value;
+				_so.addEventListener(SyncEvent.SYNC, onSync);
 			}
 			
-			
+			private function onSync(event:SyncEvent):void
+			{
+//				for (var i:int = 0; i<event.changeList.length; i++) {
+//					var iData:Object = this.data[ event.changeList[i].name ];
+//					if (list[i].code == "delete") 
+//					{
+//						// Shape has been deleted, remove it.
+//						//trace ("delete "+this.owner[list[i].name+"_mc"]);
+//						if (this.owner.selectedShape == this.owner.currentPage[list[i].name+"_mc"])
+//						{
+//							this.owner.shapeSelect_mc.clear();
+//						}
+//						this.owner.currentPage[list[i].name+"_mc"].removeMovieClip();
+//					} else 
+//					{
+//						// New/Updated Shape
+//						this.owner.drawShape(iData, iData.shape, list[i].code == "success" ? true : false);
+//					}
+//				}
+			}
 			
 			[Bindable]
 			private var _drawManager:DrawManager;
