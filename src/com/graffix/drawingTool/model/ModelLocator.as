@@ -27,5 +27,11 @@ package com.graffix.drawingTool.model
 		}
 		
 		public var settings:Settings;
+		
+		public var message:String;
+		
+		public var initStatus:String = "connecting";
+		
+		public var username:String;
 	}
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="480" height="300">
+	<s:states>
+		<s:State name="ConnectState"/>
+		<s:State name="LoginState"/>
+		<s:State name="ErrorState"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.commands.application.LoginCommand;
+			import com.graffix.drawingTool.events.application.LoginEvent;
+			import com.graffix.drawingTool.model.ModelLocator;
+			public static const CONNECTING:String = "connecting";
+			public static const ERROR:String = "error";
+			public static const LOGIN:String = "login";
+			
+			public function set status(value:String):void
+			{
+				switch(value)
+				{
+					case CONNECTING:
+						currentState = "ConnectState";
+						break;
+					
+					case ERROR:
+						currentState = "ErrorState";
+						break;
+					
+					case LOGIN:
+						currentState = "LoginState";
+						break;
+				}
+			}
+
+			
+
+
+			protected function loginButton_clickHandler(event:MouseEvent):void
+			{
+				var loginEvent:LoginEvent = new LoginEvent(nameInput.text);
+				loginEvent.dispatch();
+			}
+
+		]]>
+	</fx:Script>
+	<s:BorderContainer left="0" right="0" top="0" height="46" cornerRadius="5">
+		<s:Label x="43" y="10" text="E-Meeting"/>
+	</s:BorderContainer>
+	<s:BorderContainer left="0" right="0" top="54" bottom="0" cornerRadius="5">
+		<s:Group includeIn="LoginState" right="5" top="10" width="258" height="73">
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+			<s:Label text="Please enter your name"/>
+			<s:TextInput width="250" id="nameInput"/>
+			<s:Button id="loginButton" 
+					  click="loginButton_clickHandler(event)"
+					  label="Enter" enabled="{nameInput.text != ''}"/>
+		</s:Group>
+		<s:Label includeIn="ConnectState" y="50" horizontalCenter="0"
+				 text="Connecting to server... Please wait..."/>
+		<s:Button 
+					includeIn="ErrorState" y="179" 
+				  label="Reconnect" horizontalCenter="0"/>
+		<s:Label includeIn="ErrorState" y="30" horizontalCenter="0" text="{ModelLocator.getInstance().message}"/>
+		<s:Label includeIn="ErrorState" y="58" horizontalCenter="0"
+				 text="Your connection to server was interrupted.&#xd;Please reconnect or contact technical support."
+				 textAlign="center" verticalAlign="top"/>
+	</s:BorderContainer>
+</s:Group>
