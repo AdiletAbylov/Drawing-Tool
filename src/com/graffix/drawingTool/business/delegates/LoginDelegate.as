@@ -23,6 +23,7 @@ package com.graffix.drawingTool.business.delegates
 		
 		private function onNetStatus(event:NetStatusEvent):void
 		{
+			trace("event.info.code: " + event.info.code);
 			switch(event.info.code)
 			{
 				case "NetConnection.Connect.Success":

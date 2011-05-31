@@ -18,7 +18,7 @@ package com.graffix.drawingTool.commands.application
 		{
 			var __model:ModelLocator = ModelLocator.getInstance();
 			__model.settings.roomID = FlexGlobals.topLevelApplication.parameters.roomname;
-			__model.settings.roomID = "eroom";
+			__model.settings.roomID = "1";
 			if(!__model.settings.roomID)
 			{
 				__model.initStatus = LoginView.ERROR;
@@ -36,16 +36,15 @@ package com.graffix.drawingTool.commands.application
 			__model.settings.role = FlexGlobals.topLevelApplication.parameters.role;
 			if(!__model.settings.role || __model.settings.role == "")
 			{
-				__model.settings.role = "guest";
+				__model.settings.role = "admin";
 			}
 			
-			__model.settings.rtmpServerUrl = FlexGlobals.topLevelApplication.parameters.serveraddress;
-			
+			//__model.settings.rtmpServerUrl = FlexGlobals.topLevelApplication.parameters.serveraddress;
+			//__model.settings.rtmpServerUrl = "kym85f42dv.rtmphost.com";
 			//
 			// test bandwidth
 			
 			__model.initStatus = LoginView.LOGIN;
-			
 		}
 	}
 }

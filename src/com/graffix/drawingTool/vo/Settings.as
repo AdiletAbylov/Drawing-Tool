@@ -7,7 +7,7 @@ package com.graffix.drawingTool.vo
 		{
 		}
 		
-		public var rtmpServerUrl:String;
+		public var rtmpServerUrl:String = "kym85f42dv.rtmphost.com"
 		public var ports:Array = [0, 1935, 8080, 21, 23, 110, 143, 993, 995, 80];
 		public var roomID:String;
 		public var role:String = "guest";
@@ -18,7 +18,7 @@ package com.graffix.drawingTool.vo
 		
 		public function get roomInstance():String
 		{
-			return "rtmp://" + rtmpServerUrl + ":8080/" + roomAppname  + roomID;
+			return "rtmp://" + rtmpServerUrl + ":1935/" + roomAppname  + roomID;
 		}
 	}
 }
