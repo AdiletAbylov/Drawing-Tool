@@ -17,7 +17,6 @@ package com.graffix.drawingTool.commands.net
 			{
 				case "NetConnection.Connect.Success":
 				{
-					//ModelLocator.getInstance().messageText = LabelStrings.CONNECT_SUCCESS;
 					
 					break;
 				}

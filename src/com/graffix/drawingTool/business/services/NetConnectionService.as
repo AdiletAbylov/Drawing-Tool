@@ -5,6 +5,7 @@ package com.graffix.drawingTool.business.services
 	
 	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
+	import flash.net.SharedObject;
 
 	public class NetConnectionService
 	{
@@ -48,5 +49,19 @@ package com.graffix.drawingTool.business.services
 			var netStatusEvent:NCStatusEvent = new NCStatusEvent(event.info.code);
 			netStatusEvent.dispatch();
 		}
+		
+		
+		private var _boardSO:SharedObject;
+		
+		public function get boardSO():SharedObject
+		{
+			if(!_boardSO)
+			{
+				_boardSO = SharedObject.getRemote("FCWhiteBoard.ololo.1", _netConnection.uri, true );
+				_boardSO.connect( _netConnection );
+			}
+			return _boardSO;
+		}
+		
 	}
 }

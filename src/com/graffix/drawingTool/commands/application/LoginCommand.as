@@ -19,6 +19,7 @@ package com.graffix.drawingTool.commands.application
 		{
 			var delegate:LoginDelegate = new LoginDelegate(this);
 			delegate.login( __model.settings.roomInstance, (event as LoginEvent).username);
+			__model.user.username = (event as LoginEvent).username;
 		}
 		
 		public function result(data:Object):void
