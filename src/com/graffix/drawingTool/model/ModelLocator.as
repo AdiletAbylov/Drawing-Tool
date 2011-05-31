@@ -33,5 +33,7 @@ package com.graffix.drawingTool.model
 		public var initStatus:String = "connecting";
 		
 		public var username:String;
+		
+		public var currentState:String = "InitState";
 	}
 }

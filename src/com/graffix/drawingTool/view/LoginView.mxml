@@ -38,9 +38,6 @@
 				}
 			}
 
-			
-
-
 			protected function loginButton_clickHandler(event:MouseEvent):void
 			{
 				var loginEvent:LoginEvent = new LoginEvent(nameInput.text);

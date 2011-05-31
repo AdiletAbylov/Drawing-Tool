@@ -23,12 +23,12 @@ package com.graffix.drawingTool.commands.application
 		
 		public function result(data:Object):void
 		{
-			
+			__model.currentState = "MainState";
 		}
 		
 		public function fault(info:Object):void
 		{
-			
+			__model.initStatus = "ErrorState";
 		}
 	}
 }

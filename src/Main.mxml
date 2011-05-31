@@ -6,6 +6,7 @@
 			   xmlns:view="com.graffix.drawingTool.view.*"
 			   xmlns:editors="com.graffix.drawingTool.view.drawing.view.editors.*"
 			   applicationComplete="init(event)"
+			   currentState="{__model.currentState}"
 			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*">
 	<s:states>
 		<s:State name="InitState"/>
@@ -21,7 +22,8 @@
 			
 			import mx.events.FlexEvent;
 			
-
+			[Bindable]
+			private var __model:ModelLocator = ModelLocator.getInstance();
 
 			protected function init(event:FlexEvent):void
 			{
