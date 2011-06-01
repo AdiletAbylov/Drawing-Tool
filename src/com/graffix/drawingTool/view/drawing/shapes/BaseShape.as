@@ -1,7 +1,10 @@
 package com.graffix.drawingTool.view.drawing.shapes
 {	
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
+	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
+	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	import com.senocular.display.TransformTool;
 	
 	import flash.display.BitmapData;
@@ -12,9 +15,9 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import flash.utils.setTimeout;
 	
 	import mx.core.UIComponent;
+	import mx.utils.UIDUtil;
 	
 	import spark.primitives.Rect;
-	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
 
 	public class BaseShape extends UIComponent implements IDrawable, ISelectable
 	{
@@ -28,7 +31,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_type = type;
 			_transformTool = new TransformTool();
 			_spriteToDraw = new Sprite();
-			
+			id = UIDUtil.createUID();
 		}
 		
 		override protected function createChildren():void
@@ -39,7 +42,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		
 		protected var _spriteToDraw:Sprite;
-		protected var _drawData:Object;
+		protected var _shapeDrawData:ShapeDrawData;
 		protected var _drawDataChanged:Boolean;
 		
 		protected var _type:int;
@@ -100,12 +103,10 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 		public function setPoints(startPoint:Point, endPoint:Point):void
 		{
-			_drawData = {startPoint:startPoint, endPoint:endPoint};
+			_shapeDrawData.drawData = {startPoint:startPoint, endPoint:endPoint};
 			_drawDataChanged = true;
 			invalidateDisplayList();
 		}
-		
-		
 		
 		public function draw():void
 		{/*override in childs*/}
@@ -116,6 +117,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function finishDraw():void
 		{	
 			addEventListener(MouseEvent.CLICK, onMouseClick);
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
 		}
 		
 		public function clear():void
@@ -188,7 +190,8 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		override protected function keyUpHandler(event:KeyboardEvent):void
 		{
-			if(_transformTool.constrainScale){
+			if(_transformTool.constrainScale)
+			{
 				_transformTool.constrainScale = false;
 			}
 		}
@@ -201,6 +204,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			removeChild(_transformTool);
 			_transformTool = null;
 			removeEventListener(MouseEvent.CLICK, onMouseClick);
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_REMOVED, shapeDrawData));
 		}
 		
 		
@@ -215,6 +219,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 		{
 			_toRemove = value;
 		}
-
+		
+		public function get shapeDrawData():ShapeDrawData
+		{
+			_shapeDrawData.shapeID = id;
+			_shapeDrawData.shapeType = _type;
+			return _shapeDrawData;
+		}
 	}
 }

@@ -27,7 +27,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 			}
 			
 			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.drawRect( (_drawData as Rectangle).x, (_drawData as Rectangle).y, (_drawData as Rectangle).width, (_drawData as Rectangle).height );
+			_spriteToDraw.graphics.drawRect( (_shapeDrawData as Rectangle).x, (_shapeDrawData as Rectangle).y, (_shapeDrawData as Rectangle).width, (_shapeDrawData as Rectangle).height );
 		}
 	}
 }

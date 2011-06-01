@@ -1,8 +1,10 @@
 package com.graffix.drawingTool.view.drawing.shapes.closed
 {
+	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 
 	/**
 	 * Basic class for closed figures like rectangle or ellipse.  
@@ -46,6 +48,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			var redrawed:Boolean = _lineSizeChanged || _lineColorChanged || _drawDataChanged || _hasFillChanged || _fillColorChanged;
 			if(_lineSizeChanged)
 			{
 				//redraw
@@ -73,6 +76,11 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 				draw();
 				_drawDataChanged = false;
 			}
+			
+			if(redrawed)
+			{
+				dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			}
 		}
 		
 		override public function setPoints(startPoint:Point, endPoint:Point):void
@@ -80,7 +88,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 			var rectWidth:Number = endPoint.x - startPoint.x;
 			var rectHeight:Number = endPoint.y - startPoint.y;
 			var rectStartPoint:Point = findTopLeftCorner(startPoint, endPoint);
-			_drawData = new Rectangle(rectStartPoint.x, rectStartPoint.y, Math.abs(rectWidth), Math.abs(rectHeight));
+			_shapeDrawData.drawData = new Rectangle(rectStartPoint.x, rectStartPoint.y, Math.abs(rectWidth), Math.abs(rectHeight));
 			_drawDataChanged = true;
 			invalidateDisplayList();
 		}

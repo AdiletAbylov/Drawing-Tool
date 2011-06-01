@@ -23,9 +23,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 				_spriteToDraw.graphics.beginFill(_fillColor, 0);
 			}
 			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.drawEllipse( (_drawData as Rectangle).x, (_drawData as Rectangle).y, (_drawData as Rectangle).width, (_drawData as Rectangle).height );
+			_spriteToDraw.graphics.drawEllipse( (_shapeDrawData as Rectangle).x, (_shapeDrawData as Rectangle).y, (_shapeDrawData as Rectangle).width, (_shapeDrawData as Rectangle).height );
 		}
-	
-	
 	}
 }

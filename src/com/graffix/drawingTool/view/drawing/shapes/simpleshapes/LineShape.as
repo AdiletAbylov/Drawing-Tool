@@ -1,6 +1,6 @@
 package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 {
-	import flash.geom.Point;
+	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 
 	public class LineShape extends BaseShape
@@ -32,6 +32,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			var redrawed:Boolean = _lineSizeChanged || _lineColorChanged || _drawDataChanged;
 			if(_lineSizeChanged)
 			{
 				//redraw
@@ -48,6 +49,11 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 				draw();
 				_drawDataChanged = false;
 			}
+			
+			if(redrawed)
+			{
+				dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			}
 		}
 		
 		
@@ -55,8 +61,8 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 		{
 			_spriteToDraw.graphics.clear();
 			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.moveTo( _drawData.startPoint.x, _drawData.startPoint.y );
-			_spriteToDraw.graphics.lineTo( _drawData.endPoint.x, _drawData.endPoint.y );
+			_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
+			_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
 		}
 	}
 }
