@@ -4,12 +4,14 @@
 		 creationComplete="init()"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:toolbars="com.graffix.drawingTool.view.drawing.view.toolbars.*" xmlns:services="com.graffix.drawingTool.business.services.*" >
 	<fx:Declarations>
-		<services:NetConnectionService />
+		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
+			import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
+			import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -45,6 +47,28 @@
 //						this.owner.drawShape(iData, iData.shape, list[i].code == "success" ? true : false);
 //					}
 //				}
+				for (var i:int = 0; i<event.changeList.length; ++i) 
+				{
+					trace("ololo", event.changeList[i].code);
+					var name:String = event.changeList[i].name;
+					var shapeData:ShapeDrawData = new ShapeDrawData(_so.data[name]);
+					switch(event.changeList[i].code)
+					{
+						case "delete":
+							
+							break;
+						
+						case "change":
+							_drawManager.drawShape( shapeData );
+							break;
+						
+						case "success":
+							//
+							//do nothing on success
+							break;
+					}
+				}
+				
 			}
 			
 			[Bindable]
@@ -53,10 +77,28 @@
 			protected function init():void
 			{
 				_drawManager = new DrawManager( drawArea );
-				var initEvent:InitEvent = new InitEvent();
-				initEvent.dispatch();
+				addEventListener(ShapeChangedEvent.SHAPE_ADDED, onShapeAdded);
+				addEventListener(ShapeChangedEvent.SHAPE_CHANGED, onShapeChanged);
+				addEventListener(ShapeChangedEvent.SHAPE_REMOVED, onShapeRemoved);
 			}
 			
+			private function  onShapeAdded(event:ShapeChangedEvent):void
+			{
+				_so.setProperty(event.shapeData.shapeID, event.shapeData);
+				_so.setDirty(event.shapeData.shapeID);
+			}
+			
+			private function onShapeChanged(event:ShapeChangedEvent):void
+			{
+				_so.setProperty(event.shapeData.shapeID, event.shapeData);
+				_so.setDirty(event.shapeData.shapeID);
+			}
+			
+			private function onShapeRemoved(event:ShapeChangedEvent):void
+			{
+				_so.setProperty(event.shapeData.shapeID, null);
+				_so.setDirty(event.shapeData.shapeID);
+			}
 			
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
 			{

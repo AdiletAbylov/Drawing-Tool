@@ -9,10 +9,10 @@ package com.graffix.drawingTool.business.delegates
 		public function RoomNetConnectionDelegate()
 		{
 		}
-		public function connect(url:String, role:String):void
+		public function connect(url:String, username:String, role:String):void
 		{
 			var nc:NetConnection = NetConnectionService.instance.netConnection;
-			nc.connect(url, role);
+			nc.connect(url, username, role);
 		}
 	}
 }

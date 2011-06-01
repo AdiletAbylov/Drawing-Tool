@@ -32,6 +32,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_transformTool = new TransformTool();
 			_spriteToDraw = new Sprite();
 			id = UIDUtil.createUID();
+			_shapeDrawData = new ShapeDrawData();
 		}
 		
 		override protected function createChildren():void
@@ -43,6 +44,23 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected var _spriteToDraw:Sprite;
 		protected var _shapeDrawData:ShapeDrawData;
+
+		public function set shapeDrawData(value:ShapeDrawData):void
+		{
+			_shapeDrawData = value;
+			_drawDataChanged = true;
+			invalidateDisplayList();
+		}
+		
+		public function get shapeDrawData():ShapeDrawData
+		{
+			_shapeDrawData.shapeID = id;
+			_shapeDrawData.shapeType = _type;
+			_shapeDrawData.x = x;
+			_shapeDrawData.y = y;
+			return _shapeDrawData;
+		}
+		
 		protected var _drawDataChanged:Boolean;
 		
 		protected var _type:int;
@@ -220,11 +238,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_toRemove = value;
 		}
 		
-		public function get shapeDrawData():ShapeDrawData
-		{
-			_shapeDrawData.shapeID = id;
-			_shapeDrawData.shapeType = _type;
-			return _shapeDrawData;
-		}
+		
 	}
 }

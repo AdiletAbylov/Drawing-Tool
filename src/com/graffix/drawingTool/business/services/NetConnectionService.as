@@ -3,18 +3,20 @@ package com.graffix.drawingTool.business.services
 	import com.demonsters.debugger.MonsterDebugger;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.SharedObject;
 
-	public class NetConnectionService
+	public class NetConnectionService extends EventDispatcher
 	{
 		
 		private static var __instance:NetConnectionService = null;
 		
 		public static function get instance():NetConnectionService
 		{
-			if (__instance == null)
+			if (!__instance)
 			{
 				__instance = new NetConnectionService();
 			}
@@ -37,6 +39,7 @@ package com.graffix.drawingTool.business.services
 				_netConnection = new NetConnection();
 				_netConnection.client = this;
 				_netConnection.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus );
+				
 			}
 			
 			return _netConnection;
@@ -53,6 +56,7 @@ package com.graffix.drawingTool.business.services
 		
 		private var _boardSO:SharedObject;
 		
+		[Bindable(event="netConnectionChanged")]
 		public function get boardSO():SharedObject
 		{
 			if(!_boardSO)

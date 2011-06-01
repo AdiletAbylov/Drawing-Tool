@@ -11,7 +11,7 @@ package com.graffix.drawingTool.model
 		
 		public static function getInstance():ModelLocator
 		{
-			if (__instance == null)
+			if (!__instance)
 			{
 				__instance = new ModelLocator();
 			}

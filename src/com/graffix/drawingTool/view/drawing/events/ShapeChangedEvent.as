@@ -12,7 +12,7 @@ package com.graffix.drawingTool.view.drawing.events
 		public var shapeData:ShapeDrawData;
 		public function ShapeChangedEvent(type:String, shapeData:ShapeDrawData)
 		{
-			super(type);
+			super(type, true);
 			this.shapeData = shapeData;
 		}
 	}

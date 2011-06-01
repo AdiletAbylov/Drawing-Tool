@@ -3,6 +3,7 @@ package com.graffix.drawingTool.commands.application
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.business.delegates.LoginDelegate;
+	import com.graffix.drawingTool.business.delegates.RoomNetConnectionDelegate;
 	import com.graffix.drawingTool.events.application.LoginEvent;
 	import com.graffix.drawingTool.model.ModelLocator;
 	
@@ -24,7 +25,8 @@ package com.graffix.drawingTool.commands.application
 		
 		public function result(data:Object):void
 		{
-			__model.currentState = "MainState";
+			var delegate:RoomNetConnectionDelegate = new RoomNetConnectionDelegate();
+			delegate.connect(__model.settings.roomInstance, __model.user.username, __model.user.role);
 		}
 		
 		public function fault(info:Object):void

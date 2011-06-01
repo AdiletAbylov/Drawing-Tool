@@ -157,6 +157,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			{
 				var shape:IVisualElement = getElementAt(1);
 				shape.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+				(shape as BaseShape).destroy();
 				removeElementAt(1);
 			}
 		}

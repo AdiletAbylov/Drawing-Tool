@@ -79,7 +79,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 			
 			if(redrawed)
 			{
-				dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+				//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 			}
 		}
 		

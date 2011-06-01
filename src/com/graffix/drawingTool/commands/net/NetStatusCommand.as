@@ -3,6 +3,7 @@ package com.graffix.drawingTool.commands.net
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
+	import com.graffix.drawingTool.model.ModelLocator;
 	
 	public class NetStatusCommand implements ICommand
 	{
@@ -17,7 +18,7 @@ package com.graffix.drawingTool.commands.net
 			{
 				case "NetConnection.Connect.Success":
 				{
-					
+					ModelLocator.getInstance().currentState = "MainState";
 					break;
 				}
 					

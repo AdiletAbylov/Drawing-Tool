@@ -52,17 +52,22 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 			
 			if(redrawed)
 			{
-				dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+				//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 			}
 		}
 		
-		
 		override public function draw():void
 		{
-			_spriteToDraw.graphics.clear();
-			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
-			_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
+			try
+			{
+				_spriteToDraw.graphics.clear();
+				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
+				_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
+			}catch(e:Error)
+			{
+				_spriteToDraw.graphics.clear();
+			}
 		}
 	}
 }

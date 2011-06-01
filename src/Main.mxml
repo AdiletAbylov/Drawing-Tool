@@ -7,16 +7,18 @@
 			   xmlns:editors="com.graffix.drawingTool.view.drawing.view.editors.*"
 			   applicationComplete="init(event)"
 			   currentState="{__model.currentState}"
-			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*">
+			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*" xmlns:services="com.graffix.drawingTool.business.services.*">
 	<s:states>
 		<s:State name="InitState"/>
 		<s:State name="MainState"/>
 	</s:states>
 	<fx:Declarations>
 		<control:ApplicationController id="appController"/>
+		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.business.services.NetConnectionService;
 			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
 			
@@ -34,5 +36,5 @@
 		]]>
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
-	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5"/>
+	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5" sharedObject="{NetConnectionService.instance.boardSO}"/>
 </s:Application>

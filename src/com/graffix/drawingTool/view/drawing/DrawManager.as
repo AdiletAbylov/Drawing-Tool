@@ -6,14 +6,15 @@ package com.graffix.drawingTool.view.drawing
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
-	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
-	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
-	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
+	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.view.editors.TextEditorWindow;
+	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	
 	import flash.geom.Point;
 	
@@ -264,9 +265,18 @@ package com.graffix.drawingTool.view.drawing
 			}
 		}
 		
-		public function drawShape(shapeData:Object):void
+		public function drawShape(shapeData:ShapeDrawData):void
 		{
-			
+			if(shapeData)
+			{
+				var shape:BaseShape = ShapesFactory.createTool( shapeData.shapeType );
+				shape.id = shapeData.shapeID;
+				
+				_drawArea.currentPage.addElement( shape );
+				shape.shapeDrawData = shapeData;
+				shape.x = shapeData.x;
+				shape.y = shapeData.y;
+			}
 		}
 		
 		public function eraseShape(shapeID:int):void
