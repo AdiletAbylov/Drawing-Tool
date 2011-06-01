@@ -263,5 +263,21 @@ package com.graffix.drawingTool.view.drawing
 				selectedShape.showTransformControls();
 			}
 		}
+		
+		public function drawShape(shapeData:Object):void
+		{
+			
+		}
+		
+		public function eraseShape(shapeID:int):void
+		{
+			
+		}
+		
+		public function redrawShape(shapeID:int, shapeData:Object):void
+		{
+			
+		}
+		
 	}
 }
