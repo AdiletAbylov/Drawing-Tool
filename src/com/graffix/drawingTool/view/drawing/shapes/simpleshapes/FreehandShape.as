@@ -33,8 +33,14 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 		
 		override public function draw():void
 		{	
-			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.drawPath(_commands, _coords);
+			try
+			{
+				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.drawPath(_commands, _coords);
+			}catch(e:Error)
+			{
+				_spriteToDraw.graphics.clear();
+			}
 		}
 	}
 }

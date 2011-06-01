@@ -2,7 +2,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-
+	
 	public class EllipseShape extends ClosedFigureBaseShape
 	{
 		public function EllipseShape()
@@ -14,16 +14,22 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 		
 		override public function draw():void
 		{
-			_spriteToDraw.graphics.clear();
-			if(_hasFill)
+			try
 			{
-				_spriteToDraw.graphics.beginFill(_fillColor);
-			}else
+				_spriteToDraw.graphics.clear();
+				if(_hasFill)
+				{
+					_spriteToDraw.graphics.beginFill(_fillColor);
+				}else
+				{
+					_spriteToDraw.graphics.beginFill(_fillColor, 0);
+				}
+				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.drawEllipse( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
+			}catch(e:Error)
 			{
-				_spriteToDraw.graphics.beginFill(_fillColor, 0);
+				_spriteToDraw.graphics.clear();
 			}
-			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.drawEllipse( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
 		}
 	}
 }

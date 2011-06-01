@@ -3,7 +3,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.sampler.NewObjectSample;
-
+	
 	public class RectShape extends ClosedFigureBaseShape
 	{
 		public function RectShape()
@@ -17,17 +17,23 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 		
 		override public function draw():void
 		{
-			_spriteToDraw.graphics.clear();
-			if(_hasFill)
+			try
 			{
-				_spriteToDraw.graphics.beginFill(_fillColor);
-			}else
+				_spriteToDraw.graphics.clear();
+				if(_hasFill)
+				{
+					_spriteToDraw.graphics.beginFill(_fillColor);
+				}else
+				{
+					_spriteToDraw.graphics.beginFill(_fillColor, 0);
+				}
+				
+				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.drawRect( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
+			}catch(e:Error)
 			{
-				_spriteToDraw.graphics.beginFill(_fillColor, 0);
+				_spriteToDraw.graphics.clear();
 			}
-			
-			_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
-			_spriteToDraw.graphics.drawRect( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
 		}
 	}
 }
