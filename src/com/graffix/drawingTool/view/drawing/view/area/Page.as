@@ -4,7 +4,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
-	import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

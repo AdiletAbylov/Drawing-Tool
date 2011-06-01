@@ -1,10 +1,10 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.closed
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.sampler.NewObjectSample;
 
-	public class RectShape extends ClosedFigureShape
+	public class RectShape extends ClosedFigureBaseShape
 	{
 		public function RectShape()
 		{

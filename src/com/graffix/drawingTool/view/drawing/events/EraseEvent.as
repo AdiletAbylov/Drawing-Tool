@@ -1,6 +1,6 @@
 package com.graffix.drawingTool.view.drawing.events
 {
-	import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	
 	import flash.events.Event;
 	

@@ -14,6 +14,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import mx.core.UIComponent;
 	
 	import spark.primitives.Rect;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
 
 	public class BaseShape extends UIComponent implements IDrawable, ISelectable
 	{

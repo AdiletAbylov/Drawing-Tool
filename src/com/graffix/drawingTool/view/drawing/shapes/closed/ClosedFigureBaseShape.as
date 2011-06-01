@@ -1,15 +1,17 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.closed
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+
 	/**
 	 * Basic class for closed figures like rectangle or ellipse.  
 	 * @author adiletabylov
 	 * 
 	 */	
-	public class ClosedFigureShape extends BaseShape
+	public class ClosedFigureBaseShape extends BaseShape
 	{
-		public function ClosedFigureShape()
+		public function ClosedFigureBaseShape()
 		{
 			super();
 		}

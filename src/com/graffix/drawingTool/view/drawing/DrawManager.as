@@ -5,12 +5,12 @@ package com.graffix.drawingTool.view.drawing
 	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
-	import com.graffix.drawingTool.view.drawing.shapes.EraserShape;
-	import com.graffix.drawingTool.view.drawing.shapes.ISelectable;
-	import com.graffix.drawingTool.view.drawing.shapes.ImageShape;
-	import com.graffix.drawingTool.view.drawing.shapes.SelectTool;
-	import com.graffix.drawingTool.view.drawing.shapes.ShapesFactory;
-	import com.graffix.drawingTool.view.drawing.shapes.TextShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
+	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.view.editors.TextEditorWindow;

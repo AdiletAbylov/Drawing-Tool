@@ -1,5 +1,14 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.factory
 {
+	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.FreehandShape;
+	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.LineShape;
+	import com.graffix.drawingTool.view.drawing.shapes.closed.EllipseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.closed.RectShape;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
+	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 	
 	public class ShapesFactory
 	{

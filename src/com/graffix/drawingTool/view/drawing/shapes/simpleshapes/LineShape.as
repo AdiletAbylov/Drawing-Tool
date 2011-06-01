@@ -1,6 +1,7 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 {
 	import flash.geom.Point;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 
 	public class LineShape extends BaseShape
 	{

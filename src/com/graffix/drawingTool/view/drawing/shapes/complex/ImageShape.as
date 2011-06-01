@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.complex
 {
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
@@ -10,6 +10,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 
 	public class ImageShape extends BaseShape
 	{

@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 {
 	import flash.geom.Point;
 

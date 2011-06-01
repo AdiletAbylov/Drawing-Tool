@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.complex
 {
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	
@@ -16,6 +16,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	
 	import spark.components.Group;
 	import spark.components.RichText;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
 	
 	public class TextShape extends BaseShape

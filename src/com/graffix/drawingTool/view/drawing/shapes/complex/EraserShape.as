@@ -1,10 +1,11 @@
-package com.graffix.drawingTool.view.drawing.shapes
+package com.graffix.drawingTool.view.drawing.shapes.complex
 {
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
+	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.FreehandShape;
 
 	public class EraserShape extends FreehandShape
 	{
