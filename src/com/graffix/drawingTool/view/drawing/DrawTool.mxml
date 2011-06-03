@@ -8,7 +8,6 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 			import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
@@ -49,7 +48,7 @@
 //				}
 				for (var i:int = 0; i<event.changeList.length; ++i) 
 				{
-					trace("ololo", event.changeList[i].code);
+					//trace("ololo", event.changeList[i].code);
 					var name:String = event.changeList[i].name;
 					var shapeData:ShapeDrawData = new ShapeDrawData(_so.data[name]);
 					switch(event.changeList[i].code)

@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
+package com.graffix.drawingTool.view.drawing.shapes.simple
 {
 	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;

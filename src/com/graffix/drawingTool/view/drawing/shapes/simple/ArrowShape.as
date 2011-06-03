@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
+package com.graffix.drawingTool.view.drawing.shapes.simple
 {
 
 	public class ArrowShape extends LineShape

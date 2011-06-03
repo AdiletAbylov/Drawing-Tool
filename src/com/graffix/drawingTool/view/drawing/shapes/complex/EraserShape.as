@@ -5,7 +5,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
-	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.FreehandShape;
+	import com.graffix.drawingTool.view.drawing.shapes.simple.FreehandShape;
 
 	public class EraserShape extends FreehandShape
 	{

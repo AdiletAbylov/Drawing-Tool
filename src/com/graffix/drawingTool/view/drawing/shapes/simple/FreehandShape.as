@@ -1,5 +1,7 @@
-package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
+package com.graffix.drawingTool.view.drawing.shapes.simple
 {
+	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
+	
 	import flash.geom.Point;
 
 	public class FreehandShape extends LineShape
@@ -8,6 +10,8 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 		{
 			super();
 			_type = FREEHAND_SHAPE;
+			_commands = new Vector.<int>();
+			_coords = new Vector.<Number>();
 		}
 		public static const FREEHAND_SHAPE:int = 4;
 		
@@ -16,10 +20,9 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 		
 		override public function setPoints(startPoint:Point, endPoint:Point):void
 		{
-			if(!_commands)
+			if(_commands.length == 0)
 			{
-				_commands = new Vector.<int>();
-				_coords = new Vector.<Number>();
+				
 				_commands[0] = 1;
 				_coords[0] = 0;
 				_coords[1] = 1;
@@ -41,6 +44,19 @@ package com.graffix.drawingTool.view.drawing.shapes.simpleshapes
 			{
 				_spriteToDraw.graphics.clear();
 			}
+		}
+		
+		override public function set shapeDrawData(value:ShapeDrawData):void
+		{	
+			_commands = (value.drawData.commands as Vector.<int>);
+			_coords = value.drawData.coords;
+			super.shapeDrawData = value;
+		}
+		
+		override public function get shapeDrawData():ShapeDrawData
+		{
+			_shapeDrawData.drawData = {commands: _commands, coords:_coords};
+			return super.shapeDrawData;
 		}
 	}
 }

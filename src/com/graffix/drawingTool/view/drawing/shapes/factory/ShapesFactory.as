@@ -1,7 +1,7 @@
 package com.graffix.drawingTool.view.drawing.shapes.factory
 {
-	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.FreehandShape;
-	import com.graffix.drawingTool.view.drawing.shapes.simpleshapes.LineShape;
+	import com.graffix.drawingTool.view.drawing.shapes.simple.FreehandShape;
+	import com.graffix.drawingTool.view.drawing.shapes.simple.LineShape;
 	import com.graffix.drawingTool.view.drawing.shapes.closed.EllipseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.closed.RectShape;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
