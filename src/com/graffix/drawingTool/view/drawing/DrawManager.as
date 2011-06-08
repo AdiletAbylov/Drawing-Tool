@@ -279,9 +279,9 @@ package com.graffix.drawingTool.view.drawing
 			}
 		}
 		
-		public function eraseShape(shapeID:int):void
+		public function eraseShape(shapeID:String):void
 		{
-			
+			_drawArea.currentPage.removeShapeByID(shapeID);
 		}
 		
 		public function redrawShape(shapeID:int, shapeData:Object):void

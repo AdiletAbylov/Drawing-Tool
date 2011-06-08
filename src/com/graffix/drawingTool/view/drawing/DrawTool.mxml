@@ -15,50 +15,52 @@
 			import spark.events.IndexChangeEvent;
 			
 			private var _so:SharedObject;
-
+			
 			public function get sharedObject():SharedObject
 			{
 				return _so;
 			}
-
+			
 			public function set sharedObject(value:SharedObject):void
 			{
 				_so = value;
-				_so.addEventListener(SyncEvent.SYNC, onSync);
 			}
 			
 			private function onSync(event:SyncEvent):void
 			{
-//				for (var i:int = 0; i<event.changeList.length; i++) {
-//					var iData:Object = this.data[ event.changeList[i].name ];
-//					if (list[i].code == "delete") 
-//					{
-//						// Shape has been deleted, remove it.
-//						//trace ("delete "+this.owner[list[i].name+"_mc"]);
-//						if (this.owner.selectedShape == this.owner.currentPage[list[i].name+"_mc"])
-//						{
-//							this.owner.shapeSelect_mc.clear();
-//						}
-//						this.owner.currentPage[list[i].name+"_mc"].removeMovieClip();
-//					} else 
-//					{
-//						// New/Updated Shape
-//						this.owner.drawShape(iData, iData.shape, list[i].code == "success" ? true : false);
-//					}
-//				}
+				//				for (var i:int = 0; i<event.changeList.length; i++) {
+				//					var iData:Object = this.data[ event.changeList[i].name ];
+				//					if (list[i].code == "delete") 
+				//					{
+				//						// Shape has been deleted, remove it.
+				//						//trace ("delete "+this.owner[list[i].name+"_mc"]);
+				//						if (this.owner.selectedShape == this.owner.currentPage[list[i].name+"_mc"])
+				//						{
+				//							this.owner.shapeSelect_mc.clear();
+				//						}
+				//						this.owner.currentPage[list[i].name+"_mc"].removeMovieClip();
+				//					} else 
+				//					{
+				//						// New/Updated Shape
+				//						this.owner.drawShape(iData, iData.shape, list[i].code == "success" ? true : false);
+				//					}
+				//				}
 				for (var i:int = 0; i<event.changeList.length; ++i) 
 				{
-					//trace("ololo", event.changeList[i].code);
+					trace("ololo", event.changeList[i].code);
 					var name:String = event.changeList[i].name;
 					var shapeData:ShapeDrawData = new ShapeDrawData(_so.data[name]);
 					switch(event.changeList[i].code)
 					{
 						case "delete":
-							
+							_drawManager.eraseShape(name);
 							break;
 						
 						case "change":
+							
+							
 							_drawManager.drawShape( shapeData );
+							
 							break;
 						
 						case "success":
@@ -79,6 +81,10 @@
 				addEventListener(ShapeChangedEvent.SHAPE_ADDED, onShapeAdded);
 				addEventListener(ShapeChangedEvent.SHAPE_CHANGED, onShapeChanged);
 				addEventListener(ShapeChangedEvent.SHAPE_REMOVED, onShapeRemoved);
+				if(_so)
+				{
+					_so.addEventListener(SyncEvent.SYNC, onSync);
+				}
 			}
 			
 			private function  onShapeAdded(event:ShapeChangedEvent):void
@@ -126,18 +132,18 @@
 				drawArea.selectPage( pagesBar.selectedIndex );
 			}
 			
-
+			
 			protected function removePageButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.removeCurrentPage();
 			}
-
-
+			
+			
 			protected function screenshotButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.currentPage.makeScreenshot();
 			}
-
+			
 		]]>
 	</fx:Script>
 	
@@ -146,11 +152,11 @@
 	</s:BorderContainer>
 	
 	<toolbars:ToolsView id="toolbar" left="10" top="10"
-					   TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
+						TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
 	</toolbars:ToolsView>
 	<s:HGroup left="55" top="5">
 		<s:Button id="clearButton" 
-				 click="clearButton_clickHandler(event)"
+				  click="clearButton_clickHandler(event)"
 				  label="Clear"
 				  icon="{ICON}"/>
 		<s:Button id="screenshotButton"
@@ -158,7 +164,7 @@
 				  click="screenshotButton_clickHandler(event)"
 				  />
 		<toolbars:ToolPropertiesView id="toolProperties" left="130" top="10"
-									currentTool="{_drawManager.selectedShape}">
+									 currentTool="{_drawManager.selectedShape}">
 		</toolbars:ToolPropertiesView>
 	</s:HGroup>
 	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>

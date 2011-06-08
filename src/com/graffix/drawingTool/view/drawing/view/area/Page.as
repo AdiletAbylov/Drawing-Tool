@@ -9,10 +9,12 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.FileReference;
+	import flash.utils.Dictionary;
 	
 	import flashx.textLayout.formats.WhiteSpaceCollapse;
 	
@@ -48,7 +50,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 			{
 				removeElement( _objectsToErase[i] );
 			}
-			event.eraser.destroy();
 			removeElement(event.eraser);
 			_objectsToErase.length = 0;
 		}
@@ -155,9 +156,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			while(numElements > 1)
 			{
-				var shape:IVisualElement = getElementAt(1);
-				shape.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
-				(shape as BaseShape).destroy();
 				removeElementAt(1);
 			}
 		}
@@ -188,20 +186,42 @@ package com.graffix.drawingTool.view.drawing.view.area
 			}
 		}
 		
+		private var _elementsByID:Dictionary = new Dictionary();
+		
+		public function removeShapeByID(shapeID:String):void
+		{
+			var element:IVisualElement = _elementsByID[shapeID] ;
+			if(element)
+			{
+				removeElement( element);
+			}
+		}		
 		
 		override public function addElement(element:IVisualElement):IVisualElement
 		{
 			element.addEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+			if(element is BaseShape)
+			{
+				_elementsByID[ (element as BaseShape).id ] = element;
+			}
 			return super.addElement(element);
 		}
 		
 		override public function removeElement(element:IVisualElement):IVisualElement
 		{
+			delete _elementsByID[ (element as BaseShape).id ];
 			element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+			(element as BaseShape).destroy();
 			return super.removeElement(element);
 		}
 		
-		
-		
+		override public function removeElementAt(index:int):IVisualElement
+		{
+			var shape:IVisualElement = getElementAt(index);
+			delete _elementsByID[ (shape as BaseShape).id ];
+			shape.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+			(shape as BaseShape).destroy();
+			return super.removeElementAt(index);
+		}
 	}
 }

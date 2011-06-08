@@ -9,12 +9,12 @@
 			   currentState="{__model.currentState}"
 			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*" xmlns:services="com.graffix.drawingTool.business.services.*">
 	<s:states>
-		<s:State name="InitState"/>
+		
 		<s:State name="MainState"/>
+		<s:State name="InitState"/>
 	</s:states>
 	<fx:Declarations>
 		<control:ApplicationController id="appController"/>
-		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[

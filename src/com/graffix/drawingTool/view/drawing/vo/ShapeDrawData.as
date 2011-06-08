@@ -2,6 +2,7 @@ package com.graffix.drawingTool.view.drawing.vo
 {
 	public class ShapeDrawData
 	{
+		
 		public function ShapeDrawData(data:Object = null)
 		{
 			if(data)
@@ -9,6 +10,7 @@ package com.graffix.drawingTool.view.drawing.vo
 				serialize(data);
 			}
 		}
+		
 		public var shapeID:String;
 		public var shapeType:int;
 		public var drawData:Object;
