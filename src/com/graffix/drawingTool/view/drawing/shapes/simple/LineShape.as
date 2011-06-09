@@ -18,7 +18,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 			switch(name)
 			{
 				case PROPERTY_LINE_SIZE:
-					_lineSize = value as int;
+					_shapeDrawData.lineSize = value as int;
 					_lineSizeChanged = true;
 					break;
 				case PROPERTY_LINE_COLOR:
@@ -61,7 +61,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 			try
 			{
 				_spriteToDraw.graphics.clear();
-				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _lineColor );
 				_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
 				_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
 			}catch(e:Error)

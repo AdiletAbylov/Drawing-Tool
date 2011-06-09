@@ -19,7 +19,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var width:Number;
 		public var height:Number;
 		public var depth:int;
-		public var lineSize:int;
+		public var lineSize:int = 2;
 		public var lineColor:uint;
 		public var hasFill:Boolean;
 		public var fillColor:uint;

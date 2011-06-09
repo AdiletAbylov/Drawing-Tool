@@ -28,7 +28,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 					_spriteToDraw.graphics.beginFill(_fillColor, 0);
 				}
 				
-				_spriteToDraw.graphics.lineStyle( _lineSize, _lineColor );
+				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _lineColor );
 				_spriteToDraw.graphics.drawRect( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
 			}catch(e:Error)
 			{

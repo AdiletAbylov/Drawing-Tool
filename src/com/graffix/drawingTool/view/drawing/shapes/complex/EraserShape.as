@@ -15,7 +15,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			super();
 			_shapeDrawData.shapeType = ERASER_SHAPE;
 			_lineColor = 0xFFFFFF;
-			_lineSize = 80;
+			_shapeDrawData.lineSize = 80;
 		}
 		
 		private var _eraserIcon:Shape;

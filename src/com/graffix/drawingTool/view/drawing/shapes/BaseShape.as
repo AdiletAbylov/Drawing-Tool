@@ -75,13 +75,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		//
 		// Tool Properties
-		[Bindable]
-		protected var _lineSize:int = 2;
+		
+		
 		protected var _lineSizeChanged:Boolean;
 		
 		public function get lineSize():int
 		{
-			return _lineSize;
+			return _shapeDrawData.lineSize;
 		}
 
 		protected var _lineColor:uint = 0x000000;

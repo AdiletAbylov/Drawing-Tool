@@ -23,7 +23,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 			switch(name)
 			{
 				case PROPERTY_LINE_SIZE:
-					_lineSize = value as int;
+					_shapeDrawData.lineSize = value as int;
 					_lineSizeChanged = true;
 					break;
 				
