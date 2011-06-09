@@ -8,7 +8,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 		public function EllipseShape()
 		{
 			super();
-			_type=ELLIPSE_SHAPE;
+			_shapeDrawData.shapeType=ELLIPSE_SHAPE;
 		}
 		public static const ELLIPSE_SHAPE:int = 3;
 		

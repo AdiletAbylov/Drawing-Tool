@@ -16,6 +16,14 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var drawData:Object;
 		public var x:Number;
 		public var y:Number;
+		public var width:Number;
+		public var height:Number;
+		public var depth:int;
+		public var lineSize:int;
+		public var lineColor:uint;
+		public var hasFill:Boolean;
+		public var fillColor:uint;
+		
 		private function serialize(data:Object):void
 		{
 			shapeID = data.shapeID;
@@ -23,6 +31,13 @@ package com.graffix.drawingTool.view.drawing.vo
 			x = data.x;
 			y = data.y;
 			drawData = data.drawData;
+			width = data.width;
+			height = data.height;
+			depth = data.depth;
+			lineColor = data.lineColor;
+			lineSize = data.lineSize;
+			hasFill = data.hasFill;
+			fillColor = data.fillColor;
 		}
 	}
 }

@@ -8,7 +8,7 @@ package com.graffix.drawingTool.view.drawing.shapes.selection
 		public function SelectTool()
 		{
 			super();
-			_type = TRANSFORM_TOOL;
+			_shapeDrawData.shapeType = TRANSFORM_TOOL;
 		}
 	}
 }

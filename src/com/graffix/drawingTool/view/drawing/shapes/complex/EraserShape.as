@@ -13,7 +13,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		public function EraserShape()
 		{
 			super();
-			_type = ERASER_SHAPE;
+			_shapeDrawData.shapeType = ERASER_SHAPE;
 			_lineColor = 0xFFFFFF;
 			_lineSize = 80;
 		}

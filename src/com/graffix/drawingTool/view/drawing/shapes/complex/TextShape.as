@@ -28,7 +28,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		{
 			super();
 			this.doubleClickEnabled = true;	
-			_type = TEXT_SHAPE;
+			_shapeDrawData.shapeType = TEXT_SHAPE;
 		}
 		
 		private var textContainer:Group;

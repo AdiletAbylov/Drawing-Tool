@@ -9,7 +9,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 		public function FreehandShape()
 		{
 			super();
-			_type = FREEHAND_SHAPE;
+			_shapeDrawData.shapeType = FREEHAND_SHAPE;
 			_commands = new Vector.<int>();
 			_coords = new Vector.<Number>();
 		}

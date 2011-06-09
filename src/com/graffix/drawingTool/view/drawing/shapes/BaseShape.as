@@ -28,11 +28,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function BaseShape()
 		{
-			_type = type;
+			
 			_transformTool = new TransformTool();
 			_spriteToDraw = new Sprite();
 			id = UIDUtil.createUID();
 			_shapeDrawData = new ShapeDrawData();
+			_shapeDrawData.shapeType = type;
 		}
 		
 		override protected function createChildren():void
@@ -55,18 +56,21 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function get shapeDrawData():ShapeDrawData
 		{
 			_shapeDrawData.shapeID = id;
-			_shapeDrawData.shapeType = _type;
+			
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
+			_shapeDrawData.depth = this.depth;
+			_shapeDrawData.width = width;
+			_shapeDrawData.height = height;
 			return _shapeDrawData;
 		}
 		
 		protected var _drawDataChanged:Boolean;
 		
-		protected var _type:int;
+		
 		public function get type():int
 		{
-			return _type;
+			return shapeDrawData.shapeType;
 		}
 		
 		//
