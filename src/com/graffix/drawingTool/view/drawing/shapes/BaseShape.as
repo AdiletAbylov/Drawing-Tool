@@ -90,11 +90,11 @@ package com.graffix.drawingTool.view.drawing.shapes
 			return _shapeDrawData.lineColor;
 		}
 			
-		protected var _hasFill:Boolean;
+		
 		protected var _hasFillChanged:Boolean;
 		public function get hasFill():Boolean
 		{
-			return _hasFill;
+			return _shapeDrawData.hasFill;
 		}
 		
 		protected var _fillColor:uint = 0xFFFFFF;
@@ -106,7 +106,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 
 		public function set hasFill(value:Boolean):void
 		{
-			_hasFill = value;
+			_shapeDrawData.hasFill = value;
 		}
 		
 		

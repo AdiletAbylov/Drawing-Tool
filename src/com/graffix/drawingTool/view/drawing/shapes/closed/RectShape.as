@@ -20,7 +20,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 			try
 			{
 				_spriteToDraw.graphics.clear();
-				if(_hasFill)
+				if(_shapeDrawData.hasFill)
 				{
 					_spriteToDraw.graphics.beginFill(_fillColor);
 				}else

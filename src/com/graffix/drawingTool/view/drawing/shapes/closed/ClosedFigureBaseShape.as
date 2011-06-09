@@ -33,7 +33,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 					break;
 				
 				case PROPERTY_FILL_ENABLED:
-					_hasFill = value as Boolean;
+					_shapeDrawData.hasFill = value as Boolean;
 					_hasFillChanged = true;
 					break;
 				
