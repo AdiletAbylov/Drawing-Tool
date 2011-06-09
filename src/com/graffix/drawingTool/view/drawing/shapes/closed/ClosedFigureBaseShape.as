@@ -28,7 +28,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 					break;
 				
 				case PROPERTY_LINE_COLOR:
-					_lineColor = value as uint;
+					_shapeDrawData.lineColor = value as uint;
 					_lineSizeChanged = true;
 					break;
 				

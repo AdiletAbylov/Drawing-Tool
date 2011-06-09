@@ -14,7 +14,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		{
 			super();
 			_shapeDrawData.shapeType = ERASER_SHAPE;
-			_lineColor = 0xFFFFFF;
+			_shapeDrawData.lineColor = 0xFFFFFF;
 			_shapeDrawData.lineSize = 80;
 		}
 		

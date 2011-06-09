@@ -38,7 +38,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 		{	
 			try
 			{
-				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _lineColor );
+				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
 				_spriteToDraw.graphics.drawPath(_commands, _coords);
 			}catch(e:Error)
 			{

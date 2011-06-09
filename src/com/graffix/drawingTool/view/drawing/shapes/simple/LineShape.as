@@ -22,7 +22,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 					_lineSizeChanged = true;
 					break;
 				case PROPERTY_LINE_COLOR:
-					_lineColor = value as uint;
+					_shapeDrawData.lineColor = value as uint;
 					_lineSizeChanged = true;
 					break;
 			}
@@ -61,7 +61,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 			try
 			{
 				_spriteToDraw.graphics.clear();
-				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _lineColor );
+				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
 				_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
 				_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
 			}catch(e:Error)

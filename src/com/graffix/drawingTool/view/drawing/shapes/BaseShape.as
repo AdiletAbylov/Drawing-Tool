@@ -84,11 +84,10 @@ package com.graffix.drawingTool.view.drawing.shapes
 			return _shapeDrawData.lineSize;
 		}
 
-		protected var _lineColor:uint = 0x000000;
 		protected var _lineColorChanged:Boolean;
 		public function get lineColor():uint
 		{
-			return _lineColor;
+			return _shapeDrawData.lineColor;
 		}
 			
 		protected var _hasFill:Boolean;
