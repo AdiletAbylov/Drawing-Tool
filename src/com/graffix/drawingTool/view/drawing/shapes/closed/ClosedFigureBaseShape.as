@@ -38,7 +38,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 					break;
 				
 				case PROPERTY_FILL_COLOR:
-					_fillColor = value as uint;
+					_shapeDrawData.fillColor = value as uint;
 					_fillColorChanged = true;
 					break;
 			}

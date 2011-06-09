@@ -22,7 +22,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var lineSize:int = 2;
 		public var lineColor:uint;
 		public var hasFill:Boolean;
-		public var fillColor:uint;
+		public var fillColor:uint = 0xFFFFFF;
 		
 		private function serialize(data:Object):void
 		{

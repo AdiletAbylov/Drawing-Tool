@@ -22,10 +22,10 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 				_spriteToDraw.graphics.clear();
 				if(_shapeDrawData.hasFill)
 				{
-					_spriteToDraw.graphics.beginFill(_fillColor);
+					_spriteToDraw.graphics.beginFill(_shapeDrawData.fillColor);
 				}else
 				{
-					_spriteToDraw.graphics.beginFill(_fillColor, 0);
+					_spriteToDraw.graphics.beginFill(_shapeDrawData.fillColor, 0);
 				}
 				
 				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );

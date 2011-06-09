@@ -97,11 +97,11 @@ package com.graffix.drawingTool.view.drawing.shapes
 			return _shapeDrawData.hasFill;
 		}
 		
-		protected var _fillColor:uint = 0xFFFFFF;
+		
 		protected var _fillColorChanged:Boolean;
 		public function get fillColor():uint
 		{
-			return _fillColor;
+			return _shapeDrawData.fillColor;
 		}
 
 		public function set hasFill(value:Boolean):void
