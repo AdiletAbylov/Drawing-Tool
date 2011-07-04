@@ -128,7 +128,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			removeEventListener(MouseEvent.DOUBLE_CLICK, onDoubleClick);
 		}
 		
-		override protected function get ololo():DisplayObject
+		override protected function get viewObject():DisplayObject
 		{
 			return textContainer;
 		}

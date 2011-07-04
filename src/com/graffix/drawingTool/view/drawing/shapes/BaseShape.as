@@ -65,7 +65,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.height = height;
 			if(_spriteToDraw)
 			{
-				_shapeDrawData.matrix = ololo.transform.matrix;
+				_shapeDrawData.matrix = viewObject.transform.matrix;
 			}
 			return _shapeDrawData;
 		}
@@ -167,7 +167,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected function showTransform():void
 		{
-			_transformTool.target = ololo;
+			_transformTool.target = viewObject;
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
 			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
@@ -270,7 +270,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 				draw();
 				if(_shapeDrawData.matrix)
 				{
-					ololo.transform.matrix = _shapeDrawData.matrix;
+					viewObject.transform.matrix = _shapeDrawData.matrix;
 				}
 				x = _shapeDrawData.x;
 				y = _shapeDrawData.y;
@@ -279,7 +279,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		}
 		
 		
-		protected function get ololo():DisplayObject
+		protected function get viewObject():DisplayObject
 		{
 			return _spriteToDraw;
 		}
