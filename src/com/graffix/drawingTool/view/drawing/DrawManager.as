@@ -284,6 +284,7 @@ package com.graffix.drawingTool.view.drawing
 					shape.id = shapeData.shapeID;
 					_drawArea.currentPage.addElement( shape );
 					shape.shapeDrawData = shapeData;
+					shape.finishDraw();
 				}
 				
 			}
