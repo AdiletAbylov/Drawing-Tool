@@ -279,6 +279,10 @@ package com.graffix.drawingTool.view.drawing
 				if(shape)
 				{
 					shape.shapeDrawData = shapeData;
+					if(shape.transforming)
+					{
+						shape.hideTransformControls();
+					}
 				}
 				else
 				{
@@ -286,8 +290,8 @@ package com.graffix.drawingTool.view.drawing
 					shape.id = shapeData.shapeID;
 					_drawArea.currentPage.addElement( shape );
 					shape.shapeDrawData = shapeData;
+					
 				}
-				
 			}
 		}
 		

@@ -170,7 +170,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		private function onTransformTarget(event:Event):void
 		{
 			trace("shape changed")
-			//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 		
 		public function hideTransformControls():void
