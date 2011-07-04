@@ -28,6 +28,7 @@
 			
 			private function onSync(event:SyncEvent):void
 			{
+				trace("onSync");
 				for (var i:int = 0; i<event.changeList.length; ++i) 
 				{
 					trace("ololo", event.changeList[i].code);

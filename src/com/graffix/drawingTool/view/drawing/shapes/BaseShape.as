@@ -8,6 +8,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import com.senocular.display.TransformTool;
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -64,7 +65,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.height = height;
 			if(_spriteToDraw)
 			{
-				_shapeDrawData.matrix = _spriteToDraw.transform.matrix;
+				_shapeDrawData.matrix = ololo.transform.matrix;
 			}
 			return _shapeDrawData;
 		}
@@ -166,7 +167,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected function showTransform():void
 		{
-			_transformTool.target = _spriteToDraw;
+			_transformTool.target = ololo;
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
 			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
@@ -174,7 +175,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		private function onTransformTarget(event:Event):void
 		{
-			trace("shape changed")
+			//trace("shape changed")
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 		
@@ -269,12 +270,18 @@ package com.graffix.drawingTool.view.drawing.shapes
 				draw();
 				if(_shapeDrawData.matrix)
 				{
-					_spriteToDraw.transform.matrix = _shapeDrawData.matrix;
+					ololo.transform.matrix = _shapeDrawData.matrix;
 				}
 				x = _shapeDrawData.x;
 				y = _shapeDrawData.y;
 				_redrawAll = false;
 			}
+		}
+		
+		
+		protected function get ololo():DisplayObject
+		{
+			return _spriteToDraw;
 		}
 	}
 }

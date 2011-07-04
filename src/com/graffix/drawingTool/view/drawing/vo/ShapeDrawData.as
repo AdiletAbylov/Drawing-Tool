@@ -27,6 +27,8 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var fillColor:uint = 0xFFFFFF;
 		public var matrix:Matrix;
 		
+		public var text:String;
+		
 		private function serialize(data:Object):void
 		{
 			try{
@@ -42,6 +44,9 @@ package com.graffix.drawingTool.view.drawing.vo
 			lineSize = data.lineSize;
 			hasFill = data.hasFill;
 			fillColor = data.fillColor;
+			
+			text = data.text;
+			
 			if(data.matrix)
 			{
 				matrix = new Matrix(data.matrix.a,data.matrix.b, data.matrix.c, data.matrix.d, data.matrix.tx, data.matrix.ty);

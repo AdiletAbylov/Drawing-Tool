@@ -208,9 +208,9 @@ package com.graffix.drawingTool.view.drawing
 		private function onTextEditorClose(event:CloseEvent):void
 		{
 			var formattedString:String = TextConverter.export(_textEditorWindow.richTextEditor.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			(currentDrawingShape as TextShape).setText(formattedString);
+			(selectedShape as TextShape).setText(formattedString);
 			_textEditorPopuped = false;
-			currentDrawingShape.finishDraw();
+			//currentDrawingShape.finishDraw();
 		}
 		
 		//
@@ -290,7 +290,6 @@ package com.graffix.drawingTool.view.drawing
 					shape.id = shapeData.shapeID;
 					_drawArea.currentPage.addElement( shape );
 					shape.shapeDrawData = shapeData;
-					
 				}
 			}
 		}

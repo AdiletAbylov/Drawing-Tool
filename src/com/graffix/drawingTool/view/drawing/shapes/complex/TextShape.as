@@ -1,22 +1,19 @@
 package com.graffix.drawingTool.view.drawing.shapes.complex
 {
+	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
+	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.senocular.display.TransformTool;
 	
+	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import flash.text.TextField;
 	import flash.text.TextLineMetrics;
 	
-	import flashx.textLayout.conversion.ConversionType;
 	import flashx.textLayout.conversion.TextConverter;
-	import flashx.textLayout.elements.TextFlow;
-	
-	import mx.controls.Label;
-	import mx.core.mx_internal;
 	
 	import spark.components.Group;
 	import spark.components.RichText;
-	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
 	
 	public class TextShape extends BaseShape
@@ -32,6 +29,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		}
 		
 		private var textContainer:Group;
+		
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -60,13 +58,34 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		
 		public function editText():void
 		{
-			var ss:String = TextConverter.export(_label.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			dispatchEvent( new TextEditorEvent(TextEditorEvent.TEXT_EDIT, ss ));
+			dispatchEvent( new TextEditorEvent(TextEditorEvent.TEXT_EDIT, _shapeDrawData.text ));
 		}
 		
-		public function setText(flow:String):void
+		public function setText(text:String):void
 		{
-			_label.textFlow = TextConverter.importToFlow(flow,  TextConverter.TEXT_LAYOUT_FORMAT );
+			_shapeDrawData.text = text;
+			_textChanged = true;
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			invalidateDisplayList();
+		}
+		
+		
+		
+		private var _textChanged:Boolean;
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			if(_textChanged)
+			{
+				draw();
+				_textChanged = false;
+			}
+		}
+		
+		override public function draw():void
+		{
+			_label.textFlow = TextConverter.importToFlow(_shapeDrawData.text, TextConverter.TEXT_LAYOUT_FORMAT );
 			meauserLabel();
 			if(_transforming)
 			{
@@ -82,14 +101,21 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			textContainer.width = lineMetrics.width+40;
 			textContainer.height = 100;
 		}
-		
-		override protected function showTransform():void
-		{
-			//_transformTool.doubleClickEnabled = true;
-			_transformTool.target = textContainer;
-			_transformTool.registration = _transformTool.boundsCenter;
-			_transforming = true;
-		}
+//		
+//		override protected function showTransform():void
+//		{
+//			//_transformTool.doubleClickEnabled = true;
+//			_transformTool.target = textContainer;
+//			_transformTool.registration = _transformTool.boundsCenter;
+//			_transforming = true;
+//			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
+//		}
+//		
+//		private function onTransformTarget(event:Event):void
+//		{
+//			trace("shape changed")
+//			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+//		}
 		
 		override public function destroy():void
 		{
@@ -100,6 +126,11 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			removeChild(textContainer);
 			textContainer = null;
 			removeEventListener(MouseEvent.DOUBLE_CLICK, onDoubleClick);
+		}
+		
+		override protected function get ololo():DisplayObject
+		{
+			return textContainer;
 		}
 	}
 }
