@@ -62,7 +62,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.depth = this.depth;
 			_shapeDrawData.width = width;
 			_shapeDrawData.height = height;
-			_shapeDrawData.matrix = this.transform.matrix;
+			_shapeDrawData.matrix = _spriteToDraw.transform.matrix;
 			return _shapeDrawData;
 		}
 		
@@ -264,9 +264,10 @@ package com.graffix.drawingTool.view.drawing.shapes
 				draw();
 				if(_shapeDrawData.matrix)
 				{
-					transform.matrix = _shapeDrawData.matrix;
+					_spriteToDraw.transform.matrix = _shapeDrawData.matrix;
 				}
-				
+				x = _shapeDrawData.x;
+				y = _shapeDrawData.y;
 				_redrawAll = false;
 			}
 		}
