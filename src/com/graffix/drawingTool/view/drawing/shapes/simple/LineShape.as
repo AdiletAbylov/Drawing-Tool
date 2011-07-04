@@ -26,6 +26,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 					_lineSizeChanged = true;
 					break;
 			}
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 			invalidateDisplayList();
 		}
 		

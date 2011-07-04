@@ -42,7 +42,9 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 					_fillColorChanged = true;
 					break;
 			}
+			
 			invalidateDisplayList();
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
