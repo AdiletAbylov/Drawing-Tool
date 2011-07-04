@@ -141,7 +141,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function finishDraw():void
 		{	
-			
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
 		}
 		

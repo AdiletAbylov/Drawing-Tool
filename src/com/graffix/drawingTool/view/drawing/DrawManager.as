@@ -260,7 +260,7 @@ package com.graffix.drawingTool.view.drawing
 			}
 			
 			selectedShape = event.target as BaseShape;
-			currentDrawingShape = event.target as BaseShape;
+			//currentDrawingShape = event.target as BaseShape;
 			if( _operationType == SelectTool.TRANSFORM_TOOL && !selectedShape.transforming )
 			{	
 				selectedShape.showTransformControls();
