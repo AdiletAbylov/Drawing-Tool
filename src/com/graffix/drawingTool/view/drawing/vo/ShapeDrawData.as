@@ -1,5 +1,7 @@
 package com.graffix.drawingTool.view.drawing.vo
 {
+	import flash.geom.Matrix;
+
 	public class ShapeDrawData
 	{
 		
@@ -23,6 +25,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var lineColor:uint;
 		public var hasFill:Boolean;
 		public var fillColor:uint = 0xFFFFFF;
+		public var matrix:Matrix;
 		
 		private function serialize(data:Object):void
 		{
@@ -38,6 +41,10 @@ package com.graffix.drawingTool.view.drawing.vo
 			lineSize = data.lineSize;
 			hasFill = data.hasFill;
 			fillColor = data.fillColor;
+			if(data.matrix)
+			{
+				matrix = new Matrix(data.matrix.a,data.matrix.b, data.matrix.c, data.matrix.d, data.matrix.tx, data.matrix.ty);
+			}
 		}
 	}
 }

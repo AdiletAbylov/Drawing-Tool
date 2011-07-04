@@ -265,17 +265,27 @@ package com.graffix.drawingTool.view.drawing
 			}
 		}
 		
-		public function drawShape(shapeData:ShapeDrawData):void
+		/**
+		 * Redraws and transforms shape
+		 * if shape doesn't exists creates new one and applys all transformation data
+		 * */
+		public function updateShape(shapeData:ShapeDrawData):void
 		{
 			if(shapeData)
 			{
-				var shape:BaseShape = ShapesFactory.createTool( shapeData.shapeType );
-				shape.id = shapeData.shapeID;
+				var shape:BaseShape = _drawArea.currentPage.getShapeByID(shapeData.shapeID);
+				if(shape)
+				{
+					shape.shapeDrawData = shapeData;
+				}
+				else
+				{
+					shape = ShapesFactory.createTool( shapeData.shapeType );
+					shape.id = shapeData.shapeID;
+					_drawArea.currentPage.addElement( shape );
+					shape.shapeDrawData = shapeData;
+				}
 				
-				_drawArea.currentPage.addElement( shape );
-				shape.shapeDrawData = shapeData;
-				shape.x = shapeData.x;
-				shape.y = shapeData.y;
 			}
 		}
 		
@@ -283,11 +293,5 @@ package com.graffix.drawingTool.view.drawing
 		{
 			_drawArea.currentPage.removeShapeByID(shapeID);
 		}
-		
-		public function redrawShape(shapeID:int, shapeData:Object):void
-		{
-			
-		}
-		
 	}
 }

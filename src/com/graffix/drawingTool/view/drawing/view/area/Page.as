@@ -195,7 +195,12 @@ package com.graffix.drawingTool.view.drawing.view.area
 			{
 				removeElement( element);
 			}
-		}		
+		}	
+		
+		public function getShapeByID(shapeID:String):BaseShape
+		{
+			return _elementsByID[shapeID];
+		}
 		
 		override public function addElement(element:IVisualElement):IVisualElement
 		{

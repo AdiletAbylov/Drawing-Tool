@@ -9,6 +9,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -45,28 +46,28 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected var _spriteToDraw:Sprite;
 		protected var _shapeDrawData:ShapeDrawData;
-
+			
 		public function set shapeDrawData(value:ShapeDrawData):void
 		{
 			_shapeDrawData = value;
-			_drawDataChanged = true;
+			_redrawAll = true;
 			invalidateDisplayList();
 		}
 		
 		public function get shapeDrawData():ShapeDrawData
 		{
 			_shapeDrawData.shapeID = id;
-			
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
 			_shapeDrawData.depth = this.depth;
 			_shapeDrawData.width = width;
 			_shapeDrawData.height = height;
+			_shapeDrawData.matrix = this.transform.matrix;
 			return _shapeDrawData;
 		}
 		
 		protected var _drawDataChanged:Boolean;
-		
+		protected var _redrawAll:Boolean;
 		
 		public function get type():int
 		{
@@ -163,6 +164,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_transformTool.target = _spriteToDraw;
 			_transformTool.registration = _transformTool.boundsCenter;
 			_transforming = true;
+			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
+		}
+		
+		private function onTransformTarget(event:Event):void
+		{
+			trace("shape changed")
+			//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 		
 		public function hideTransformControls():void
@@ -174,6 +182,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		{
 			_transformTool.target = null;
 			_transforming = false;
+			_transformTool.removeEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
 		}
 		
 		protected function onMouseClick(event:MouseEvent):void
@@ -241,6 +250,24 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_toRemove = value;
 		}
 		
-		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			if(_drawDataChanged)
+			{
+				_drawDataChanged = false;
+				draw();
+			}
+			
+			if(_redrawAll)
+			{
+				draw();
+				if(_shapeDrawData.matrix)
+				{
+					transform.matrix = _shapeDrawData.matrix;
+				}
+				_redrawAll = false;
+			}
+		}
 	}
 }

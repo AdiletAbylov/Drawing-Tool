@@ -28,23 +28,6 @@
 			
 			private function onSync(event:SyncEvent):void
 			{
-				//				for (var i:int = 0; i<event.changeList.length; i++) {
-				//					var iData:Object = this.data[ event.changeList[i].name ];
-				//					if (list[i].code == "delete") 
-				//					{
-				//						// Shape has been deleted, remove it.
-				//						//trace ("delete "+this.owner[list[i].name+"_mc"]);
-				//						if (this.owner.selectedShape == this.owner.currentPage[list[i].name+"_mc"])
-				//						{
-				//							this.owner.shapeSelect_mc.clear();
-				//						}
-				//						this.owner.currentPage[list[i].name+"_mc"].removeMovieClip();
-				//					} else 
-				//					{
-				//						// New/Updated Shape
-				//						this.owner.drawShape(iData, iData.shape, list[i].code == "success" ? true : false);
-				//					}
-				//				}
 				for (var i:int = 0; i<event.changeList.length; ++i) 
 				{
 					trace("ololo", event.changeList[i].code);
@@ -57,10 +40,7 @@
 							break;
 						
 						case "change":
-							
-							
-							_drawManager.drawShape( shapeData );
-							
+							_drawManager.updateShape( shapeData );
 							break;
 						
 						case "success":
@@ -87,6 +67,8 @@
 				}
 			}
 			
+			
+		
 			private function  onShapeAdded(event:ShapeChangedEvent):void
 			{
 				_so.setProperty(event.shapeData.shapeID, event.shapeData);
@@ -107,7 +89,6 @@
 			
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
 			{
-				
 				_drawManager.operationType = event.toolType;
 				toolProperties.toolType = event.toolType;
 			}

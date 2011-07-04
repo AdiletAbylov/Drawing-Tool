@@ -71,11 +71,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 				draw();
 				_fillColorChanged = false;
 			}
-			if(_drawDataChanged)
-			{
-				draw();
-				_drawDataChanged = false;
-			}
+			
 			
 			if(redrawed)
 			{

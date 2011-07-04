@@ -44,11 +44,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 				draw();
 				_lineColorChanged = false;
 			}
-			if(_drawDataChanged)
-			{
-				draw();
-				_drawDataChanged = false;
-			}
+			
 			
 			if(redrawed)
 			{
