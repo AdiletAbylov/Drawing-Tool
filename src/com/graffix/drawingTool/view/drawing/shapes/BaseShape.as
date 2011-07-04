@@ -62,7 +62,10 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.depth = this.depth;
 			_shapeDrawData.width = width;
 			_shapeDrawData.height = height;
-			_shapeDrawData.matrix = _spriteToDraw.transform.matrix;
+			if(_spriteToDraw)
+			{
+				_shapeDrawData.matrix = _spriteToDraw.transform.matrix;
+			}
 			return _shapeDrawData;
 		}
 		
@@ -144,7 +147,10 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function clear():void
 		{
-			_spriteToDraw.graphics.clear();
+			if(_spriteToDraw)
+			{
+				_spriteToDraw.graphics.clear();
+			}
 		}
 
 		

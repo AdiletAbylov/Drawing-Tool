@@ -29,6 +29,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		
 		private function serialize(data:Object):void
 		{
+			try{
 			shapeID = data.shapeID;
 			shapeType = data.shapeType;
 			x = data.x;
@@ -44,6 +45,10 @@ package com.graffix.drawingTool.view.drawing.vo
 			if(data.matrix)
 			{
 				matrix = new Matrix(data.matrix.a,data.matrix.b, data.matrix.c, data.matrix.d, data.matrix.tx, data.matrix.ty);
+			}
+			}catch(e:Error)
+			{
+				trace("serialize error");
 			}
 		}
 	}

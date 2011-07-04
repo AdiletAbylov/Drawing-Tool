@@ -100,6 +100,7 @@
 			protected function clearButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.currentPage.clear();
+				//_so.clear();
 			}
 			
 			[Embed("com/graffix/drawingTool/view/assets/remove.png")]

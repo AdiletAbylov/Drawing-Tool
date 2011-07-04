@@ -214,18 +214,23 @@ package com.graffix.drawingTool.view.drawing.view.area
 		
 		override public function removeElement(element:IVisualElement):IVisualElement
 		{
-			delete _elementsByID[ (element as BaseShape).id ];
-			element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
-			(element as BaseShape).destroy();
+			if(element is BaseShape){
+				delete _elementsByID[ (element as BaseShape).id ];
+				element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+				(element as BaseShape).destroy();
+			}
 			return super.removeElement(element);
 		}
 		
 		override public function removeElementAt(index:int):IVisualElement
 		{
-			var shape:IVisualElement = getElementAt(index);
-			delete _elementsByID[ (shape as BaseShape).id ];
-			shape.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
-			(shape as BaseShape).destroy();
+			var element:IVisualElement = getElementAt(index);
+			if(element is BaseShape)
+			{
+				delete _elementsByID[ (element as BaseShape).id ];
+				element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+				(element as BaseShape).destroy();
+			}
 			return super.removeElementAt(index);
 		}
 	}
