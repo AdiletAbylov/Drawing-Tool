@@ -71,18 +71,21 @@
 		
 			private function  onShapeAdded(event:ShapeChangedEvent):void
 			{
+				trace("shapeAdded");
 				_so.setProperty(event.shapeData.shapeID, event.shapeData);
 				_so.setDirty(event.shapeData.shapeID);
 			}
 			
 			private function onShapeChanged(event:ShapeChangedEvent):void
 			{
+				trace("shapeChanged");
 				_so.setProperty(event.shapeData.shapeID, event.shapeData);
 				_so.setDirty(event.shapeData.shapeID);
 			}
 			
 			private function onShapeRemoved(event:ShapeChangedEvent):void
 			{
+				trace("shapeRemoved");
 				_so.setProperty(event.shapeData.shapeID, null);
 				_so.setDirty(event.shapeData.shapeID);
 			}

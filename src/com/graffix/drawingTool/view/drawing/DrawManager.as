@@ -108,7 +108,9 @@ package com.graffix.drawingTool.view.drawing
 			if(currentDrawingShape && currentDrawingShape.type != TextShape.TEXT_SHAPE && currentDrawingShape.type != ImageShape.IMAGE_SHAPE)
 			{
 				currentDrawingShape.finishDraw();
+				
 				currentDrawingShape = null;
+				
 			}
 		}
 		
@@ -284,7 +286,6 @@ package com.graffix.drawingTool.view.drawing
 					shape.id = shapeData.shapeID;
 					_drawArea.currentPage.addElement( shape );
 					shape.shapeDrawData = shapeData;
-					shape.finishDraw();
 				}
 				
 			}

@@ -34,7 +34,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_spriteToDraw = new Sprite();
 			id = UIDUtil.createUID();
 			_shapeDrawData = new ShapeDrawData();
-			_shapeDrawData.shapeType = type;
+			addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 		
 		override protected function createChildren():void
@@ -138,7 +138,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function finishDraw():void
 		{	
-			addEventListener(MouseEvent.CLICK, onMouseClick);
+			
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
 		}
 		
@@ -266,6 +266,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 				{
 					transform.matrix = _shapeDrawData.matrix;
 				}
+				
 				_redrawAll = false;
 			}
 		}
