@@ -14,13 +14,13 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		private var _viewHost:IVisualElementContainer;
 		
-		public function arrangeElementsByZIndex(elements:Array):void
+		public function arrangeElementsByZIndex():void
 		{
-			var length:int = elements.length;
+			var length:int = _viewHost.numElements;
 			var element:IVisualElement;
 			for(var i:int = 0; i < length; ++i)
 			{
-				element = elements[i];
+				element = _viewHost.getElementAt(i);
 				_viewHost.setElementIndex(element, (element as BaseShape).zIndex);
 			}
 		}

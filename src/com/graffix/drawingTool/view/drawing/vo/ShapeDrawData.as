@@ -20,7 +20,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		public var y:Number;
 		public var width:Number;
 		public var height:Number;
-		public var depth:int;
+		public var zIndex:int;
 		public var lineSize:int = 2;
 		public var lineColor:uint;
 		public var hasFill:Boolean;
@@ -39,7 +39,7 @@ package com.graffix.drawingTool.view.drawing.vo
 			drawData = data.drawData;
 			width = data.width;
 			height = data.height;
-			depth = data.depth;
+			zIndex = data.zIndex;
 			lineColor = data.lineColor;
 			lineSize = data.lineSize;
 			hasFill = data.hasFill;

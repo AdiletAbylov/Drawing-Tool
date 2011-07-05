@@ -212,5 +212,10 @@ package com.graffix.drawingTool.view.drawing.view.area
 		}
 		
 		private var _orderManager:LayoutOrderManager = new LayoutOrderManager(this as IVisualElementContainer);
+		
+		public function relayoutElements():void
+		{
+			_orderManager.arrangeElementsByZIndex();
+		}
 	}
 }

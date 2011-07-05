@@ -59,7 +59,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.shapeID = id;
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
-			_shapeDrawData.depth = this.depth;
+			_shapeDrawData.zIndex = zIndex;
 			_shapeDrawData.width = width;
 			_shapeDrawData.height = height;
 			if(viewObject)
