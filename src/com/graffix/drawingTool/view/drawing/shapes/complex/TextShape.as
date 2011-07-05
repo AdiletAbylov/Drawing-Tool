@@ -3,10 +3,8 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 	import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
-	import com.senocular.display.TransformTool;
 	
 	import flash.display.DisplayObject;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextLineMetrics;
 	
@@ -101,21 +99,6 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			textContainer.width = lineMetrics.width+40;
 			textContainer.height = 100;
 		}
-//		
-//		override protected function showTransform():void
-//		{
-//			//_transformTool.doubleClickEnabled = true;
-//			_transformTool.target = textContainer;
-//			_transformTool.registration = _transformTool.boundsCenter;
-//			_transforming = true;
-//			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
-//		}
-//		
-//		private function onTransformTarget(event:Event):void
-//		{
-//			trace("shape changed")
-//			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
-//		}
 		
 		override public function destroy():void
 		{

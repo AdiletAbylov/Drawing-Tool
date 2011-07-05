@@ -4,31 +4,22 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
-	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.Shape;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.FileReference;
 	import flash.utils.Dictionary;
 	
-	import flashx.textLayout.formats.WhiteSpaceCollapse;
-	
 	import mx.controls.Label;
 	import mx.core.IVisualElement;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
-	import mx.graphics.SolidColorStroke;
-	import mx.graphics.codec.PNGEncoder;
 	
-	import spark.components.BorderContainer;
 	import spark.components.NavigatorContent;
-	import spark.effects.easing.EaseInOutBase;
 	
 	public class Page extends NavigatorContent
 	{
@@ -57,7 +48,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 		private var _objectsToErase:Vector.<IVisualElement> = new Vector.<IVisualElement>();;
 		public function detectObjectsToErase(stageMouseCoord:Point):void
 		{
-			//_objectsToErase = new Vector.<IVisualElement>();
 			stageMouseCoord = globalToLocal( stageMouseCoord);
 			var eraserRect:Rectangle = new Rectangle( stageMouseCoord.x - 20, stageMouseCoord.y - 20, 40, 40);
 			var length:int = numElements - 1;
@@ -109,7 +99,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			var hasShape:Boolean;
 			var objects:Array = getObjectsUnderPoint(new Point(event.stageX, event.stageY));
-			//dispatchEvent( new DrawAreaEvent(DrawAreaEvent.CLICK, event, hasShape));
 		}
 		
 		private function onMouseMove(event:MouseEvent):void
@@ -214,7 +203,8 @@ package com.graffix.drawingTool.view.drawing.view.area
 		
 		override public function removeElement(element:IVisualElement):IVisualElement
 		{
-			if(element is BaseShape){
+			if(element is BaseShape)
+			{
 				delete _elementsByID[ (element as BaseShape).id ];
 				element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 				(element as BaseShape).destroy();

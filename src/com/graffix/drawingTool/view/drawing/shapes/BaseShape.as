@@ -30,7 +30,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function BaseShape()
 		{
-			
 			_transformTool = new TransformTool();
 			_spriteToDraw = new Sprite();
 			id = UIDUtil.createUID();
@@ -63,7 +62,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.depth = this.depth;
 			_shapeDrawData.width = width;
 			_shapeDrawData.height = height;
-			if(_spriteToDraw)
+			if(viewObject)
 			{
 				_shapeDrawData.matrix = viewObject.transform.matrix;
 			}
@@ -80,8 +79,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		//
 		// Tool Properties
-		
-		
 		protected var _lineSizeChanged:Boolean;
 		
 		public function get lineSize():int
@@ -175,7 +172,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		private function onTransformTarget(event:Event):void
 		{
-			//trace("shape changed")
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 		
@@ -193,7 +189,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected function onMouseClick(event:MouseEvent):void
 		{
-			//
+			// !!!!!!!!!!
 			// workaround 
 			// because dispathicg event here
 			// stops of dispatching dblClick event
@@ -210,26 +206,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 		{
 			var event:LayoutOrderEvent = new LayoutOrderEvent(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, this, direction);
 			dispatchEvent(event);
-		}
-		
-		
-		override protected function keyDownHandler(event:KeyboardEvent):void
-		{
-			if(event.ctrlKey)
-			{
-				if(_transforming)
-				{
-					_transformTool.constrainScale = true;
-				}
-			}
-		}
-		
-		override protected function keyUpHandler(event:KeyboardEvent):void
-		{
-			if(_transformTool.constrainScale)
-			{
-				_transformTool.constrainScale = false;
-			}
 		}
 		
 		public function destroy():void
@@ -277,7 +253,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 				_redrawAll = false;
 			}
 		}
-		
 		
 		protected function get viewObject():DisplayObject
 		{
