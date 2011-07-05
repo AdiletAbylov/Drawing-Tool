@@ -21,6 +21,7 @@ package com.graffix.drawingTool.view.drawing
 	import flashx.textLayout.conversion.ConversionType;
 	import flashx.textLayout.conversion.TextConverter;
 	
+	import mx.core.IVisualElement;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
@@ -279,6 +280,7 @@ package com.graffix.drawingTool.view.drawing
 				if(shape)
 				{
 					shape.shapeDrawData = shapeData;
+					_drawArea.currentPage.updateElementLayout(shapeData as IVisualElement);
 					if(shape.transforming)
 					{
 						shape.hideTransformControls();
@@ -288,10 +290,12 @@ package com.graffix.drawingTool.view.drawing
 				{
 					shape = ShapesFactory.createTool( shapeData.shapeType );
 					shape.id = shapeData.shapeID;
-					_drawArea.currentPage.addElement( shape );
 					shape.shapeDrawData = shapeData;
+					_drawArea.currentPage.addElement( shape );
 				}
+				
 			}
+			
 		}
 		
 		public function eraseShape(shapeID:String):void

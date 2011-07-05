@@ -20,6 +20,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
+	import mx.utils.OrderedObject;
 	
 	import spark.components.NavigatorContent;
 	
@@ -181,11 +182,13 @@ package com.graffix.drawingTool.view.drawing.view.area
 		override public function addElement(element:IVisualElement):IVisualElement
 		{
 			element.addEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
+			var el:IVisualElement  = super.addElement(element);
 			if(element is BaseShape)
 			{
 				_elementsByID[ (element as BaseShape).id ] = element;
+				callLater(updateElementLayout, [ element ]);
 			}
-			return super.addElement(element);
+			return el;
 		}
 		
 		override public function removeElement(element:IVisualElement):IVisualElement
@@ -195,6 +198,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 				delete _elementsByID[ (element as BaseShape).id ];
 				element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 				(element as BaseShape).destroy();
+				callLater(_orderManager.updateZIndexes);
 			}
 			return super.removeElement(element);
 		}
@@ -207,15 +211,18 @@ package com.graffix.drawingTool.view.drawing.view.area
 				delete _elementsByID[ (element as BaseShape).id ];
 				element.removeEventListener(LayoutOrderEvent.CHANGE_LAYOUT_ORDER, onLayoutEvent);
 				(element as BaseShape).destroy();
+				callLater(_orderManager.updateZIndexes);
 			}
 			return super.removeElementAt(index);
 		}
 		
+		
+		
 		private var _orderManager:LayoutOrderManager = new LayoutOrderManager(this as IVisualElementContainer);
 		
-		public function relayoutElements():void
+		public function updateElementLayout(element:IVisualElement):void
 		{
-			_orderManager.arrangeElementsByZIndex();
+			//setElementIndex( element, (element as BaseShape).zIndex);
 		}
 	}
 }

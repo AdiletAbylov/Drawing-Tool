@@ -260,16 +260,17 @@ package com.graffix.drawingTool.view.drawing.shapes
 		}
 		
 		
-		private var _zIndex:uint;
+		
 
 		public function get zIndex():uint
 		{
-			return _zIndex;
+			return _shapeDrawData.zIndex;
 		}
 
 		public function set zIndex(value:uint):void
 		{
-			_zIndex = value;
+			_shapeDrawData.zIndex = value;
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
 
 	}

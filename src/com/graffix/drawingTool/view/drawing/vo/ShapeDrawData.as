@@ -1,7 +1,7 @@
 package com.graffix.drawingTool.view.drawing.vo
 {
 	import flash.geom.Matrix;
-
+	
 	public class ShapeDrawData
 	{
 		
@@ -31,26 +31,27 @@ package com.graffix.drawingTool.view.drawing.vo
 		
 		private function serialize(data:Object):void
 		{
-			try{
-			shapeID = data.shapeID;
-			shapeType = data.shapeType;
-			x = data.x;
-			y = data.y;
-			drawData = data.drawData;
-			width = data.width;
-			height = data.height;
-			zIndex = data.zIndex;
-			lineColor = data.lineColor;
-			lineSize = data.lineSize;
-			hasFill = data.hasFill;
-			fillColor = data.fillColor;
-			
-			text = data.text;
-			
-			if(data.matrix)
+			try
 			{
-				matrix = new Matrix(data.matrix.a,data.matrix.b, data.matrix.c, data.matrix.d, data.matrix.tx, data.matrix.ty);
-			}
+				shapeID = data.shapeID;
+				shapeType = data.shapeType;
+				x = data.x;
+				y = data.y;
+				drawData = data.drawData;
+				width = data.width;
+				height = data.height;
+				zIndex = data.zIndex;
+				lineColor = data.lineColor;
+				lineSize = data.lineSize;
+				hasFill = data.hasFill;
+				fillColor = data.fillColor;
+				
+				text = data.text;
+				
+				if(data.matrix)
+				{
+					matrix = new Matrix(data.matrix.a,data.matrix.b, data.matrix.c, data.matrix.d, data.matrix.tx, data.matrix.ty);
+				}
 			}catch(e:Error)
 			{
 				trace("serialize error");

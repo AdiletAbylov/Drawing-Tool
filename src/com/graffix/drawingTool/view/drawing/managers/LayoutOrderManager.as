@@ -14,14 +14,17 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		private var _viewHost:IVisualElementContainer;
 		
-		public function arrangeElementsByZIndex():void
+		public function updateZIndexes():void
 		{
 			var length:int = _viewHost.numElements;
 			var element:IVisualElement;
 			for(var i:int = 0; i < length; ++i)
 			{
 				element = _viewHost.getElementAt(i);
-				_viewHost.setElementIndex(element, (element as BaseShape).zIndex);
+				if(element is BaseShape)
+				{
+					(element as BaseShape).zIndex = _viewHost.getElementIndex(element);
+				}
 			}
 		}
 		
@@ -44,6 +47,7 @@ package com.graffix.drawingTool.view.drawing.managers
 					_viewHost.setElementIndex(element, shapeIndex);
 				}
 			}
+			(element as BaseShape).zIndex = shapeIndex;
 		}
 	}
 }
