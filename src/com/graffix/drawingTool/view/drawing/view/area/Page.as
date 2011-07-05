@@ -20,7 +20,6 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
-	import mx.utils.OrderedObject;
 	
 	import spark.components.NavigatorContent;
 	
@@ -186,7 +185,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			if(element is BaseShape)
 			{
 				_elementsByID[ (element as BaseShape).id ] = element;
-				//callLater(updateElementLayout, [ element ]);
+				callLater(updateElementLayout, [ element ]);
 			}
 			return el;
 		}
@@ -216,13 +215,16 @@ package com.graffix.drawingTool.view.drawing.view.area
 			return super.removeElementAt(index);
 		}
 		
-		
-		
 		private var _orderManager:LayoutOrderManager = new LayoutOrderManager(this as IVisualElementContainer);
 		
 		public function updateElementLayout(element:IVisualElement):void
 		{
 			setElementIndex( element, (element as BaseShape).zIndex);
+			setElementIndex(_background, 0);
+//			for(var i:int = 0; i < numElements; ++i)
+//			{
+//				trace("element " + i + ": " + getElementAt(i));
+//			}
 		}
 	}
 }

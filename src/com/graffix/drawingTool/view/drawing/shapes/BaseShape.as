@@ -211,10 +211,16 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function destroy():void
 		{
 			clear();
-			removeChild(_spriteToDraw);
-			_spriteToDraw = null;
-			removeChild(_transformTool);
-			_transformTool = null;
+			if(_spriteToDraw)
+			{
+				removeChild(_spriteToDraw);
+				_spriteToDraw = null;
+			}
+			if(_transformTool)
+			{
+				removeChild(_transformTool);
+				_transformTool = null;
+			}
 			removeEventListener(MouseEvent.CLICK, onMouseClick);
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_REMOVED, shapeDrawData));
 		}
