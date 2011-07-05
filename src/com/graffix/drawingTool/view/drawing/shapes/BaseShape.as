@@ -258,5 +258,19 @@ package com.graffix.drawingTool.view.drawing.shapes
 		{
 			return _spriteToDraw;
 		}
+		
+		
+		private var _zIndex:uint;
+
+		public function get zIndex():uint
+		{
+			return _zIndex;
+		}
+
+		public function set zIndex(value:uint):void
+		{
+			_zIndex = value;
+		}
+
 	}
 }

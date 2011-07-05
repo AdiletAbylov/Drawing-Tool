@@ -3,6 +3,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
 	import com.graffix.drawingTool.view.drawing.events.EraseEvent;
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
+	import com.graffix.drawingTool.view.drawing.managers.LayoutOrderManager;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
 	import flash.display.BitmapData;
@@ -15,6 +16,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	
 	import mx.controls.Label;
 	import mx.core.IVisualElement;
+	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
@@ -157,22 +159,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 		private function onLayoutEvent(event:LayoutOrderEvent):void
 		{
 			var shape:IVisualElement = event.shape;
-			var shapeIndex:int = getElementIndex( shape );
-			if(event.direction == "up")
-			{
-				if( shapeIndex < numElements - 1)
-				{
-					shapeIndex++;
-					setElementIndex(shape, shapeIndex);
-				}
-			}else
-			{
-				if(shapeIndex > 1)
-				{
-					shapeIndex--;
-					setElementIndex(shape, shapeIndex);
-				}
-			}
+			_orderManager.changeElementZIndex( shape, event.direction);
 		}
 		
 		private var _elementsByID:Dictionary = new Dictionary();
@@ -223,5 +210,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			}
 			return super.removeElementAt(index);
 		}
+		
+		private var _orderManager:LayoutOrderManager = new LayoutOrderManager(this as IVisualElementContainer);
 	}
 }
