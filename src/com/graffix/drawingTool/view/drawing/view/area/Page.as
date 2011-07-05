@@ -186,7 +186,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			if(element is BaseShape)
 			{
 				_elementsByID[ (element as BaseShape).id ] = element;
-				callLater(updateElementLayout, [ element ]);
+				//callLater(updateElementLayout, [ element ]);
 			}
 			return el;
 		}
@@ -222,7 +222,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 		
 		public function updateElementLayout(element:IVisualElement):void
 		{
-			//setElementIndex( element, (element as BaseShape).zIndex);
+			setElementIndex( element, (element as BaseShape).zIndex);
 		}
 	}
 }

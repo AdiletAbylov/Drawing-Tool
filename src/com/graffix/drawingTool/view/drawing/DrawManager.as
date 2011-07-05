@@ -280,7 +280,7 @@ package com.graffix.drawingTool.view.drawing
 				if(shape)
 				{
 					shape.shapeDrawData = shapeData;
-					_drawArea.currentPage.updateElementLayout(shapeData as IVisualElement);
+					_drawArea.currentPage.updateElementLayout(shape as IVisualElement);
 					if(shape.transforming)
 					{
 						shape.hideTransformControls();
