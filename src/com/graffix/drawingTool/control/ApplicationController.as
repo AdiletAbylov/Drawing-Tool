@@ -3,7 +3,7 @@ package com.graffix.drawingTool.control
 	import com.adobe.cairngorm.control.FrontController;
 	import com.graffix.drawingTool.commands.application.InitCommand;
 	import com.graffix.drawingTool.commands.application.LoginCommand;
-	import com.graffix.drawingTool.commands.members.ChangeStatusEvent;
+	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
 	import com.graffix.drawingTool.commands.members.MembersCommand;
 	import com.graffix.drawingTool.commands.net.NetStatusCommand;
 	import com.graffix.drawingTool.commands.net.TestConnectionCommand;

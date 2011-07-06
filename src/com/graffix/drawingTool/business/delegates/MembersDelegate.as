@@ -32,7 +32,7 @@ package com.graffix.drawingTool.business.delegates
 			nc.call(prefix+"connect", null);
 		}
 		
-		public function setStatus(status:String, prefix:String):void
+		public function setStatus(status:int, prefix:String):void
 		{
 			var nc:NetConnection = NetConnectionService.instance.netConnection;
 			nc.call(prefix+"setStatus", null, status);

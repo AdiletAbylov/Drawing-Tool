@@ -5,6 +5,7 @@ package com.graffix.drawingTool.commands.members
 	import com.graffix.drawingTool.business.delegates.MembersDelegate;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.model.ModelLocator;
+	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
 	
 	public class MembersCommand implements ICommand
 	{
