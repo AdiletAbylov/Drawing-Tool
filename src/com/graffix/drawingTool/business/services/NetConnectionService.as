@@ -80,12 +80,10 @@ package com.graffix.drawingTool.business.services
 		// SharedObject for members list
 		private var _membersSO:SharedObject;
 		
-		public function get membersSO():SharedObject
+		public function getMembersSO(prefix:String=""):SharedObject
 		{
 			if(!_membersSO)
-			{
-				var name:String = "_DEFAULT_";
-				var prefix:String = "FuncitonPeopleList." + name + ".";
+			{	
 				_membersSO = SharedObject.getRemote( prefix + "usuarios", _netConnection.uri );
 				_membersSO.connect(_netConnection);
 				_membersSO.addEventListener(SyncEvent.SYNC, onMembersSync);

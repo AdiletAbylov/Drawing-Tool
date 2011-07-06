@@ -15,10 +15,13 @@ package com.graffix.drawingTool.commands.members
 		public function execute(event:CairngormEvent):void
 		{
 			var membersDelegate:MembersDelegate = new MembersDelegate();
+			var name:String = "_DEFAULT_";
+			var prefix:String = "FuncitonPeopleList." + name + ".";
 			switch(event.type)
 			{
 				case MembersListEvent.GONNECT_MEMBERS_LIST:
-					membersDelegate.connect();
+					membersDelegate.connect(prefix);
+					membersDelegate.setUsername(ModelLocator.getInstance().user.username, prefix);
 					break;
 				
 				case MembersListEvent.MEMBERS_LIST_SYNC:
