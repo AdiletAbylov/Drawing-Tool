@@ -1,6 +1,7 @@
 package com.graffix.drawingTool.business.delegates
 {
 	import com.graffix.drawingTool.business.services.NetConnectionService;
+	import com.graffix.drawingTool.vo.MembersList;
 	
 	import flash.net.NetConnection;
 	import flash.net.SharedObject;
@@ -14,9 +15,9 @@ package com.graffix.drawingTool.business.delegates
 			
 		}
 		
-		public function getMembersList():ArrayCollection
+		public function getMembersList():MembersList
 		{
-			var list:ArrayCollection = new ArrayCollection();
+			var list:MembersList = new MembersList();
 			var membersSO:SharedObject = NetConnectionService.instance.getMembersSO();
 			for(var i:String in membersSO.data)
 			{

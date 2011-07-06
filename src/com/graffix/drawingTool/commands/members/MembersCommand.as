@@ -27,7 +27,7 @@ package com.graffix.drawingTool.commands.members
 				
 				case MembersListEvent.MEMBERS_LIST_SYNC:
 					ModelLocator.getInstance().membersList = membersDelegate.getMembersList();
-					ModelLocator.getInstance().membersList.sort();
+					//ModelLocator.getInstance().membersList.sort();
 					break;
 				
 				case ChangeStatusEvent.CHANGE_STATUS:
