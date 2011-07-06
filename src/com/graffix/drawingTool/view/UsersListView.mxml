@@ -26,7 +26,6 @@
 			{
 				var statusEvent:ChangeStatusEvent = new ChangeStatusEvent( statusDDList.selectedItem.data);
 				statusEvent.dispatch();
-				
 			}
 			
 		]]>
@@ -47,9 +46,11 @@
 			</s:ArrayList>
 		</s:dataProvider>
 	</s:DropDownList>
+	
  	<s:List left="0" right="0" top="0" bottom="25"
 			id="statusDDList"
 			change="statusChangeHandler(event)"
+			itemRenderer="com.graffix.drawingTool.view.renderers.MemberItemRenderer"
 			dataProvider="{ModelLocator.getInstance().membersList}"
 			/>
 </s:TitleWindow>
