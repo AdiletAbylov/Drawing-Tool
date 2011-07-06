@@ -1,11 +1,13 @@
 package com.graffix.drawingTool.business.services
 {
 	import com.demonsters.debugger.MonsterDebugger;
+	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.NetStatusEvent;
+	import flash.events.SyncEvent;
 	import flash.net.NetConnection;
 	import flash.net.SharedObject;
 
@@ -47,18 +49,22 @@ package com.graffix.drawingTool.business.services
 		
 		private function onNetStatus(event:NetStatusEvent):void
 		{
-			trace(event.info.code);
+			//trace(event.info.code);
 			MonsterDebugger.trace(this, event.info.code );
 			var netStatusEvent:NCStatusEvent = new NCStatusEvent(event.info.code);
 			netStatusEvent.dispatch();
 		}
 		
 		
+		
+		//
+		// SharedObject for drawing board objects
 		private var _boardSO:SharedObject;
 		
 		[Bindable(event="netConnectionChanged")]
 		public function get boardSO():SharedObject
 		{
+			
 			if(!_boardSO)
 			{
 				_boardSO = SharedObject.getRemote("FCWhiteBoard.ololo.1", _netConnection.uri, true );
@@ -67,5 +73,29 @@ package com.graffix.drawingTool.business.services
 			return _boardSO;
 		}
 		
+		
+		//
+		// SharedObject for members list
+		private var _membersSO:SharedObject;
+		
+		public function get membersSO():SharedObject
+		{
+			if(_membersSO)
+			{
+				var name:String = "_DEFAULT_";
+				var prefix:String = "FuncitonPeopleList." + name + ".";
+				_membersSO = SharedObject.getRemote( prefix + "usuarios", _netConnection.uri );
+				_membersSO.connect(_netConnection);
+				_membersSO.addEventListener(SyncEvent.SYNC, onMembersSync);
+			}
+			return _membersSO;
+		}
+		
+		private function onMembersSync(event:SyncEvent):void
+		{
+			var membersListEvent:MembersListEvent = new MembersListEvent(MembersListEvent.MEMBERS_LIST_SYNC);
+			membersListEvent.dispatch();
+		}
+			
 	}
 }

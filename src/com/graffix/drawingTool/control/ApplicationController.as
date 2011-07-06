@@ -35,7 +35,8 @@ package com.graffix.drawingTool.control
 		
 		private function membersCommand():void
 		{
-			addCommand(MembersListEvent.GET_MEMBERS_LIST, MembersCommand );
+			addCommand(MembersListEvent.GONNECT_MEMBERS_LIST, MembersCommand );
+			addCommand(MembersListEvent.MEMBERS_LIST_SYNC, MembersCommand);
 		}
 	}
 }
