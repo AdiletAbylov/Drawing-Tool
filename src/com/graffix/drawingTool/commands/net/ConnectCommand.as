@@ -11,6 +11,7 @@ package com.graffix.drawingTool.commands.net
 		
 		public function execute(event:CairngormEvent):void
 		{
+			
 		}
 	}
 }

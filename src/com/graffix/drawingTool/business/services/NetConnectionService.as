@@ -33,6 +33,8 @@ package com.graffix.drawingTool.business.services
 			}
 		}
 		
+		
+		
 		private var _netConnection:NetConnection;
 		public function get netConnection():NetConnection
 		{
@@ -80,7 +82,7 @@ package com.graffix.drawingTool.business.services
 		
 		public function get membersSO():SharedObject
 		{
-			if(_membersSO)
+			if(!_membersSO)
 			{
 				var name:String = "_DEFAULT_";
 				var prefix:String = "FuncitonPeopleList." + name + ".";

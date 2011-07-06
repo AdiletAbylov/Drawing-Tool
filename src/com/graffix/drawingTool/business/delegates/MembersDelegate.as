@@ -15,7 +15,7 @@ package com.graffix.drawingTool.business.delegates
 		public function getMembersList():ArrayCollection
 		{
 			var list:ArrayCollection = new ArrayCollection();
-			
+			var membersSO:SharedObject = NetConnectionService.instance.membersSO;
 			return list; 
 		}
 		
