@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 closeButton="{null}"
+		 creationComplete="init(event)"
+		 width="204" height="374" title="Members">
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.events.members.MembersListEvent;
+			import com.graffix.drawingTool.model.ModelLocator;
+			
+			import mx.events.FlexEvent;
+			
+			protected function init(event:FlexEvent):void
+			{
+				var membersListEvent:MembersListEvent = new MembersListEvent();
+				membersListEvent.dispatch();
+			}
+			
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-</s:Group>
+	
+	<s:DropDownList left="4" top="318" width="140"
+					labelField="label"
+					selectedIndex="0">
+		<s:dataProvider>
+			<s:ArrayList>
+				<fx:Object data="1" label="Online"/>
+				<fx:Object data="2" label="Away"/>
+				<fx:Object data="3" label="Be right back"/>
+				<fx:Object data="5" label="Out to lunch"/>
+			</s:ArrayList>
+		</s:dataProvider>
+	</s:DropDownList>
+ 	<s:List left="0" right="0" top="0" bottom="25"
+			dataProvider="{ModelLocator.getInstance().membersList}"
+			/>
+</s:TitleWindow>

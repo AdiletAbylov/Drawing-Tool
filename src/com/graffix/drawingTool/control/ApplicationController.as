@@ -3,10 +3,12 @@ package com.graffix.drawingTool.control
 	import com.adobe.cairngorm.control.FrontController;
 	import com.graffix.drawingTool.commands.application.InitCommand;
 	import com.graffix.drawingTool.commands.application.LoginCommand;
+	import com.graffix.drawingTool.commands.members.MembersCommand;
 	import com.graffix.drawingTool.commands.net.NetStatusCommand;
 	import com.graffix.drawingTool.commands.net.TestConnectionCommand;
 	import com.graffix.drawingTool.events.application.InitEvent;
 	import com.graffix.drawingTool.events.application.LoginEvent;
+	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	import com.graffix.drawingTool.events.net.TestConnectionEvent;
 	
@@ -17,6 +19,7 @@ package com.graffix.drawingTool.control
 			super();
 			netCommands();	
 			appCommands();
+			membersCommand();
 		}
 		
 		private function appCommands():void
@@ -28,6 +31,11 @@ package com.graffix.drawingTool.control
 		{
 			addCommand(NCStatusEvent.NET_STATUS, NetStatusCommand);
 			addCommand(TestConnectionEvent.TEST_CONNECTION, TestConnectionCommand );
+		}
+		
+		private function membersCommand():void
+		{
+			addCommand(MembersListEvent.GET_MEMBERS_LIST, MembersCommand );
 		}
 	}
 }

@@ -36,4 +36,6 @@
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
 	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5" sharedObject="{NetConnectionService.instance.boardSO}"/>
+	<view:UsersListView includeIn="MainState" y="164" right="13">
+	</view:UsersListView>
 </s:Application>

@@ -2,6 +2,8 @@ package com.graffix.drawingTool.model
 {
 	import com.graffix.drawingTool.vo.Settings;
 	import com.graffix.drawingTool.vo.User;
+	
+	import mx.collections.ArrayCollection;
 
 	[Bindable]
 	public class ModelLocator
@@ -26,6 +28,7 @@ package com.graffix.drawingTool.model
 			}
 			settings = new Settings();
 			user = new User();
+			membersList = new ArrayCollection();
 		}
 		
 		public var settings:Settings;
@@ -39,5 +42,7 @@ package com.graffix.drawingTool.model
 		public var currentState:String = "InitState";
 		
 		public var user:User;
+		
+		public var membersList:ArrayCollection;
 	}
 }
