@@ -18,6 +18,10 @@ package com.graffix.drawingTool.business.delegates
 		{
 			var list:ArrayCollection = new ArrayCollection();
 			var membersSO:SharedObject = NetConnectionService.instance.getMembersSO();
+			for(var i:String in membersSO.data)
+			{
+				list.addItem(membersSO.data[i]);
+			}
 			return list; 
 		}
 		
