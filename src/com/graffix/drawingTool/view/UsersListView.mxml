@@ -7,15 +7,25 @@
 		 width="204" height="374" title="Members">
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.commands.members.ChangeStatusEvent;
 			import com.graffix.drawingTool.events.members.MembersListEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
 			
 			import mx.events.FlexEvent;
 			
+			import spark.events.IndexChangeEvent;
+			
 			protected function init(event:FlexEvent):void
 			{
 				var membersListEvent:MembersListEvent = new MembersListEvent(MembersListEvent.GONNECT_MEMBERS_LIST);
 				membersListEvent.dispatch();
+			}
+			
+			protected function statusChangeHandler(event:IndexChangeEvent):void
+			{
+				var statusEvent:ChangeStatusEvent = new ChangeStatusEvent( statusDDList.selectedItem.data);
+				statusEvent.dispatch();
+				
 			}
 			
 		]]>
@@ -37,6 +47,8 @@
 		</s:dataProvider>
 	</s:DropDownList>
  	<s:List left="0" right="0" top="0" bottom="25"
+			id="statusDDList"
+			change="statusChangeHandler(event)"
 			dataProvider="{ModelLocator.getInstance().membersList}"
 			/>
 </s:TitleWindow>

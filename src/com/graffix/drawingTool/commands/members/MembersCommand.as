@@ -28,6 +28,10 @@ package com.graffix.drawingTool.commands.members
 					ModelLocator.getInstance().membersList = membersDelegate.getMembersList();
 					
 					break;
+				
+				case ChangeStatusEvent.CHANGE_STATUS:
+					membersDelegate.setStatus( (event as ChangeStatusEvent).status, prefix );
+					break;
 			}
 		}
 	}
