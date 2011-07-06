@@ -1,5 +1,6 @@
 package com.graffix.drawingTool.model
 {
+	import com.graffix.drawingTool.vo.MembersList;
 	import com.graffix.drawingTool.vo.Settings;
 	import com.graffix.drawingTool.vo.User;
 	
@@ -28,7 +29,7 @@ package com.graffix.drawingTool.model
 			}
 			settings = new Settings();
 			user = new User();
-			membersList = new ArrayCollection();
+			membersList = new MembersList();
 		}
 		
 		public var settings:Settings;
@@ -43,6 +44,6 @@ package com.graffix.drawingTool.model
 		
 		public var user:User;
 		
-		public var membersList:ArrayCollection;
+		public var membersList:MembersList;
 	}
 }

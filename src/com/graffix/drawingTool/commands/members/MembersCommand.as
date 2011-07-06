@@ -3,9 +3,9 @@ package com.graffix.drawingTool.commands.members
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.business.delegates.MembersDelegate;
+	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.model.ModelLocator;
-	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
 	
 	public class MembersCommand implements ICommand
 	{
@@ -27,7 +27,7 @@ package com.graffix.drawingTool.commands.members
 				
 				case MembersListEvent.MEMBERS_LIST_SYNC:
 					ModelLocator.getInstance().membersList = membersDelegate.getMembersList();
-					
+					ModelLocator.getInstance().membersList.sort();
 					break;
 				
 				case ChangeStatusEvent.CHANGE_STATUS:
