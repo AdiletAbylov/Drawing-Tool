@@ -10,6 +10,7 @@
 			import com.graffix.drawingTool.commands.members.ChangeStatusEvent;
 			import com.graffix.drawingTool.events.members.MembersListEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
+			import com.graffix.drawingTool.vo.Statuses;
 			
 			import mx.events.FlexEvent;
 			
@@ -39,10 +40,10 @@
 					selectedIndex="0">
 		<s:dataProvider>
 			<s:ArrayList>
-				<fx:Object data="1" label="Online"/>
-				<fx:Object data="2" label="Away"/>
-				<fx:Object data="3" label="Be right back"/>
-				<fx:Object data="5" label="Out to lunch"/>
+				<fx:Object data="{Statuses.STATUS_DATA_ONLINE}" label="{Statuses.STATUS_LABEL_ONLINE}"/>
+				<fx:Object data="{Statuses.STATUS_DATA_AWAY}" label="{Statuses.STATUS_LABEL_AWAY}"/>
+				<fx:Object data="{Statuses.STATUS_DATA_RIGHTBACK}" label="{Statuses.STATUS_LABEL_RIGHTBACK}"/>
+				<fx:Object data="{Statuses.STATUS_DATA_LUNCH}" label="{Statuses.STATUS_LABEL_LUNCH}"/>
 			</s:ArrayList>
 		</s:dataProvider>
 	</s:DropDownList>
