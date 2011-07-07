@@ -1,8 +1,8 @@
 package com.graffix.drawingTool.business.services
 {
-	public class ChatSOClientObject
+	public class ChatSOClientListener
 	{
-		public function ChatSOClientObject()
+		public function ChatSOClientListener()
 		{
 			
 		}

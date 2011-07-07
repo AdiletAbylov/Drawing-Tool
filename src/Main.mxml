@@ -18,7 +18,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.business.services.NetConnectionService;
+			import com.graffix.drawingTool.business.services.NetConnectionServices;
 			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
 			
@@ -38,6 +38,6 @@
 		]]>
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
-	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5" sharedObject="{NetConnectionService.instance.boardSO}"/>
+	<drawing:DrawTool includeIn="MainState" left="5" right="5" top="5" bottom="5" sharedObject="{NetConnectionServices.instance.boardSO}"/>
 
 </s:Application>

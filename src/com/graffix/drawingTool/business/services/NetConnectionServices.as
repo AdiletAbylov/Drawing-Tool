@@ -11,21 +11,21 @@ package com.graffix.drawingTool.business.services
 	import flash.net.NetConnection;
 	import flash.net.SharedObject;
 
-	public class NetConnectionService extends EventDispatcher
+	public class NetConnectionServices extends EventDispatcher
 	{
 		
-		private static var __instance:NetConnectionService = null;
+		private static var __instance:NetConnectionServices = null;
 		
-		public static function get instance():NetConnectionService
+		public static function get instance():NetConnectionServices
 		{
 			if (!__instance)
 			{
-				__instance = new NetConnectionService();
+				__instance = new NetConnectionServices();
 			}
 			return __instance;
 		}
 		
-		public function NetConnectionService()
+		public function NetConnectionServices()
 		{
 			if (__instance)
 			{
@@ -116,7 +116,7 @@ package com.graffix.drawingTool.business.services
 		{
 			_chatSO = SharedObject.getRemote(prefix + "message", netConnection.uri );
 			_chatSO.connect( _netConnection);
-			var clientObject:ChatSOClientObject = new ChatSOClientObject();
+			var clientObject:ChatSOClientListener = new ChatSOClientListener();
 			_chatSO.client = clientObject;
 		}
 		

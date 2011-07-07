@@ -1,6 +1,6 @@
 package com.graffix.drawingTool.business.delegates
 {
-	import com.graffix.drawingTool.business.services.NetConnectionService;
+	import com.graffix.drawingTool.business.services.NetConnectionServices;
 	import com.graffix.drawingTool.vo.MembersList;
 	
 	import flash.net.NetConnection;
@@ -18,7 +18,7 @@ package com.graffix.drawingTool.business.delegates
 		public function getMembersList():MembersList
 		{
 			var list:MembersList = new MembersList();
-			var membersSO:SharedObject = NetConnectionService.instance.getMembersSO();
+			var membersSO:SharedObject = NetConnectionServices.instance.getMembersSO();
 			for(var i:String in membersSO.data)
 			{
 				list.addItem(membersSO.data[i]);
@@ -28,20 +28,20 @@ package com.graffix.drawingTool.business.delegates
 		
 		public function connect(prefix:String):void
 		{
-			var membersSO:SharedObject = NetConnectionService.instance.getMembersSO(prefix);
-			var nc:NetConnection = NetConnectionService.instance.netConnection;
+			var membersSO:SharedObject = NetConnectionServices.instance.getMembersSO(prefix);
+			var nc:NetConnection = NetConnectionServices.instance.netConnection;
 			nc.call(prefix+"connect", null);
 		}
 		
 		public function setStatus(status:int, prefix:String):void
 		{
-			var nc:NetConnection = NetConnectionService.instance.netConnection;
+			var nc:NetConnection = NetConnectionServices.instance.netConnection;
 			nc.call(prefix+"setStatus", null, status);
 		}
 		
 		public function setUsername(username:String, prefix:String):void
 		{
-			var nc:NetConnection = NetConnectionService.instance.netConnection;
+			var nc:NetConnection = NetConnectionServices.instance.netConnection;
 			nc.call(prefix+"changeName", null, username);
 		}
 	}
