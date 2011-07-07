@@ -5,6 +5,7 @@ package com.graffix.drawingTool.model
 	import com.graffix.drawingTool.vo.User;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.IFlexDisplayObject;
 
 	[Bindable]
 	public class ModelLocator
@@ -48,5 +49,7 @@ package com.graffix.drawingTool.model
 		public var membersList:MembersList;
 		
 		public var membersListWithEveryOne:MembersList;
+		
+		public var chatView:IFlexDisplayObject;
 	}
 }

@@ -56,9 +56,9 @@ package com.graffix.drawingTool.commands.net
 			usersListPopup.x = FlexGlobals.topLevelApplication.width - usersListPopup.width -10; 
 			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10;
 			
-			var chatPopup:IFlexDisplayObject = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
-			chatPopup.x =  usersListPopup.x - usersListPopup.width - 10;
-			usersListPopup.y =  FlexGlobals.topLevelApplication.height - chatPopup.height -10;
+			ModelLocator.getInstance().chatView = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
+			ModelLocator.getInstance().chatView.x =  usersListPopup.x - usersListPopup.width - 10;
+			ModelLocator.getInstance().chatView.y =  FlexGlobals.topLevelApplication.height - ModelLocator.getInstance().chatView.height -10;
 		}
 	}
 }

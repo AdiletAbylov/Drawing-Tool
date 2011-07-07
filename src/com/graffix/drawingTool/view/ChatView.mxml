@@ -10,7 +10,12 @@
 			import com.graffix.drawingTool.events.chat.ChatEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
 			
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.elements.TextFlow;
+			
 			import mx.events.FlexEvent;
+			
+			private var _htmlText:String = "";
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
@@ -21,16 +26,23 @@
 			
 			private function sendMessage():void
 			{
-				var messageEvent:ChatEvent = new ChatEvent(ChatEvent.SEND_MESSAGE, messageInput.text, membersList2.selectedItem.id);
-				messageEvent.dispatch();
-			}
-			
-			protected function messageInput_enterHandler(event:FlexEvent):void
-			{
 				if(messageInput.text != "")
 				{
-					sendMessage();
+					var messageEvent:ChatEvent = new ChatEvent(ChatEvent.SEND_MESSAGE, messageInput.text, membersList2.selectedItem.id);
+					messageEvent.dispatch();
+					messageInput.text = "";
 				}
+			}
+			
+			public function addMessage(message:String):void
+			{
+				_htmlText += message;
+				var textFlow:TextFlow = TextConverter.importToFlow(_htmlText, TextConverter.TEXT_FIELD_HTML_FORMAT);
+				
+				messagesTextArea.textFlow = textFlow;
+				//
+				//add separator
+				messagesTextArea.appendText("");
 			}
 			
 		]]>
@@ -48,10 +60,9 @@
 		<s:DropDownList id="membersList2"
 						labelField="usuario"
 						requireSelection="true"
-						selectedIndex="0"
 						dataProvider="{ModelLocator.getInstance().membersListWithEveryOne}"/>
-		<s:Button label="Send" enabled="{(messageInput.text != '')}"/>
+		<s:Button label="Send" enabled="{(messageInput.text != '')}" click="sendMessage()"/>
 	</s:controlBarContent>
-	<s:TextArea left="0" right="0" top="0" bottom="23" editable="false"/>
-	<s:TextInput left="0" right="0" bottom="0" id="messageInput" enter="messageInput_enterHandler(event)"/>
+	<s:TextArea left="0" right="0" top="0" bottom="23" editable="false" id="messagesTextArea"/>
+	<s:TextInput left="0" right="0" bottom="0" id="messageInput" enter="sendMessage()"/>
 </s:TitleWindow>

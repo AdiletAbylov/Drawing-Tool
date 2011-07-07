@@ -14,6 +14,8 @@ package com.graffix.drawingTool.business.delegates
 		public function connect(prefix:String):void
 		{
 			NetConnectionServices.instance.createChatSO(prefix);
+			var nc:NetConnection = NetConnectionServices.instance.netConnection;
+			nc.call(prefix+"connect", null);
 		}
 				
 		
@@ -21,6 +23,12 @@ package com.graffix.drawingTool.business.delegates
 		{
 			var nc:NetConnection = NetConnectionServices.instance.netConnection;
 			nc.call( prefix + "sendMessage", null, message, to);
+		}
+		
+		public function setUsername( prefix:String):void
+		{
+			var nc:NetConnection = NetConnectionServices.instance.netConnection;
+			nc.call(prefix+"changeName", null);
 		}
 	}
 }
