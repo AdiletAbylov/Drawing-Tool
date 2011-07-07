@@ -2,15 +2,33 @@
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 
 		 creationComplete="creationCompleteHandler(event)"
-		 width="400" height="300" title="Chat">
+		 width="464" height="292" title="Chat">
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.events.chat.ChatEvent;
+			import com.graffix.drawingTool.model.ModelLocator;
+			
 			import mx.events.FlexEvent;
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				closeButton.visible = false;
+			}
+			
+			private function sendMessage():void
+			{
+				var messageEvent:ChatEvent = new ChatEvent(ChatEvent.SEND_MESSAGE, messageInput.text, membersList2.selectedItem.id);
+				messageEvent.dispatch();
+			}
+			
+			protected function messageInput_enterHandler(event:FlexEvent):void
+			{
+				if(messageInput.text != "")
+				{
+					sendMessage();
+				}
 			}
 			
 		]]>
@@ -20,8 +38,16 @@
 	</fx:Declarations>
 	
 	<s:controlBarContent>
-		
+		<s:DropDownList id="membersList1"
+						labelField="usuario"
+						dataProvider="{ModelLocator.getInstance().membersList}"/>
+		<s:Button label="Ring"/>
+		<s:Spacer width="100%"/>
+		<s:DropDownList id="membersList2"
+						labelField="usuario"
+						dataProvider="{ModelLocator.getInstance().membersList}"/>
+		<s:Button label="Send" enabled="{(messageInput.text != '')}"/>
 	</s:controlBarContent>
-	<s:TextArea left="0" right="0" top="0" bottom="30"/>
-	<s:TextInput left="0" right="0" bottom="5"/>
+	<s:TextArea left="0" right="0" top="0" bottom="23" editable="false"/>
+	<s:TextInput left="0" right="0" bottom="0" id="messageInput" enter="messageInput_enterHandler(event)"/>
 </s:TitleWindow>
