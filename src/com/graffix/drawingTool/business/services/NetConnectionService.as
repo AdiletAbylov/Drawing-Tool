@@ -96,6 +96,29 @@ package com.graffix.drawingTool.business.services
 			var membersListEvent:MembersListEvent = new MembersListEvent(MembersListEvent.MEMBERS_LIST_SYNC);
 			membersListEvent.dispatch();
 		}
-			
+		
+		
+		//
+		// SharedObject for chat
+		
+		private var _chatSO:SharedObject;
+		
+		public function get chatSO():SharedObject
+		{
+			if(!_chatSO)
+			{
+				throw new Error("SharedObject is not created yet. Call createChatSO method first.");
+			}
+			return _chatSO;
+		}
+		
+		public function createChatSO(prefix:String=""):void
+		{
+			_chatSO = SharedObject.getRemote(prefix + "message", netConnection.uri );
+			_chatSO.connect( _netConnection);
+			var clientObject:ChatSOClientObject = new ChatSOClientObject();
+			_chatSO.client = clientObject;
+		}
+		
 	}
 }
