@@ -9,7 +9,7 @@ package com.graffix.drawingTool.business.services
 		
 		public function message(text:String):void
 		{
-			
+			trace("received: " + text);
 		}
 		
 		public function clearHistory(message:String):void

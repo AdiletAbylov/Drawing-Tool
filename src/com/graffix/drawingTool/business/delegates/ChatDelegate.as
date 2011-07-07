@@ -11,6 +11,12 @@ package com.graffix.drawingTool.business.delegates
 			
 		}
 		
+		public function connect(prefix:String):void
+		{
+			NetConnectionServices.instance.createChatSO(prefix);
+		}
+				
+		
 		public function sendMessage(message:String, to:String, prefix:String):void
 		{
 			var nc:NetConnection = NetConnectionServices.instance.netConnection;
