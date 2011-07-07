@@ -3,7 +3,9 @@ package com.graffix.drawingTool.commands.chat
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.business.delegates.ChatDelegate;
+	import com.graffix.drawingTool.business.delegates.MembersDelegate;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
+	import com.graffix.drawingTool.model.ModelLocator;
 	
 	public class ChatCommand implements ICommand
 	{
@@ -20,6 +22,8 @@ package com.graffix.drawingTool.commands.chat
 			{
 				case ChatEvent.CONNECT_SO:
 					chatDelegate.connect(prefix);
+					var membersDelegate:MembersDelegate = new MembersDelegate();
+					membersDelegate.setUsername(ModelLocator.getInstance().user.username, prefix);
 					break;
 				
 				case ChatEvent.RECEIVE_MESSAGE:
