@@ -4,6 +4,7 @@ package com.graffix.drawingTool.commands.net
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	import com.graffix.drawingTool.model.ModelLocator;
+	import com.graffix.drawingTool.view.ChatView;
 	import com.graffix.drawingTool.view.UsersListView;
 	
 	import flash.display.DisplayObject;
@@ -53,7 +54,11 @@ package com.graffix.drawingTool.commands.net
 		{
 			var usersListPopup:IFlexDisplayObject = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UsersListView );
 			usersListPopup.x = FlexGlobals.topLevelApplication.width - usersListPopup.width -10; 
-			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10; 
+			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10;
+			
+			var chatPopup:IFlexDisplayObject = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
+			chatPopup.x =  usersListPopup.x - usersListPopup.width - 10;
+			usersListPopup.y =  FlexGlobals.topLevelApplication.height - chatPopup.height -10;
 		}
 	}
 }
