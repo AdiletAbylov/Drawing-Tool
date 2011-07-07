@@ -37,6 +37,8 @@
 	
 	<s:DropDownList left="4" top="318" width="140"
 					labelField="label"
+					id="statusDDList"
+					change="statusChangeHandler(event)"
 					selectedIndex="0">
 		<s:dataProvider>
 			<s:ArrayList>
@@ -49,8 +51,6 @@
 	</s:DropDownList>
 	
  	<s:List left="0" right="0" top="0" bottom="25"
-			id="statusDDList"
-			change="statusChangeHandler(event)"
 			itemRenderer="com.graffix.drawingTool.view.renderers.MemberItemRenderer"
 			dataProvider="{ModelLocator.getInstance().membersList}"
 			/>
