@@ -27,6 +27,8 @@ package com.graffix.drawingTool.commands.members
 				
 				case MembersListEvent.MEMBERS_LIST_SYNC:
 					ModelLocator.getInstance().membersList = membersDelegate.getMembersList();
+					ModelLocator.getInstance().membersListWithEveryOne =  membersDelegate.getMembersList();
+					ModelLocator.getInstance().membersListWithEveryOne.addItemAt({'usuario': 'Everyone', id:'everyone' }, 0);
 					//ModelLocator.getInstance().membersList.sort();
 					break;
 				

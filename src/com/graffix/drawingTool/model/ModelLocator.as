@@ -30,6 +30,7 @@ package com.graffix.drawingTool.model
 			settings = new Settings();
 			user = new User();
 			membersList = new MembersList();
+			membersListWithEveryOne = new MembersList();
 		}
 		
 		public var settings:Settings;
@@ -45,5 +46,7 @@ package com.graffix.drawingTool.model
 		public var user:User;
 		
 		public var membersList:MembersList;
+		
+		public var membersListWithEveryOne:MembersList;
 	}
 }

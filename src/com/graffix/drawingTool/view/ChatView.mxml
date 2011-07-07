@@ -47,7 +47,9 @@
 		<s:Spacer width="100%"/>
 		<s:DropDownList id="membersList2"
 						labelField="usuario"
-						dataProvider="{ModelLocator.getInstance().membersList}"/>
+						requireSelection="true"
+						selectedIndex="0"
+						dataProvider="{ModelLocator.getInstance().membersListWithEveryOne}"/>
 		<s:Button label="Send" enabled="{(messageInput.text != '')}"/>
 	</s:controlBarContent>
 	<s:TextArea left="0" right="0" top="0" bottom="23" editable="false"/>
