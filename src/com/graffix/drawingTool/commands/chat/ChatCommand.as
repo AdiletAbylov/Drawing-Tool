@@ -21,7 +21,7 @@ package com.graffix.drawingTool.commands.chat
 			var prefix:String = "FCPrivateChat." + name + ".";
 			switch(event.type)
 			{
-				case ChatEvent.CONNECT_SO:
+				case ChatEvent.CONNECT_CHAT_SO:
 					chatDelegate.connect(prefix);
 					//chatDelegate.setUsername(prefix);
 					break;

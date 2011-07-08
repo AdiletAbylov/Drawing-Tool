@@ -5,6 +5,7 @@ package com.graffix.drawingTool.control
 	import com.graffix.drawingTool.commands.application.LoginCommand;
 	import com.graffix.drawingTool.commands.application.StartApplicationCommand;
 	import com.graffix.drawingTool.commands.chat.ChatCommand;
+	import com.graffix.drawingTool.commands.drawing.ImageGalleryCommand;
 	import com.graffix.drawingTool.commands.members.MembersCommand;
 	import com.graffix.drawingTool.commands.net.NetStatusCommand;
 	import com.graffix.drawingTool.commands.net.TestConnectionCommand;
@@ -12,6 +13,7 @@ package com.graffix.drawingTool.control
 	import com.graffix.drawingTool.events.application.InitEvent;
 	import com.graffix.drawingTool.events.application.LoginEvent;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
+	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
@@ -26,6 +28,7 @@ package com.graffix.drawingTool.control
 			appCommands();
 			membersCommand();
 			chatCommand();
+			drawingCommands();
 		}
 		
 		private function appCommands():void
@@ -49,9 +52,14 @@ package com.graffix.drawingTool.control
 		
 		private function chatCommand():void
 		{
-			addCommand(ChatEvent.CONNECT_SO, ChatCommand);
+			addCommand(ChatEvent.CONNECT_CHAT_SO, ChatCommand);
 			addCommand(ChatEvent.RECEIVE_MESSAGE, ChatCommand);
 			addCommand(ChatEvent.SEND_MESSAGE, ChatCommand);
+		}
+		
+		private function drawingCommands():void
+		{
+			addCommand(ImageGalleryEvent.CONNECT_IMAGE_SO, ImageGalleryCommand);
 		}
 	}
 }

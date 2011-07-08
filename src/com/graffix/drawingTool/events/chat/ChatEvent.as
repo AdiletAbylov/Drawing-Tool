@@ -6,7 +6,7 @@ package com.graffix.drawingTool.events.chat
 	{
 		public static const SEND_MESSAGE:String = "SEND_MESSAGE";
 		public static const RECEIVE_MESSAGE:String = "RECEIVE_MESSAGE";
-		public static const CONNECT_SO:String = "CONNECT_SO";
+		public static const CONNECT_CHAT_SO:String = "CONNECT_SO";
 		public var message:String;
 		public var to:String;
 		public function ChatEvent(type:String, message:String = "", to:String = "everyone")

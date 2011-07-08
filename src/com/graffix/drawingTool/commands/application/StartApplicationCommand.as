@@ -3,6 +3,7 @@ package com.graffix.drawingTool.commands.application
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
+	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.model.ModelLocator;
 	import com.graffix.drawingTool.view.ChatView;
@@ -23,11 +24,17 @@ package com.graffix.drawingTool.commands.application
 		private var __model:ModelLocator;
 		public function execute(event:CairngormEvent):void
 		{
-			__model.currentState = "MainState";
+			
 			var membersEvent:MembersListEvent = new MembersListEvent(MembersListEvent.GONNECT_MEMBERS_LIST);
 			membersEvent.dispatch();
-			var chatEvent:ChatEvent = new ChatEvent(ChatEvent.CONNECT_SO);
+			
+			var chatEvent:ChatEvent = new ChatEvent(ChatEvent.CONNECT_CHAT_SO);
 			chatEvent.dispatch();
+			
+			var imageGalleryEvent:ImageGalleryEvent = new ImageGalleryEvent(ImageGalleryEvent.CONNECT_IMAGE_SO);
+			imageGalleryEvent.dispatch();
+			
+			__model.currentState = "MainState";
 			
 			createPopups();
 		}
