@@ -4,6 +4,7 @@ package com.graffix.drawingTool.business.delegates
 	{
 		public function ImageGalleryDelegate()
 		{
+			
 		}
 	}
 }

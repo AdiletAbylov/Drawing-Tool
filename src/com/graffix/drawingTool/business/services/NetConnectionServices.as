@@ -120,5 +120,23 @@ package com.graffix.drawingTool.business.services
 			_chatSO.client = clientObject;
 		}
 		
+		//
+		// SharedObject for image files
+		private var _imagesSO:SharedObject;
+		
+		public function get imagesSO():SharedObject
+		{
+			if(!_imagesSO)
+			{
+				throw new Error("SharedObject is not created yet. Call createChatSO method first.");
+			}
+			return _imagesSO;
+		}
+		
+		public function createImagesSO():void
+		{
+			_imagesSO = SharedObject.getRemote("filelist", netConnection.uri );
+			_imagesSO.connect( _netConnection);
+		}
 	}
 }
