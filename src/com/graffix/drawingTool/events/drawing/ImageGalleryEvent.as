@@ -5,7 +5,7 @@ package com.graffix.drawingTool.events.drawing
 	public class ImageGalleryEvent extends CairngormEvent
 	{
 		public static const CONNECT_IMAGE_SO:String = "CONNECT_IMAGE_SO";
-		 
+		public static const IMAGES_SYNC:String = "IMAGES_SYNC"; 
 		public function ImageGalleryEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

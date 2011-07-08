@@ -60,6 +60,7 @@ package com.graffix.drawingTool.control
 		private function drawingCommands():void
 		{
 			addCommand(ImageGalleryEvent.CONNECT_IMAGE_SO, ImageGalleryCommand);
+			addCommand(ImageGalleryEvent.IMAGES_SYNC, ImageGalleryCommand);
 		}
 	}
 }

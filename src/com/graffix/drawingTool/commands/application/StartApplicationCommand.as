@@ -24,7 +24,8 @@ package com.graffix.drawingTool.commands.application
 		private var __model:ModelLocator;
 		public function execute(event:CairngormEvent):void
 		{
-			
+		
+			__model = ModelLocator.getInstance();
 			var membersEvent:MembersListEvent = new MembersListEvent(MembersListEvent.GONNECT_MEMBERS_LIST);
 			membersEvent.dispatch();
 			

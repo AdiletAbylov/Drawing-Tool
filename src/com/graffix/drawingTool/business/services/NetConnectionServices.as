@@ -1,6 +1,7 @@
 package com.graffix.drawingTool.business.services
 {
 	import com.demonsters.debugger.MonsterDebugger;
+	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	
@@ -135,8 +136,15 @@ package com.graffix.drawingTool.business.services
 		
 		public function createImagesSO():void
 		{
-			_imagesSO = SharedObject.getRemote("filelist", netConnection.uri );
+			_imagesSO = SharedObject.getRemote("filelist", netConnection.uri, true );
 			_imagesSO.connect( _netConnection);
+			_imagesSO.addEventListener(SyncEvent.SYNC, onImagesSOSync);
+		}
+		
+		private function onImagesSOSync(event:SyncEvent):void
+		{
+			var imageEvent:ImageGalleryEvent  = new ImageGalleryEvent(ImageGalleryEvent.IMAGES_SYNC);
+			imageEvent.dispatch();
 		}
 	}
 }

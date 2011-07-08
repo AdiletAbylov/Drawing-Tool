@@ -20,23 +20,6 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-			[Bindable]
-			[Embed(source="com/graffix/drawingTool/view/assets/example1.jpg")]
-			private var example1:Class;
-			
-			[Bindable]
-			[Embed(source="com/graffix/drawingTool/view/assets/example2.jpg")]
-			private var example2:Class;
-			
-			[Bindable]
-			[Embed(source="com/graffix/drawingTool/view/assets/example3.jpg")]
-			private var example3:Class;
-			
-			[Bindable]
-			[Embed(source="com/graffix/drawingTool/view/assets/example4.jpg")]
-			private var example4:Class;
-
-
 			protected function insertButton_clickHandler(event:MouseEvent):void
 			{
 				var insertEvent:ImageShapeEvent = new ImageShapeEvent(ImageShapeEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
@@ -46,7 +29,7 @@
 
 			protected function uploadButton_clickHandler(event:MouseEvent):void
 			{
-				var formurl:String = "upload.php?roomname="+ModelLocator.getInstance().settings.roomID;
+				var formurl:String = "upload.php?roomname=" + ModelLocator.getInstance().settings.roomID;
 				var request:URLRequest = new URLRequest("javascript:NewWindow(\'"+formurl+"\',\'uploadwin\',\'580\',\'580\',\'no\',\'center\',\'no\');");
 				navigateToURL( request);
 				
@@ -54,8 +37,9 @@
 			
 			protected function deleteButton_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				var formurl:String = "delete.php?roomname=" + ModelLocator.getInstance().settings.roomID + "&filename="+imagesList.selectedItem.data;
+				var request:URLRequest = new URLRequest("javascript:NewWindow(\'"+formurl+"\',\'delwin\',\'580\',\'430\',\'no\',\'center\',\'no\');");
+				navigateToURL(request);
 			}
 			
 		]]>
@@ -64,19 +48,12 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:List id="imagesList" 
+			dataProvider="{ModelLocator.getInstance().imagesList}"
 			selectedIndex="-1"
 			left="5" right="5" top="5" bottom="5" itemRenderer="com.graffix.drawingTool.view.drawing.view.renderers.ImagesItemRenderer">
 		<s:layout>
 			<s:TileLayout/>
 		</s:layout>
-		<s:dataProvider>
-			<s:ArrayCollection>
-				<fx:Object source = "{example1}"/>
-				<fx:Object source = "{example2}"/>
-				<fx:Object source = "{example3}"/>
-				<fx:Object source = "{example4}"/>
-			</s:ArrayCollection>
-		</s:dataProvider>
 	</s:List>
 	<s:controlBarContent>
 		<s:Button label="Upload" id="uploadButton" click="uploadButton_clickHandler(event)"/>

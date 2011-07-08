@@ -51,5 +51,7 @@ package com.graffix.drawingTool.model
 		public var membersListWithEveryOne:MembersList;
 		
 		public var chatView:IFlexDisplayObject;
+		
+		public var imagesList:ArrayCollection;
 	}
 }
