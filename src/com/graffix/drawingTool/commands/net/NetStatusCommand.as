@@ -2,16 +2,8 @@ package com.graffix.drawingTool.commands.net
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
+	import com.graffix.drawingTool.events.StartApllicationEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
-	import com.graffix.drawingTool.model.ModelLocator;
-	import com.graffix.drawingTool.view.ChatView;
-	import com.graffix.drawingTool.view.UsersListView;
-	
-	import flash.display.DisplayObject;
-	
-	import mx.core.FlexGlobals;
-	import mx.core.IFlexDisplayObject;
-	import mx.managers.PopUpManager;
 	
 	public class NetStatusCommand implements ICommand
 	{
@@ -26,8 +18,8 @@ package com.graffix.drawingTool.commands.net
 			{
 				case "NetConnection.Connect.Success":
 				{
-					ModelLocator.getInstance().currentState = "MainState";
-					createPopups();
+					var startEvent:StartApllicationEvent = new StartApllicationEvent();
+					startEvent.dispatch();
 					break;
 				}
 					
@@ -50,15 +42,6 @@ package com.graffix.drawingTool.commands.net
 				}
 			}
 		}
-		private function createPopups():void
-		{
-			var usersListPopup:IFlexDisplayObject = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UsersListView );
-			usersListPopup.x = FlexGlobals.topLevelApplication.width - usersListPopup.width -10; 
-			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10;
-			
-			ModelLocator.getInstance().chatView = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
-			ModelLocator.getInstance().chatView.x =  usersListPopup.x - usersListPopup.width - 10;
-			ModelLocator.getInstance().chatView.y =  FlexGlobals.topLevelApplication.height - ModelLocator.getInstance().chatView.height -10;
-		}
+		
 	}
 }

@@ -19,8 +19,7 @@
 			protected function init(event:FlexEvent):void
 			{
 				closeButton.visible = false;
-				var membersListEvent:MembersListEvent = new MembersListEvent(MembersListEvent.GONNECT_MEMBERS_LIST);
-				membersListEvent.dispatch();
+			
 			}
 			
 			protected function statusChangeHandler(event:IndexChangeEvent):void
