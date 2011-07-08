@@ -6,8 +6,11 @@
 			   width="706" height="564">
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.model.ModelLocator;
 			import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
 			import com.graffix.drawingTool.view.drawing.view.renderers.ImagesItemRenderer;
+			
+			import flash.net.navigateToURL;
 			
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
@@ -41,6 +44,20 @@
 				//dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
 			}
 
+			protected function uploadButton_clickHandler(event:MouseEvent):void
+			{
+				var formurl:String = "upload.php?roomname="+ModelLocator.getInstance().settings.roomID;
+				var request:URLRequest = new URLRequest("javascript:NewWindow(\'"+formurl+"\',\'uploadwin\',\'580\',\'580\',\'no\',\'center\',\'no\');");
+				navigateToURL( request);
+				
+			}
+			
+			protected function deleteButton_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -62,7 +79,12 @@
 		</s:dataProvider>
 	</s:List>
 	<s:controlBarContent>
+		<s:Button label="Upload" id="uploadButton" click="uploadButton_clickHandler(event)"/>
 		
+		<s:Spacer width="100%"/>
+		<s:Button label="Delete" id="deleteButton"
+				  enabled="{imagesList.selectedIndex != -1}"
+				  click="deleteButton_clickHandler(event)"/>
 		<s:Button id="insertButton" 
 				  click="insertButton_clickHandler(event)"
 				  label="Insert" enabled="{imagesList.selectedIndex != -1}"/>
