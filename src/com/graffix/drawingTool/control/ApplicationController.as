@@ -3,10 +3,12 @@ package com.graffix.drawingTool.control
 	import com.adobe.cairngorm.control.FrontController;
 	import com.graffix.drawingTool.commands.application.InitCommand;
 	import com.graffix.drawingTool.commands.application.LoginCommand;
+	import com.graffix.drawingTool.commands.application.StartApplicationCommand;
 	import com.graffix.drawingTool.commands.chat.ChatCommand;
 	import com.graffix.drawingTool.commands.members.MembersCommand;
 	import com.graffix.drawingTool.commands.net.NetStatusCommand;
 	import com.graffix.drawingTool.commands.net.TestConnectionCommand;
+	import com.graffix.drawingTool.events.StartApllicationEvent;
 	import com.graffix.drawingTool.events.application.InitEvent;
 	import com.graffix.drawingTool.events.application.LoginEvent;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
@@ -30,6 +32,7 @@ package com.graffix.drawingTool.control
 		{
 			addCommand(InitEvent.INIT, InitCommand );
 			addCommand(LoginEvent.LOGIN, LoginCommand);
+			addCommand(StartApllicationEvent.START_APPLICATION, StartApplicationCommand);
 		}
 		private function netCommands():void
 		{
