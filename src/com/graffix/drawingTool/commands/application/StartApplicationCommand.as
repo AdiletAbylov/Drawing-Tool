@@ -47,7 +47,7 @@ package com.graffix.drawingTool.commands.application
 			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10;
 			
 			__model.chatView = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
-			__model.chatView.x =  usersListPopup.x - usersListPopup.width - 10;
+			__model.chatView.x =  usersListPopup.x - __model.chatView.width - 10;
 			__model.chatView.y =  FlexGlobals.topLevelApplication.height - __model.chatView.height -10;
 		}
 	}

@@ -34,7 +34,6 @@
 			}
 
 			
-			
 		]]>
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
