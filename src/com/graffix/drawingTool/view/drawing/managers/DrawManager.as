@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.view.drawing
+package com.graffix.drawingTool.view.drawing.managers
 {
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
 	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
@@ -39,12 +39,37 @@ package com.graffix.drawingTool.view.drawing
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
 		}
 		
+		/**
+		 * current selected tool id. By default transform tool is selected
+		 * Tool draws or creates shapes
+		 * */
+		private var _selectedTool:int = SelectTool.TRANSFORM_TOOL;
+		
+		public function get selectedTool():int
+		{
+			return _selectedTool;
+		}
+		
+		public function set selectedTool(value:int):void
+		{
+			_selectedTool = value;
+			if( selectedShape )
+			{
+				selectedShape.hideTransformControls();
+				currentDrawingShape = null;
+				selectedShape = null;
+			}
+		}
+		
+		
+		private var _drawMode:int = DrawMode.TRANSFROM_MODE;
+		
 		//
 		// --------------- CATCH TOOLS EVENTS-----------------
 		//
 		protected function onMouseDown(event:DrawAreaEvent):void
 		{	
-			switch(_operationType)
+			switch(_selectedTool)
 			{
 				case SelectTool.TRANSFORM_TOOL:
 					//
@@ -86,7 +111,7 @@ package com.graffix.drawingTool.view.drawing
 		
 		protected function onMouseMove(event:DrawAreaEvent):void
 		{
-			if(_operationType == SelectTool.TRANSFORM_TOOL )
+			if(_selectedTool == SelectTool.TRANSFORM_TOOL )
 			{
 				//
 				//do nothing
@@ -96,7 +121,7 @@ package com.graffix.drawingTool.view.drawing
 				if(currentDrawingShape)
 				{
 					currentDrawingShape.setPoints( new Point(0,0), currentDrawingShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
-					if(_operationType == EraserShape.ERASER_SHAPE)
+					if(_selectedTool == EraserShape.ERASER_SHAPE)
 					{
 						_drawArea.currentPage.detectObjectsToErase( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY) );
 					}
@@ -194,7 +219,7 @@ package com.graffix.drawingTool.view.drawing
 		
 		private function onTextEdit(event:TextEditorEvent):void
 		{
-			if( _operationType == SelectTool.TRANSFORM_TOOL)
+			if( _selectedTool == SelectTool.TRANSFORM_TOOL)
 			{
 				if(_textEditorPopuped)
 				{
@@ -219,29 +244,14 @@ package com.graffix.drawingTool.view.drawing
 		//
 		private var _drawArea:DrawArea;
 		
-		private var _operationType:int = SelectTool.TRANSFORM_TOOL;
-		public function get operationType():int
-		{
-			return _operationType;
-		}
 		
-		public function set operationType(value:int):void
-		{
-			_operationType = value;
-			if( selectedShape )
-			{
-				selectedShape.hideTransformControls();
-				currentDrawingShape = null;
-				selectedShape = null;
-			}
-		}
 		
 		[Bindable]
 		public var currentDrawingShape:BaseShape;
 		private var _startPoint:Point;
 		private function createShapeToDraw(stageX:Number, stageY:Number):void
 		{
-			var tool:BaseShape = ShapesFactory.createTool( _operationType );
+			var tool:BaseShape = ShapesFactory.createTool( _selectedTool );
 			_startPoint = new Point(stageX, stageY);
 			_startPoint = _drawArea.globalToLocal( _startPoint );
 			tool.x = _startPoint.x;
@@ -262,7 +272,7 @@ package com.graffix.drawingTool.view.drawing
 			
 			selectedShape = event.target as BaseShape;
 			//currentDrawingShape = event.target as BaseShape;
-			if( _operationType == SelectTool.TRANSFORM_TOOL && !selectedShape.transforming )
+			if( _selectedTool == SelectTool.TRANSFORM_TOOL && !selectedShape.transforming )
 			{	
 				selectedShape.showTransformControls();
 			}
