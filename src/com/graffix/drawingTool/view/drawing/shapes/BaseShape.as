@@ -7,19 +7,15 @@ package com.graffix.drawingTool.view.drawing.shapes
 	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	import com.senocular.display.TransformTool;
 	
-	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.utils.setTimeout;
 	
 	import mx.core.UIComponent;
 	import mx.utils.UIDUtil;
-	
-	import spark.primitives.Rect;
 
 	public class BaseShape extends UIComponent implements IDrawable, ISelectable
 	{

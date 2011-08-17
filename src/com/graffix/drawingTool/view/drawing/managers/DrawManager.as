@@ -37,13 +37,23 @@ package com.graffix.drawingTool.view.drawing.managers
 			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
 			_drawArea.addEventListener(TextEditorEvent.TEXT_EDIT, onTextEdit);
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
+			
+			//
+			// transforming mode is default 
+			_selectedTool = SelectTool.TRANSFORM_TOOL;
+			_drawMode = DrawMode.TRANSFROM_MODE;
 		}
+		/**
+		 * Refernce to the draw area
+		 * */
+		private var _drawArea:DrawArea;
+		
 		
 		/**
 		 * current selected tool id. By default transform tool is selected
 		 * Tool draws or creates shapes
 		 * */
-		private var _selectedTool:int = SelectTool.TRANSFORM_TOOL;
+		private var _selectedTool:int;
 		
 		public function get selectedTool():int
 		{
@@ -53,16 +63,25 @@ package com.graffix.drawingTool.view.drawing.managers
 		public function set selectedTool(value:int):void
 		{
 			_selectedTool = value;
-			if( selectedShape )
+			if( _currentShape )
 			{
-				selectedShape.hideTransformControls();
-				currentDrawingShape = null;
-				selectedShape = null;
+				_currentShape.hideTransformControls();
+				_currentShape = null;
 			}
 		}
 		
+		/**
+		 * Shape what is drawing, tranforming, editing right now.
+		 * */
+		[Bindable]
+		public var _currentShape:BaseShape;
 		
-		private var _drawMode:int = DrawMode.TRANSFROM_MODE;
+		/**
+		 * Current draw mode.
+		 * Modes are: DRAWING, TRANSFORMING, EDITING, ERASING
+		 * 
+		 * */
+		private var _drawMode:int;
 		
 		//
 		// --------------- CATCH TOOLS EVENTS-----------------
@@ -100,13 +119,7 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		protected function onMouseClick(event:DrawAreaEvent):void
 		{
-			if(!event.hasShapeUnderClick)
-			{
-				if(selectedShape && selectedShape.transforming)
-				{
-					selectedShape.hideTransformControls();
-				}
-			}
+			
 		}
 		
 		protected function onMouseMove(event:DrawAreaEvent):void
@@ -118,9 +131,9 @@ package com.graffix.drawingTool.view.drawing.managers
 			}
 			else 
 			{
-				if(currentDrawingShape)
+				if(_currentShape)
 				{
-					currentDrawingShape.setPoints( new Point(0,0), currentDrawingShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
+					_currentShape.setPoints( new Point(0,0), _currentShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
 					if(_selectedTool == EraserShape.ERASER_SHAPE)
 					{
 						_drawArea.currentPage.detectObjectsToErase( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY) );
@@ -131,11 +144,11 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		protected function onMouseUp(event:DrawAreaEvent):void
 		{
-			if(currentDrawingShape && currentDrawingShape.type != TextShape.TEXT_SHAPE && currentDrawingShape.type != ImageShape.IMAGE_SHAPE)
+			if(_currentShape && _currentShape.type != TextShape.TEXT_SHAPE && _currentShape.type != ImageShape.IMAGE_SHAPE)
 			{
-				currentDrawingShape.finishDraw();
+				_currentShape.finishDraw();
 				
-				currentDrawingShape = null;
+				_currentShape = null;
 				
 			}
 		}
@@ -166,21 +179,21 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		private function onInsertImage(event:ImageShapeEvent):void
 		{
-			(currentDrawingShape as ImageShape).insertImage( event.image, event.width, event.height );
+			(_currentShape as ImageShape).insertImage( event.image, event.width, event.height );
 		}
 		
 		private function onGalleryWindowClose(event:CloseEvent):void
 		{
 			_galleryWindowPopuped = false;
-			if( (currentDrawingShape as ImageShape).empty )
+			if( (_currentShape as ImageShape).empty )
 			{
-				_drawArea.removeChildFromCurrentPage( currentDrawingShape );
+				_drawArea.removeChildFromCurrentPage( _currentShape );
 			}
 			else
 			{
-				currentDrawingShape.finishDraw();
+				_currentShape.finishDraw();
 			}
-			currentDrawingShape = null;
+			_currentShape = null;
 		}
 		
 		private function onShowGalleryEvent(event:ImageShapeEvent):void
@@ -234,20 +247,14 @@ package com.graffix.drawingTool.view.drawing.managers
 		private function onTextEditorClose(event:CloseEvent):void
 		{
 			var formattedString:String = TextConverter.export(_textEditorWindow.richTextEditor.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			(selectedShape as TextShape).setText(formattedString);
+			(_currentShape as TextShape).setText(formattedString);
 			_textEditorPopuped = false;
 			//currentDrawingShape.finishDraw();
 		}
 		
-		//
-		// ---------------------------------------------------
-		//
-		private var _drawArea:DrawArea;
+	
 		
 		
-		
-		[Bindable]
-		public var currentDrawingShape:BaseShape;
 		private var _startPoint:Point;
 		private function createShapeToDraw(stageX:Number, stageY:Number):void
 		{
@@ -258,24 +265,12 @@ package com.graffix.drawingTool.view.drawing.managers
 			tool.y = _startPoint.y;
 			tool.startDraw();
 			_drawArea.addChildToCurrentPage( tool );
-			currentDrawingShape = tool;
+			_currentShape = tool;
 		}
 		
-		[Bindable]
-		public var selectedShape:ISelectable;
 		protected function onShapeSelect(event:ShapeSelectEvent):void
 		{
-			if(selectedShape)
-			{
-				selectedShape.hideTransformControls();
-			}
 			
-			selectedShape = event.target as BaseShape;
-			//currentDrawingShape = event.target as BaseShape;
-			if( _selectedTool == SelectTool.TRANSFORM_TOOL && !selectedShape.transforming )
-			{	
-				selectedShape.showTransformControls();
-			}
 		}
 		
 		/**
