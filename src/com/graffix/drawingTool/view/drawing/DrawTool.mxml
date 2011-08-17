@@ -8,6 +8,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.view.drawing.managers.DrawManager;
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
 			import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
@@ -93,7 +94,7 @@
 			
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
 			{
-				_drawManager.operationType = event.toolType;
+				_drawManager.selectedTool = event.toolType;
 				toolProperties.toolType = event.toolType;
 			}
 			
