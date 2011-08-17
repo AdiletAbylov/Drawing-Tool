@@ -95,7 +95,6 @@
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
 			{
 				_drawManager.selectedTool = event.toolType;
-				toolProperties.toolType = event.toolType;
 			}
 			
 			

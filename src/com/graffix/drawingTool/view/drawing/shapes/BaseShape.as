@@ -42,7 +42,8 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		protected var _spriteToDraw:Sprite;
 		protected var _shapeDrawData:ShapeDrawData;
-			
+		
+		[Bindable]	
 		public function set shapeDrawData(value:ShapeDrawData):void
 		{
 			_shapeDrawData = value;

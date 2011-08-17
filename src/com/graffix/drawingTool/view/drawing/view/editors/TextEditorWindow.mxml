@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:tlf="net.asciiworks.tlf.*"
 			   add="titlewindow1_addedHandler(event)"
-			   width="476" height="222" close="titlewindow1_closeHandler(event)">
+			   width="476" height="222">
+	<fx:Metadata>
+		[Event(name="finishEdit", type="com.graffix.drawingTool.view.drawing.events.TextEditorEvent")]
+	</fx:Metadata>
 	<fx:Script>
+		
 		<![CDATA[
+			import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
+			
 			import flashx.textLayout.conversion.TextConverter;
 			
 			import mx.events.CloseEvent;
@@ -19,7 +25,7 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-			public function setText(flow:String):void
+			public function set textFlow(flow:String):void
 			{
 				richTextEditor.textFlow = TextConverter.importToFlow(flow,  TextConverter.TEXT_LAYOUT_FORMAT );
 			}
@@ -32,12 +38,20 @@
 				}
 			}
 			
+			protected function onSaveClick(event:MouseEvent):void
+			{
+				dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, richTextEditor.textFlow) );
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<s:controlBarContent>
+		<s:Button label="Save" click="onSaveClick(event)"/>
+	</s:controlBarContent>
 	<tlf:TLFTextEditor id="richTextEditor"
 					   left="0" top="0" right="0" bottom="0">
 	</tlf:TLFTextEditor>
-</s:TitleWindow>
+</s:Panel>

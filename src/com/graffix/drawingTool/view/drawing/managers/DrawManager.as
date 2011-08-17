@@ -3,7 +3,6 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.events.DrawAreaEvent;
 	import com.graffix.drawingTool.view.drawing.events.ImageShapeEvent;
 	import com.graffix.drawingTool.view.drawing.events.ShapeSelectEvent;
-	import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
@@ -12,13 +11,9 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
-	import com.graffix.drawingTool.view.drawing.view.editors.TextEditorWindow;
 	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	
 	import flash.geom.Point;
-	
-	import flashx.textLayout.conversion.ConversionType;
-	import flashx.textLayout.conversion.TextConverter;
 	
 	import mx.core.IVisualElement;
 	import mx.events.CloseEvent;
@@ -35,7 +30,6 @@ package com.graffix.drawingTool.view.drawing.managers
 			_drawArea.addEventListener( DrawAreaEvent.UP, onMouseUp);
 			
 			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
-			_drawArea.addEventListener(TextEditorEvent.TEXT_EDIT, onTextEdit);
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
 			//
 			// transforming mode is default 
@@ -118,14 +112,6 @@ package com.graffix.drawingTool.view.drawing.managers
 		{
 			switch(_selectedTool)
 			{
-				case TextShape.TEXT_SHAPE:
-					if(!_textEditorPopuped)
-					{
-						createShapeToDraw(stageX, stageY);
-						showTextEditor();
-					}
-					return;
-					
 				case ImageShape.IMAGE_SHAPE:
 					if(!_galleryWindowPopuped)
 					{
@@ -185,7 +171,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			switch(_drawMode)
 			{
 				case DrawMode.DRAW_MODE:
-					if(_currentShape && _currentShape.type != TextShape.TEXT_SHAPE && _currentShape.type != ImageShape.IMAGE_SHAPE)
+					if( _currentShape.type != ImageShape.IMAGE_SHAPE && _currentShape.type != TextShape.TEXT_SHAPE)
 					{
 						_currentShape.finishDraw();
 						_currentShape = null;
@@ -194,18 +180,17 @@ package com.graffix.drawingTool.view.drawing.managers
 				
 				case DrawMode.ERASE_MODE:
 					_currentShape.finishDraw();
-					_currentShape = null;
 					break;
 			}
 		}
 		
 		protected function onMouseClick(event:DrawAreaEvent):void
 		{
-			if(_currentShape && _currentShape.transforming)
-			{
-				_currentShape.hideTransformControls();
-				_currentShape = null;
-			}
+//			if(_currentShape && _currentShape.transforming)
+//			{
+//				_currentShape.hideTransformControls();
+//				_currentShape = null;
+//			}
 		}
 		
 		//
@@ -256,62 +241,10 @@ package com.graffix.drawingTool.view.drawing.managers
 			showGalleryWindow();
 		}
 		
-		//
-		// -------------- TEXT EDITOR WINDOW -------------------
-		//
-		
-		private var _textEditorPopuped:Boolean;
-		
-		private var _textEditorWindow:TextEditorWindow;
-		
-		private function showTextEditor(text:String=null):void
-		{
-			if(_textEditorWindow)
-			{	
-				PopUpManager.addPopUp( _textEditorWindow, _drawArea );
-			}
-			else
-			{
-				_textEditorWindow = new TextEditorWindow();
-				_textEditorWindow.addEventListener(CloseEvent.CLOSE, onTextEditorClose);
-				PopUpManager.addPopUp( _textEditorWindow, _drawArea );
-				PopUpManager.centerPopUp(_textEditorWindow);
-			}
-			
-			_textEditorPopuped = true;
-			if(text)
-			{
-				_textEditorWindow.setText(text);
-			}
-		}
-		
-		private function onTextEdit(event:TextEditorEvent):void
-		{
-			if( _selectedTool == SelectTool.TRANSFORM_TOOL)
-			{
-				if(_textEditorPopuped)
-				{
-					_textEditorWindow.setText(event.text);
-				}else
-				{
-					showTextEditor(event.text);
-				}
-			}
-		}
-		
-		private function onTextEditorClose(event:CloseEvent):void
-		{
-			var formattedString:String = TextConverter.export(_textEditorWindow.richTextEditor.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
-			(_currentShape as TextShape).setText(formattedString);
-			_textEditorPopuped = false;
-			//currentDrawingShape.finishDraw();
-		}
-		
-		
 		
 		protected function onShapeSelect(event:ShapeSelectEvent):void
 		{
-			_drawMode == DrawMode.DRAW_MODE;
+			_drawMode == DrawMode.TRANSFROM_MODE;
 			if( _currentShape )
 			{
 				_currentShape.hideTransformControls();
@@ -341,13 +274,14 @@ package com.graffix.drawingTool.view.drawing.managers
 				else
 				{
 					shape = ShapesFactory.createTool( shapeData.shapeType );
-					shape.id = shapeData.shapeID;
-					shape.shapeDrawData = shapeData;
-					_drawArea.currentPage.addElement( shape );
+					if(shape)
+					{
+						shape.id = shapeData.shapeID;
+						shape.shapeDrawData = shapeData;
+						_drawArea.currentPage.addElement( shape );
+					}
 				}
-				
 			}
-			
 		}
 		
 		public function eraseShape(shapeID:String):void

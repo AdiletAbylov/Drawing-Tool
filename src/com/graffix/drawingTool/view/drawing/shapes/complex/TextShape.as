@@ -10,6 +10,8 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 	
 	import flashx.textLayout.conversion.TextConverter;
 	
+	import mx.controls.Label;
+	
 	import spark.components.Group;
 	import spark.components.RichText;
 	
@@ -24,23 +26,18 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			super();
 			this.doubleClickEnabled = true;	
 			_shapeDrawData.shapeType = TEXT_SHAPE;
+			_label = new RichText();
+			_label.text = "Text Label";
+			
+			
 		}
 		
-		private var textContainer:Group;
 		
 		override protected function createChildren():void
 		{
 			super.createChildren();
-			_label = new RichText();
-			_label.text = "Text Label";
-			_label.percentWidth = 100;
-			_label.percentHeight = 100;
-			textContainer = new Group();
-			addChild(textContainer);
-			textContainer.doubleClickEnabled = true;
-			_label.doubleClickEnabled = true;
-			textContainer.addElement( _label );
-			meauserLabel();
+			addChild( _label );
+			
 		}
 		
 		override public function finishDraw():void
@@ -56,7 +53,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		
 		public function editText():void
 		{
-			dispatchEvent( new TextEditorEvent(TextEditorEvent.TEXT_EDIT, _shapeDrawData.text ));
+			//dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, _shapeDrawData.text ));
 		}
 		
 		public function setText(text:String):void
@@ -79,12 +76,14 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 				draw();
 				_textChanged = false;
 			}
+			meauserLabel();
 		}
 		
 		override public function draw():void
 		{
+			
 			_label.textFlow = TextConverter.importToFlow(_shapeDrawData.text, TextConverter.TEXT_LAYOUT_FORMAT );
-			meauserLabel();
+		
 			if(_transforming)
 			{
 				_transformTool.target = null;
@@ -96,24 +95,25 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		private function meauserLabel():void
 		{
 			var lineMetrics:TextLineMetrics = _label.measureText(_label.text);
-			textContainer.width = lineMetrics.width+40;
-			textContainer.height = 100;
+			_label.width = lineMetrics.width+40;
+			_label.height = 100;
+//			textContainer.width = lineMetrics.width+40;
+//			textContainer.height = 100;
 		}
 		
 		override public function destroy():void
 		{
 			super.destroy();
-			textContainer.removeElement(_label );
+			
 			_label.textFlow = null;
 			_label = null;
-			removeChild(textContainer);
-			textContainer = null;
+			
 			removeEventListener(MouseEvent.DOUBLE_CLICK, onDoubleClick);
 		}
 		
 		override protected function get viewObject():DisplayObject
 		{
-			return textContainer;
+			return _label;
 		}
 	}
 }
