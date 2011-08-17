@@ -151,7 +151,7 @@
 				  click="screenshotButton_clickHandler(event)"
 				  />
 		<toolbars:ToolPropertiesView id="toolProperties" left="130" top="10"
-									 currentTool="{_drawManager.selectedShape}">
+									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
 	</s:HGroup>
 	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>

@@ -47,7 +47,8 @@ package com.graffix.drawingTool.view.drawing.view.area
 			_objectsToErase.length = 0;
 		}
 		
-		private var _objectsToErase:Vector.<IVisualElement> = new Vector.<IVisualElement>();;
+		private var _objectsToErase:Vector.<IVisualElement> = new Vector.<IVisualElement>();
+		
 		public function detectObjectsToErase(stageMouseCoord:Point):void
 		{
 			stageMouseCoord = globalToLocal( stageMouseCoord);
@@ -101,6 +102,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			var hasShape:Boolean;
 			var objects:Array = getObjectsUnderPoint(new Point(event.stageX, event.stageY));
+			dispatchEvent( new DrawAreaEvent(DrawAreaEvent.CLICK, event));
 		}
 		
 		private function onMouseMove(event:MouseEvent):void

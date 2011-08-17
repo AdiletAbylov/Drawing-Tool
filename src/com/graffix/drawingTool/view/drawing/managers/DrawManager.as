@@ -9,7 +9,6 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
-	import com.graffix.drawingTool.view.drawing.shapes.selection.ISelectable;
 	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
@@ -34,17 +33,19 @@ package com.graffix.drawingTool.view.drawing.managers
 			_drawArea.addEventListener(DrawAreaEvent.MOVE, onMouseMove );
 			_drawArea.addEventListener(DrawAreaEvent.DOWN, onMouseDown );
 			_drawArea.addEventListener( DrawAreaEvent.UP, onMouseUp);
+			
 			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
 			_drawArea.addEventListener(TextEditorEvent.TEXT_EDIT, onTextEdit);
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
-			
 			//
 			// transforming mode is default 
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
 			_drawMode = DrawMode.TRANSFROM_MODE;
 		}
+		
+		
 		/**
-		 * Refernce to the draw area
+		 * Reference to the draw area
 		 * */
 		private var _drawArea:DrawArea;
 		
@@ -68,6 +69,21 @@ package com.graffix.drawingTool.view.drawing.managers
 				_currentShape.hideTransformControls();
 				_currentShape = null;
 			}
+			
+			switch(_selectedTool)
+			{
+				case SelectTool.TRANSFORM_TOOL:
+					_drawMode = DrawMode.TRANSFROM_MODE;
+					break;
+				
+				case EraserShape.ERASER_SHAPE:
+					_drawMode = DrawMode.ERASE_MODE;
+					break;
+				
+				default:
+					_drawMode = DrawMode.DRAW_MODE;
+					break;
+			}
 		}
 		
 		/**
@@ -84,21 +100,28 @@ package com.graffix.drawingTool.view.drawing.managers
 		private var _drawMode:int;
 		
 		//
-		// --------------- CATCH TOOLS EVENTS-----------------
+		// --------------- DRAWING METHODS -------------------
 		//
-		protected function onMouseDown(event:DrawAreaEvent):void
-		{	
+		private function createShapeToDraw(stageX:Number, stageY:Number):void
+		{
+			var tool:BaseShape = ShapesFactory.createTool( _selectedTool );
+			var startPoint:Point = new Point(stageX, stageY);
+			startPoint = _drawArea.globalToLocal( startPoint );
+			tool.x = startPoint.x;
+			tool.y = startPoint.y;
+			tool.startDraw();
+			_drawArea.addChildToCurrentPage( tool );
+			_currentShape = tool;
+		}
+		
+		private function startDraw(stageX:Number, stageY:Number):void
+		{
 			switch(_selectedTool)
 			{
-				case SelectTool.TRANSFORM_TOOL:
-					//
-					//do nothing
-					return;
-					
 				case TextShape.TEXT_SHAPE:
 					if(!_textEditorPopuped)
 					{
-						createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
+						createShapeToDraw(stageX, stageY);
 						showTextEditor();
 					}
 					return;
@@ -106,50 +129,82 @@ package com.graffix.drawingTool.view.drawing.managers
 				case ImageShape.IMAGE_SHAPE:
 					if(!_galleryWindowPopuped)
 					{
-						createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
+						createShapeToDraw(stageX, stageY);
 						showGalleryWindow();
 					}
 					return;
 					
 				default:
-					createShapeToDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
+					createShapeToDraw(stageX, stageY);
+					break;
+			}
+		}
+		
+		private function drawShape(stageX:Number, stageY:Number):void
+		{
+			if(_currentShape)
+			{
+				_currentShape.setPoints( new Point(0,0), _currentShape.globalToLocal( new Point(stageX, stageY )));
+			}
+		}
+		
+		//
+		// --------------- HANDLE MOUSE EVENTS-----------------
+		//
+		protected function onMouseDown(event:DrawAreaEvent):void
+		{
+			switch(_drawMode)
+			{
+				case DrawMode.DRAW_MODE:
+					startDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
+					break;
+				
+				case DrawMode.ERASE_MODE:
+					startDraw(event.mouseEvent.stageX, event.mouseEvent.stageY);
+					break;
+			}
+		}
+		
+		protected function onMouseMove(event:DrawAreaEvent):void
+		{
+			switch(_drawMode)
+			{
+				case DrawMode.DRAW_MODE:
+					drawShape( event.mouseEvent.stageX, event.mouseEvent.stageY);
+					break;
+				
+				case DrawMode.ERASE_MODE:
+					drawShape(event.mouseEvent.stageX, event.mouseEvent.stageY);
+					_drawArea.currentPage.detectObjectsToErase( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY) );
+					break;
+			}
+		}
+		
+		protected function onMouseUp(event:DrawAreaEvent):void
+		{
+			switch(_drawMode)
+			{
+				case DrawMode.DRAW_MODE:
+					if(_currentShape && _currentShape.type != TextShape.TEXT_SHAPE && _currentShape.type != ImageShape.IMAGE_SHAPE)
+					{
+						_currentShape.finishDraw();
+						_currentShape = null;
+					}
+					break;
+				
+				case DrawMode.ERASE_MODE:
+					_currentShape.finishDraw();
+					_currentShape = null;
 					break;
 			}
 		}
 		
 		protected function onMouseClick(event:DrawAreaEvent):void
 		{
-			
-		}
-		
-		protected function onMouseMove(event:DrawAreaEvent):void
-		{
-			if(_selectedTool == SelectTool.TRANSFORM_TOOL )
+			if(_currentShape && _currentShape.transforming)
 			{
-				//
-				//do nothing
-			}
-			else 
-			{
-				if(_currentShape)
-				{
-					_currentShape.setPoints( new Point(0,0), _currentShape.globalToLocal( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY )));
-					if(_selectedTool == EraserShape.ERASER_SHAPE)
-					{
-						_drawArea.currentPage.detectObjectsToErase( new Point(event.mouseEvent.stageX, event.mouseEvent.stageY) );
-					}
-				}
-			}
-		}
-		
-		protected function onMouseUp(event:DrawAreaEvent):void
-		{
-			if(_currentShape && _currentShape.type != TextShape.TEXT_SHAPE && _currentShape.type != ImageShape.IMAGE_SHAPE)
-			{
-				_currentShape.finishDraw();
-				
+				_currentShape.hideTransformControls();
 				_currentShape = null;
-				
 			}
 		}
 		
@@ -252,25 +307,17 @@ package com.graffix.drawingTool.view.drawing.managers
 			//currentDrawingShape.finishDraw();
 		}
 		
-	
 		
-		
-		private var _startPoint:Point;
-		private function createShapeToDraw(stageX:Number, stageY:Number):void
-		{
-			var tool:BaseShape = ShapesFactory.createTool( _selectedTool );
-			_startPoint = new Point(stageX, stageY);
-			_startPoint = _drawArea.globalToLocal( _startPoint );
-			tool.x = _startPoint.x;
-			tool.y = _startPoint.y;
-			tool.startDraw();
-			_drawArea.addChildToCurrentPage( tool );
-			_currentShape = tool;
-		}
 		
 		protected function onShapeSelect(event:ShapeSelectEvent):void
 		{
-			
+			_drawMode == DrawMode.DRAW_MODE;
+			if( _currentShape )
+			{
+				_currentShape.hideTransformControls();
+			}
+			_currentShape = event.target as BaseShape;
+			_currentShape.showTransformControls();
 		}
 		
 		/**

@@ -187,9 +187,12 @@ package com.graffix.drawingTool.view.drawing.shapes
 		{
 			// !!!!!!!!!!
 			// workaround 
-			// because dispathicg event here
+			// because dispathing event here
 			// stops of dispatching dblClick event
-			setTimeout( dispatchSelectEvent, 200);
+			if(!transforming)
+			{
+				setTimeout( dispatchSelectEvent, 200);
+			}
 		}
 		
 		private function dispatchSelectEvent():void
