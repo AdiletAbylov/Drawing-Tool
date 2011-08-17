@@ -5,6 +5,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import com.graffix.drawingTool.view.drawing.events.LayoutOrderEvent;
 	import com.graffix.drawingTool.view.drawing.managers.LayoutOrderManager;
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -53,20 +54,23 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			stageMouseCoord = globalToLocal( stageMouseCoord);
 			var eraserRect:Rectangle = new Rectangle( stageMouseCoord.x - 20, stageMouseCoord.y - 20, 40, 40);
-			var length:int = numElements - 1;
-			var i:int = 1;
+			var length:int = numElements;
+			var i:int = 0;
 			var visElement:IVisualElement;
 			var objRect:Rectangle;
 			while(i < length)
 			{
 				visElement = getElementAt( i );
-				if(!(visElement as BaseShape).toRemove)
+				if(visElement is BaseShape && !(visElement is EraserShape))
 				{
-					objRect = (visElement as DisplayObject).getBounds( this );
-					if(eraserRect.intersects(objRect))
+					if(!(visElement as BaseShape).toRemove)
 					{
-						_objectsToErase[_objectsToErase.length] = visElement;
-						(visElement as BaseShape).toRemove = true;
+						objRect = (visElement as DisplayObject).getBounds( this );
+						if(eraserRect.intersects(objRect))
+						{
+							_objectsToErase[_objectsToErase.length] = visElement;
+							(visElement as BaseShape).toRemove = true;
+						}
 					}
 				}
 				++i;
@@ -223,10 +227,10 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			setElementIndex( element, (element as BaseShape).zIndex);
 			setElementIndex(_background, 0);
-//			for(var i:int = 0; i < numElements; ++i)
-//			{
-//				trace("element " + i + ": " + getElementAt(i));
-//			}
+			//			for(var i:int = 0; i < numElements; ++i)
+			//			{
+			//				trace("element " + i + ": " + getElementAt(i));
+			//			}
 		}
 	}
 }
