@@ -153,7 +153,7 @@
 					showTextEditor();
 				}else
 				{
-					textEditPopup.displayPopUp = false;
+					hideTextEditor();
 				}
 			}
 			
@@ -162,13 +162,19 @@
 				textEditButton.selected = true;
 				textEditPopup.displayPopUp = true;
 				textEditor.textFlow = _currentShape.shapeDrawData.text;
+				//(_currentShape as TextShape).showHighlight();
 			}
 			
 			protected function textEditor_mouseDownOutsideHandler(event:FlexMouseEvent):void
 			{
+				hideTextEditor();
+			}
+			
+			private function hideTextEditor():void
+			{
 				textEditButton.selected = false;
 				textEditPopup.displayPopUp = false;
-				
+				//(_currentShape as TextShape).hideHighlight();
 			}
 			
 		]]>
