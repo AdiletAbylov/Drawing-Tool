@@ -84,12 +84,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			
 			_label.textFlow = TextConverter.importToFlow(_shapeDrawData.text, TextConverter.TEXT_LAYOUT_FORMAT );
 		
-			if(_transforming)
-			{
-				_transformTool.target = null;
-				_transforming = false;
-				//_transformTool.target = textContainer;
-			}
+			
 		}
 		
 		private function meauserLabel():void

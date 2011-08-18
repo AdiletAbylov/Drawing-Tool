@@ -6,20 +6,21 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
-	import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
 	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	
 	import mx.core.IVisualElement;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
-	public class DrawManager
+	public class DrawManager extends EventDispatcher
 	{
 		public function DrawManager(drawArea:DrawArea)
 		{
@@ -34,7 +35,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			//
 			// transforming mode is default 
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
-			_drawMode = DrawMode.TRANSFROM_MODE;
+			drawMode = DrawMode.TRANSFROM_MODE;
 		}
 		
 		
@@ -67,15 +68,15 @@ package com.graffix.drawingTool.view.drawing.managers
 			switch(_selectedTool)
 			{
 				case SelectTool.TRANSFORM_TOOL:
-					_drawMode = DrawMode.TRANSFROM_MODE;
+					drawMode = DrawMode.TRANSFROM_MODE;
 					break;
 				
 				case EraserShape.ERASER_SHAPE:
-					_drawMode = DrawMode.ERASE_MODE;
+					drawMode = DrawMode.ERASE_MODE;
 					break;
 				
 				default:
-					_drawMode = DrawMode.DRAW_MODE;
+					drawMode = DrawMode.DRAW_MODE;
 					break;
 			}
 		}
@@ -86,12 +87,31 @@ package com.graffix.drawingTool.view.drawing.managers
 		[Bindable]
 		public var _currentShape:BaseShape;
 		
+		private var _drawMode:int;
+
+		[Bindable(event="changeDrawMode")]
 		/**
 		 * Current draw mode.
 		 * Modes are: DRAWING, TRANSFORMING, EDITING, ERASING
 		 * 
 		 * */
-		private var _drawMode:int;
+		public function get drawMode():int
+		{
+			return _drawMode;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set drawMode(value:int):void
+		{
+			if( _drawMode !== value)
+			{
+				_drawMode = value;
+				dispatchEvent(new Event("changeDrawMode"));
+			}
+		}
+		
 		
 		//
 		// --------------- DRAWING METHODS -------------------
@@ -171,10 +191,11 @@ package com.graffix.drawingTool.view.drawing.managers
 			switch(_drawMode)
 			{
 				case DrawMode.DRAW_MODE:
-					if( _currentShape.type != ImageShape.IMAGE_SHAPE && _currentShape.type != TextShape.TEXT_SHAPE)
+					if( _currentShape.type != ImageShape.IMAGE_SHAPE)
 					{
 						_currentShape.finishDraw();
-						_currentShape = null;
+						drawMode = DrawMode.TRANSFROM_MODE;
+						_currentShape.showTransformControls();
 					}
 					break;
 				

@@ -20,6 +20,7 @@
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
+			import com.graffix.drawingTool.view.drawing.managers.DrawMode;
 			import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.IPropertyChangable;
 			import com.graffix.drawingTool.view.drawing.shapes.closed.EllipseShape;
@@ -52,6 +53,7 @@
 				_currentShape = value;
 				setState(_currentShape.type);
 			}
+			
 			
 			private function setState(type:int):void
 			{
@@ -183,7 +185,9 @@
 		<s:HorizontalLayout  paddingLeft="5" paddingRight="5" verticalAlign="middle"
 							 gap="15"/>
 	</s:layout>
-	<s:Group includeIn="TextState">
+	<s:Group includeIn="TextState"
+			 
+			 >
 		<s:ToggleButton
 			id="textEditButton"
 			click="textEditButton_clickHandler(event)"
@@ -194,7 +198,6 @@
 			id="textEditPopup"
 			popUpPosition="below">
 			<editors:TextEditorWindow
-				mouseDownOutside="textEditor_mouseDownOutsideHandler(event)"
 				finishEdit = "onTextEdit(event)"
 				id="textEditor"
 				/>

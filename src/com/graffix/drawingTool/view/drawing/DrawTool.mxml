@@ -138,6 +138,7 @@
 	</s:BorderContainer>
 	
 	<toolbars:ToolsView id="toolbar" left="10" top="10"
+						drawMode="{_drawManager.drawMode}"
 						TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
 	</toolbars:ToolsView>
 	<s:HGroup left="55" top="5">
@@ -150,6 +151,7 @@
 				  click="screenshotButton_clickHandler(event)"
 				  />
 		<toolbars:ToolPropertiesView id="toolProperties" left="130" top="10"
+									 
 									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
 	</s:HGroup>
