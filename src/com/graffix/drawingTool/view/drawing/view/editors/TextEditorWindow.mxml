@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
-			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:tlf="net.asciiworks.tlf.*"
-			   add="titlewindow1_addedHandler(event)"
-			   width="476" height="222">
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:tlf="net.asciiworks.tlf.*"
+		
+		 width="476" height="222" add="titlewindow1_addedHandler(event)"
+		 creationComplete="panel1_creationCompleteHandler(event)" title="Insert text">
 	<fx:Metadata>
 		[Event(name="finishEdit", type="com.graffix.drawingTool.view.drawing.events.TextEditorEvent")]
 	</fx:Metadata>
@@ -14,16 +15,13 @@
 			import com.graffix.drawingTool.view.drawing.events.TextEditorEvent;
 			
 			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.events.UpdateCompleteEvent;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
+			import mx.events.FlexMouseEvent;
 			import mx.managers.PopUpManager;
 			
-			protected function titlewindow1_closeHandler(event:CloseEvent):void
-			{
-				//richTextEditor.textFlow = null;
-				PopUpManager.removePopUp(this);
-			}
 			
 			public function set textFlow(flow:String):void
 			{
@@ -38,20 +36,26 @@
 				}
 			}
 			
-			protected function onSaveClick(event:MouseEvent):void
+			protected function panel1_creationCompleteHandler(event:FlexEvent):void
+			{
+				richTextEditor.display.addEventListener(TextEvent.TEXT_INPUT, onTextValueCommit);
+			}
+			
+			private function onTextValueCommit(event:TextEvent):void
 			{
 				dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, richTextEditor.textFlow) );
 			}
+			
+			
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:controlBarContent>
-		<s:Button label="Save" click="onSaveClick(event)"/>
-	</s:controlBarContent>
+	
 	<tlf:TLFTextEditor id="richTextEditor"
+					   
 					   left="0" top="0" right="0" bottom="0">
 	</tlf:TLFTextEditor>
 </s:Panel>
