@@ -244,13 +244,15 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		protected function onShapeSelect(event:ShapeSelectEvent):void
 		{
-			_drawMode == DrawMode.TRANSFROM_MODE;
-			if( _currentShape )
+			if( _drawMode != DrawMode.DRAW_MODE)
 			{
-				_currentShape.hideTransformControls();
+				if( _currentShape )
+				{
+					_currentShape.hideTransformControls();
+				}
+				_currentShape = event.target as BaseShape;
+				_currentShape.showTransformControls();
 			}
-			_currentShape = event.target as BaseShape;
-			_currentShape.showTransformControls();
 		}
 		
 		/**
