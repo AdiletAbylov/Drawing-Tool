@@ -34,6 +34,7 @@
 			
 			import mx.events.CloseEvent;
 			import mx.events.ColorPickerEvent;
+			import mx.events.FlexMouseEvent;
 			import mx.messaging.AbstractConsumer;
 			
 			import spark.events.IndexChangeEvent;
@@ -136,8 +137,8 @@
 			
 			protected function onTextEdit(event:TextEditorEvent):void
 			{
-				textEditButton.selected = false;
-				textEditPopup.displayPopUp = false;
+				//textEditButton.selected = false;
+				//textEditPopup.displayPopUp = false;
 				if(_currentShape)
 				{
 					var formattedString:String = TextConverter.export(event.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
@@ -163,6 +164,13 @@
 				textEditor.textFlow = _currentShape.shapeDrawData.text;
 			}
 			
+			protected function textEditor_mouseDownOutsideHandler(event:FlexMouseEvent):void
+			{
+				textEditButton.selected = false;
+				textEditPopup.displayPopUp = false;
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<s:layout>
@@ -180,6 +188,7 @@
 			id="textEditPopup"
 			popUpPosition="below">
 			<editors:TextEditorWindow
+				mouseDownOutside="textEditor_mouseDownOutsideHandler(event)"
 				finishEdit = "onTextEdit(event)"
 				id="textEditor"
 				/>
