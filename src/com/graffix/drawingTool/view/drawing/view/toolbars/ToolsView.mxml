@@ -10,6 +10,7 @@
 			import com.graffix.drawingTool.view.drawing.shapes.closed.RectShape;
 			import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 			import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
+			import com.graffix.drawingTool.view.drawing.shapes.complex.SymbolShape;
 			import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 			import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 			import com.graffix.drawingTool.view.drawing.shapes.simple.FreehandShape;
@@ -63,10 +64,13 @@
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/text.png')"/>
 					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+					
+					<fx:Object label="Insert image" data = "{SymbolShape.SYMBOL_SHAPE}"
+							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+					
 					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/eraser.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>
 		</s:ButtonBar>
-	
 </s:Group>
