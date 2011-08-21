@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="354" height="306">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			private var _symbolsList:ArrayList = new ArrayList(["∞", "α", "β", "γ", "π", "μ","φ", "√", "≈","∑", "Ω", "ϴ", "€", "Ω", "¥", "£"]);
+		]]>
+	</fx:Script>
+	<s:DataGroup left="5" right="5" top="5" bottom="5" dataProvider="{_symbolsList}">
+		<s:layout>
+			<s:TileLayout/>
+		</s:layout>
+	</s:DataGroup>
+	
+</s:BorderContainer>
