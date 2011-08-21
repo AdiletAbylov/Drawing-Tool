@@ -2,6 +2,9 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 {
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	
+	import flash.display.DisplayObject;
+	import flash.text.TextLineMetrics;
+	
 	import spark.components.Label;
 
 	public class SymbolShape extends BaseShape
@@ -13,12 +16,15 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			super();
 			_shapeDrawData.shapeType = SYMBOL_SHAPE;
 			_label = new Label();
+			_label.maxDisplayedLines = 1;
+			_label.text = " ";
+			_label.setStyle("fontSize", 20);
+				
 		}
 		
 		override protected function createChildren():void
 		{
 			super.createChildren();
-			_label.setStyle("align", "center");
 			addChild( _label );
 		}
 		
@@ -29,15 +35,26 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			_textChanged = true;
 			invalidateDisplayList();
 		}
+		private function meauserLabel():void
+		{
+			var lineMetrics:TextLineMetrics = _label.measureText(_label.text);
+			_label.width = lineMetrics.width;
+			_label.height = 20;
+		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			if(_textChanged)
 			{
-				_label.text = shapeDrawData.text;
+				_label.text = _shapeDrawData.text;
+				meauserLabel();
 				_textChanged = false;
 			}
+		}
+		override protected function get viewObject():DisplayObject
+		{
+			return _label;
 		}
 	}
 }

@@ -9,6 +9,7 @@ package com.graffix.drawingTool.view.drawing.events
 		public function SymbolSelectEvent( symbol:String)
 		{
 			super(SELECT, bubbles, cancelable);
+			this.symbol = symbol;
 		}
 	}
 }

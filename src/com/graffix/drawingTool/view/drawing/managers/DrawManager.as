@@ -6,6 +6,7 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.shapes.BaseShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.EraserShape;
 	import com.graffix.drawingTool.view.drawing.shapes.complex.ImageShape;
+	import com.graffix.drawingTool.view.drawing.shapes.complex.SymbolShape;
 	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
 	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
@@ -79,6 +80,16 @@ package com.graffix.drawingTool.view.drawing.managers
 					drawMode = DrawMode.DRAW_MODE;
 					break;
 			}
+		}
+		
+		/**
+		 * Object handles some data received from ToolsView
+		 * used for special symbols shapes
+		 * */
+		private var _toolData:Object;
+		public function set toolData(value:Object):void
+		{
+			_toolData = value;
 		}
 		
 		/**
@@ -194,6 +205,12 @@ package com.graffix.drawingTool.view.drawing.managers
 					if( _currentShape.type != ImageShape.IMAGE_SHAPE)
 					{
 						_currentShape.finishDraw();
+						//
+						// insert text for special symbol
+						if(_currentShape.type == SymbolShape.SYMBOL_SHAPE)
+						{
+							(_currentShape as SymbolShape).symbol = _toolData as String;
+						}
 						drawMode = DrawMode.TRANSFROM_MODE;
 						_currentShape.showTransformControls();
 					}
