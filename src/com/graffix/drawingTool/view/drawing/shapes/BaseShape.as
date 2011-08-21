@@ -157,14 +157,14 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function showTransformControls():void
 		{
-			showTransform();
+			_transforming = true;
+			invalidateDisplayList();
 		}
 		
 		protected function showTransform():void
 		{
 			_transformTool.target = viewObject;
 			_transformTool.registration = _transformTool.boundsCenter;
-			_transforming = true;
 			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
 		}
 		
@@ -175,13 +175,13 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function hideTransformControls():void
 		{
-			hideTransform();
+			_transforming = false;
+			invalidateDisplayList();
 		}
 		
 		protected function hideTransform():void
 		{
 			_transformTool.target = null;
-			_transforming = false;
 			_transformTool.removeEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
 		}
 		
@@ -259,13 +259,21 @@ package com.graffix.drawingTool.view.drawing.shapes
 				y = _shapeDrawData.y;
 				_redrawAll = false;
 			}
+			
+			if(transforming)
+			{
+				showTransform();
+			}else
+			{
+				hideTransform();
+			}
+			
 		}
 		
 		protected function get viewObject():DisplayObject
 		{
 			return _spriteToDraw;
 		}
-		
 		
 		
 
