@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:toolbars="com.graffix.drawingTool.view.drawing.view.toolbars.*">
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
+			import com.graffix.drawingTool.view.drawing.events.SymbolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.managers.DrawMode;
 			import com.graffix.drawingTool.view.drawing.shapes.closed.EllipseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.closed.RectShape;
@@ -16,13 +17,21 @@
 			import com.graffix.drawingTool.view.drawing.shapes.simple.FreehandShape;
 			import com.graffix.drawingTool.view.drawing.shapes.simple.LineShape;
 			
+			import mx.controls.List;
+			
 			import spark.events.IndexChangeEvent;
 			
 			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
 			{
-				var toolSelectEvent:ToolSelectEvent = new ToolSelectEvent(buttonBar.selectedItem.data);
-				dispatchEvent(toolSelectEvent);
+				if(buttonBar.selectedItem.data != SymbolShape.SYMBOL_SHAPE)
+				
+				{
+					symbolsPanelPopup.displayPopUp = false;
+					var toolSelectEvent:ToolSelectEvent = new ToolSelectEvent(buttonBar.selectedItem.data);
+					dispatchEvent(toolSelectEvent);
+				}
 			}
+			
 			public function set drawMode(value:int):void
 			{
 				if(value == DrawMode.TRANSFROM_MODE)
@@ -30,6 +39,14 @@
 					buttonBar.selectedIndex = 0;
 				}
 			}
+			
+			
+			protected function specialsymbolspanel1_symbolSelectHandler(event:SymbolSelectEvent):void
+			{
+				var toolSelectEvent:ToolSelectEvent = new ToolSelectEvent(buttonBar.selectedItem.data, event.symbol);
+				dispatchEvent(toolSelectEvent);
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Metadata>
@@ -65,7 +82,7 @@
 					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 					
-					<fx:Object label="Insert image" data = "{SymbolShape.SYMBOL_SHAPE}"
+					<fx:Object label="Insert symbol" data = "{SymbolShape.SYMBOL_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 					
 					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
@@ -73,4 +90,13 @@
 				</s:ArrayList>
 			</s:dataProvider>
 		</s:ButtonBar>
+		<s:PopUpAnchor
+			popUpPosition="right"
+			displayPopUp="{buttonBar.selectedItem.data == SymbolShape.SYMBOL_SHAPE}"
+			id="symbolsPanelPopup"
+			width="30" height="30" y="210">
+			<toolbars:SpecialSymbolsPanel
+				symbolSelect="specialsymbolspanel1_symbolSelectHandler(event)"
+				/>
+		</s:PopUpAnchor>
 </s:Group>
