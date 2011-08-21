@@ -91,6 +91,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 			
 		
 		protected var _hasFillChanged:Boolean;
+		[Bindable]
 		public function get hasFill():Boolean
 		{
 			return _shapeDrawData.hasFill;
