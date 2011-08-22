@@ -83,7 +83,7 @@
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
 					
 					<fx:Object label="Insert symbol" data = "{SymbolShape.SYMBOL_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+							   icon="@Embed(source='com/graffix/drawingTool/view/assets/special.png')"/>
 					
 					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
 							   icon="@Embed(source='com/graffix/drawingTool/view/assets/eraser.png')"/>
