@@ -7,6 +7,7 @@
 		<s:State name="ClosedFigureState"/>
 		<s:State name="LineState"/>
 		<s:State name="TextState"/>
+		<s:State name="EmptyState"/>
 	</s:states>
 	<fx:Declarations>
 		<s:Parallel id="transitionEffect" targets="{[lineControls, fillControls, this, layoutControls]}">
@@ -25,6 +26,7 @@
 			import com.graffix.drawingTool.view.drawing.shapes.IPropertyChangable;
 			import com.graffix.drawingTool.view.drawing.shapes.closed.EllipseShape;
 			import com.graffix.drawingTool.view.drawing.shapes.closed.RectShape;
+			import com.graffix.drawingTool.view.drawing.shapes.complex.SymbolShape;
 			import com.graffix.drawingTool.view.drawing.shapes.complex.TextShape;
 			import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 			import com.graffix.drawingTool.view.drawing.shapes.simple.FreehandShape;
@@ -80,6 +82,10 @@
 						{
 							showTextEditor();
 						}
+						break;
+					
+					default:
+						currentState = "EmptyState"
 						break;
 				}
 			}
