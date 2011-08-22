@@ -16,10 +16,10 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			super();
 			_shapeDrawData.shapeType = SYMBOL_SHAPE;
 			_label = new Label();
-			_label.maxDisplayedLines = 1;
+			//_label.maxDisplayedLines = 1;
 			_label.text = " ";
 			_label.setStyle("fontSize", 20);
-				
+			_label.setStyle("textAlign", "center");	
 		}
 		
 		override protected function createChildren():void
@@ -38,19 +38,25 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		private function meauserLabel():void
 		{
 			var lineMetrics:TextLineMetrics = _label.measureText(_label.text);
-			_label.width = lineMetrics.width;
+			_label.width = lineMetrics.width + 10;
 			_label.height = 20;
 		}
 		
+		override public function draw():void
+		{
+			_label.text = _shapeDrawData.text;
+			_label.cacheAsBitmap = true;
+		}
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			if(_textChanged)
 			{
-				_label.text = _shapeDrawData.text;
-				meauserLabel();
+				draw();
+				
 				_textChanged = false;
 			}
+			meauserLabel();
 		}
 		override protected function get viewObject():DisplayObject
 		{
