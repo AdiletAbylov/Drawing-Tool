@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" width="190" height="200">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="symbolSelect", type="com.graffix.drawingTool.view.drawing.events.SymbolSelectEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.view.drawing.events.SymbolSelectEvent;
+			
+			import mx.collections.ArrayList;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			private var _symbolsArrayList:ArrayList = new ArrayList([{data:"α"}, {data:"β"}, {data:"γ"}, {data:"π"}, 
+																{data:"μ"}, {data:"φ"}, {data:"√"}, {data:"≈"},
+																{data:"∑"}, {data:"Ω"}, {data:"ϴ"}, {data:"€"}, 
+																{data:"Ω"}, {data:"¥"}, {data:"£"}, {data:"∞"}]);
+			
+			
+			
+			protected function symbolsList_changeHandler(event:IndexChangeEvent):void
+			{
+				
+				dispatchEvent(new SymbolSelectEvent( symbolsList.selectedItem.data));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:List left="5" right="5" top="5" bottom="5"
+			id="symbolsList"
+			change="symbolsList_changeHandler(event)"
+			dataProvider="{_symbolsArrayList}">
+		<s:layout>
+			<s:TileLayout horizontalAlign="center" horizontalGap="0" verticalAlign="middle"/>
+		</s:layout>
+		<s:itemRenderer>
+			<fx:Component id="ir" className="SymbolsItemRenderer">
+				<s:ItemRenderer width="40" height="40">
+					<s:Label text="{data.data}"
+							 textAlign="center"
+							 fontSize="20"
+							 verticalCenter="0" horizontalCenter="0"/>
+				</s:ItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+	
+</s:BorderContainer>
