@@ -8,6 +8,7 @@
 		 creationComplete="panel1_creationCompleteHandler(event)" title="Insert text">
 	<fx:Metadata>
 		[Event(name="finishEdit", type="com.graffix.drawingTool.view.drawing.events.TextEditorEvent")]
+		[Event(name="inputText", type="com.graffix.drawingTool.view.drawing.events.TextEditorEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		
@@ -43,16 +44,24 @@
 			
 			private function onTextValueCommit(event:TextEvent):void
 			{
-				dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, richTextEditor.textFlow) );
+				dispatchEvent( new TextEditorEvent(TextEditorEvent.INPUT_TEXT, richTextEditor.textFlow) );
 			}
 			
 			
+			
+			protected function saveButton_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, richTextEditor.textFlow) );
+			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<s:controlBarContent>
+		<s:Button label="Save" id="saveButton" click="saveButton_clickHandler(event)"/>
+	</s:controlBarContent>
 	
 	<tlf:TLFTextEditor id="richTextEditor"
 					   

@@ -28,8 +28,6 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			_shapeDrawData.shapeType = TEXT_SHAPE;
 			_label = new RichText();
 			_label.text = "Text Label";
-			
-			
 		}
 		
 		

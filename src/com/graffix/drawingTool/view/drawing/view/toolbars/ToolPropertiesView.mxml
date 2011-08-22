@@ -179,6 +179,16 @@
 				//(_currentShape as TextShape).hideHighlight();
 			}
 			
+			protected function textEditor_finishEditHandler(event:TextEditorEvent):void
+			{
+				hideTextEditor();
+				if(_currentShape)
+				{
+					var formattedString:String = TextConverter.export(event.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
+					(_currentShape as TextShape).setText(formattedString);
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<s:layout>
@@ -186,9 +196,9 @@
 							 gap="15"/>
 	</s:layout>
 	<s:Group includeIn="TextState"
-			 
 			 >
 		<s:ToggleButton
+			
 			id="textEditButton"
 			click="textEditButton_clickHandler(event)"
 			label="Edit text" />
@@ -198,7 +208,8 @@
 			id="textEditPopup"
 			popUpPosition="below">
 			<editors:TextEditorWindow
-				finishEdit = "onTextEdit(event)"
+				finishEdit = "textEditor_finishEditHandler(event)"
+				inputText="onTextEdit(event)"
 				id="textEditor"
 				/>
 		</s:PopUpAnchor>
