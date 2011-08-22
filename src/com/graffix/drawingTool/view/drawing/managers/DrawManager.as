@@ -14,6 +14,7 @@ package com.graffix.drawingTool.view.drawing.managers
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import mx.core.IVisualElement;
@@ -29,6 +30,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			_drawArea.addEventListener(DrawAreaEvent.MOVE, onMouseMove );
 			_drawArea.addEventListener(DrawAreaEvent.DOWN, onMouseDown );
 			_drawArea.addEventListener( DrawAreaEvent.UP, onMouseUp);
+			_drawArea.addEventListener( MouseEvent.ROLL_OUT, onMouseOut);
 			
 			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
@@ -38,6 +40,13 @@ package com.graffix.drawingTool.view.drawing.managers
 			drawMode = DrawMode.TRANSFROM_MODE;
 		}
 		
+		protected function onMouseOut(event:MouseEvent):void
+		{
+			if(_drawMode == DrawMode.DRAW_MODE)
+			{
+				endDraw();
+			}
+		}		
 		
 		/**
 		 * Reference to the draw area
@@ -154,6 +163,25 @@ package com.graffix.drawingTool.view.drawing.managers
 			}
 		}
 		
+		
+		private function endDraw():void
+		{
+			switch(_drawMode)
+			{
+				case DrawMode.DRAW_MODE:
+					if( _currentShape.type != ImageShape.IMAGE_SHAPE)
+					{
+						_currentShape.finishDraw();
+						drawMode = DrawMode.TRANSFROM_MODE;
+						_currentShape.showTransformControls();
+					}
+					break;
+				
+				case DrawMode.ERASE_MODE:
+					_currentShape.finishDraw();
+					break;
+			}
+		}
 		//
 		// --------------- HANDLE MOUSE EVENTS-----------------
 		//
@@ -188,22 +216,10 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		protected function onMouseUp(event:DrawAreaEvent):void
 		{
-			switch(_drawMode)
-			{
-				case DrawMode.DRAW_MODE:
-					if( _currentShape.type != ImageShape.IMAGE_SHAPE)
-					{
-						_currentShape.finishDraw();
-						drawMode = DrawMode.TRANSFROM_MODE;
-						_currentShape.showTransformControls();
-					}
-					break;
-				
-				case DrawMode.ERASE_MODE:
-					_currentShape.finishDraw();
-					break;
-			}
+			endDraw();
 		}
+		
+		
 		
 		protected function onMouseClick(event:DrawAreaEvent):void
 		{
