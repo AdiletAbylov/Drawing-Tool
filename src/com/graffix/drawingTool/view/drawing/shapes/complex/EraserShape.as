@@ -43,7 +43,15 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			dispatchEvent(new EraseEvent(this));
 		}
 		
+		override public function hideTransformControls():void
+		{
+			// do nothing
+		}
 		
+		override public function showTransformControls():void
+		{
+			//do nothing
+		}
 		
 		override public function destroy():void
 		{
