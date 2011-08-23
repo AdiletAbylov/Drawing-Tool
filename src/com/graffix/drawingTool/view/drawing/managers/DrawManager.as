@@ -182,6 +182,10 @@ package com.graffix.drawingTool.view.drawing.managers
 				case DrawMode.DRAW_MODE:
 					if( _currentShape.type != ImageShape.IMAGE_SHAPE)
 					{
+						if(_currentShape.type == SymbolShape.SYMBOL_SHAPE)
+						{
+							(_currentShape as SymbolShape).symbol = _toolData as String;
+						}
 						_currentShape.finishDraw();
 						drawMode = DrawMode.TRANSFROM_MODE;
 						_currentShape.showTransformControls();

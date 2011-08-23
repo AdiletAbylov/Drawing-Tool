@@ -16,7 +16,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 			super();
 			_shapeDrawData.shapeType = SYMBOL_SHAPE;
 			_label = new Label();
-			//_label.maxDisplayedLines = 1;
+			_label.maxDisplayedLines = 1;
 			_label.text = " ";
 			_label.setStyle("fontSize", 20);
 			_label.setStyle("textAlign", "center");	
