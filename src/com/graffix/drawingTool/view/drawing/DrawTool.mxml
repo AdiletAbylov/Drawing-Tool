@@ -8,9 +8,12 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.view.drawing.managers.DrawManager;
 			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
 			import com.graffix.drawingTool.view.drawing.events.ShapeChangedEvent;
+			import com.graffix.drawingTool.view.drawing.events.pages.PageManagerEvent;
+			import com.graffix.drawingTool.view.drawing.managers.DrawManager;
+			import com.graffix.drawingTool.view.drawing.managers.PagesManager;
+			import com.graffix.drawingTool.view.drawing.view.area.Page;
 			import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 			
 			import spark.events.IndexChangeEvent;
@@ -27,50 +30,24 @@
 				_so = value;
 			}
 			
-			private function onSync(event:SyncEvent):void
-			{
-				trace("onSync");
-				for (var i:int = 0; i<event.changeList.length; ++i) 
-				{
-					trace("ololo", event.changeList[i].code);
-					var name:String = event.changeList[i].name;
-					var shapeData:ShapeDrawData = new ShapeDrawData(_so.data[name]);
-					switch(event.changeList[i].code)
-					{
-						case "delete":
-							_drawManager.eraseShape(name);
-							break;
-						
-						case "change":
-							_drawManager.updateShape( shapeData );
-							break;
-						
-						case "success":
-							//
-							//do nothing on success
-							break;
-					}
-				}
-				
-			}
-			
 			[Bindable]
 			private var _drawManager:DrawManager;
 			
 			protected function init():void
 			{
-				_drawManager = new DrawManager( drawArea );
+				
 				addEventListener(ShapeChangedEvent.SHAPE_ADDED, onShapeAdded);
 				addEventListener(ShapeChangedEvent.SHAPE_CHANGED, onShapeChanged);
 				addEventListener(ShapeChangedEvent.SHAPE_REMOVED, onShapeRemoved);
 				if(_so)
 				{
-					_so.addEventListener(SyncEvent.SYNC, onSync);
+					_pagesManager = new PagesManager( _so, drawArea );
+					_pagesManager.addEventListener(PageManagerEvent.INIT_COMPLETE, onPagesInitComplete);
 				}
 			}
 			
 			
-		
+			
 			private function  onShapeAdded(event:ShapeChangedEvent):void
 			{
 				trace("shapeAdded");
@@ -108,27 +85,22 @@
 			[Embed("com/graffix/drawingTool/view/assets/remove.png")]
 			protected const ICON:Class;
 			
-			protected function addPageButton_clickHandler(event:MouseEvent):void
-			{
-				drawArea.addPage();
-			}
+			[Bindable]
+			private var _pagesManager:PagesManager;
 			
 			
-			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
-			{
-				drawArea.selectPage( pagesBar.selectedIndex );
-			}
-			
-			
-			protected function removePageButton_clickHandler(event:MouseEvent):void
-			{
-				drawArea.removeCurrentPage();
-			}
 			
 			
 			protected function screenshotButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.currentPage.makeScreenshot();
+			}
+			
+			//
+			// start to draw only after pages initialization complete
+			protected function onPagesInitComplete(event:PageManagerEvent):void
+			{
+				_drawManager = new DrawManager( drawArea, _so );
 			}
 			
 		]]>
@@ -156,14 +128,4 @@
 									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
 	</s:HGroup>
-	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>
-	<s:Button id="removePageButton"
-			  enabled="{drawArea.pages.length > 1}"
-			  right="75" bottom="5" label="- Page" click="removePageButton_clickHandler(event)"/>
-	<s:ButtonBar
-		id="pagesBar"
-		selectedItem="{drawArea.currentPage}"
-		left="50" bottom="5" 
-		dataProvider="{drawArea.pages}" labelField="label" change="buttonbar1_changeHandler(event)">
-	</s:ButtonBar>
 </s:Group>
