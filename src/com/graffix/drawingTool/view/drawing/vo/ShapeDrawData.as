@@ -29,6 +29,8 @@ package com.graffix.drawingTool.view.drawing.vo
 		
 		public var text:String;
 		
+		public var pageUID:String;
+		
 		private function serialize(data:Object):void
 		{
 			try
@@ -45,7 +47,7 @@ package com.graffix.drawingTool.view.drawing.vo
 				lineSize = data.lineSize;
 				hasFill = data.hasFill;
 				fillColor = data.fillColor;
-				
+				pageUID = data.pageUID;
 				text = data.text;
 				
 				if(data.matrix)
