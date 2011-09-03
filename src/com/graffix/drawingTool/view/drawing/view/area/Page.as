@@ -21,6 +21,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
+	import mx.utils.UIDUtil;
 	
 	import spark.components.NavigatorContent;
 	
@@ -29,6 +30,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 		public function Page()
 		{
 			super();
+			_uid = UIDUtil.createUID();
 			addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove );
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown );
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -37,7 +39,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			addEventListener(EraseEvent.ERASE_EVENT, onEraseEvent);
 		}
 		
-		
+		public static const PAGE_TYPE:int = 44;
 		private function onEraseEvent(event:EraseEvent):void
 		{
 			for(var i:int = 0; i < _objectsToErase.length; ++i)
@@ -160,6 +162,12 @@ package com.graffix.drawingTool.view.drawing.view.area
 		public function destroy():void
 		{
 			clear();
+			removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove );
+			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown );
+			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			removeEventListener(MouseEvent.CLICK, onMouseClick);
+			removeEventListener(ResizeEvent.RESIZE, onResize);
+			removeEventListener(EraseEvent.ERASE_EVENT, onEraseEvent);
 		}
 		
 		private function onLayoutEvent(event:LayoutOrderEvent):void
@@ -190,6 +198,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			var el:IVisualElement  = super.addElement(element);
 			if(element is BaseShape)
 			{
+				(element as BaseShape).pageUID = pageUID;
 				_elementsByID[ (element as BaseShape).id ] = element;
 				callLater(updateElementLayout, [ element ]);
 			}
@@ -227,10 +236,19 @@ package com.graffix.drawingTool.view.drawing.view.area
 		{
 			setElementIndex( element, (element as BaseShape).zIndex);
 			setElementIndex(_background, 0);
-			//			for(var i:int = 0; i < numElements; ++i)
-			//			{
-			//				trace("element " + i + ": " + getElementAt(i));
-			//			}
 		}
+		
+		private var _uid:String;
+
+		public function get pageUID():String
+		{
+			return _uid;
+		}
+
+		public function set pageUID(value:String):void
+		{
+			_uid = value;
+		}
+		
 	}
 }
