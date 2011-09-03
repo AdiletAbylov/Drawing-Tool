@@ -12,6 +12,7 @@ package com.graffix.drawingTool.view.drawing.managers
 	import flash.net.SharedObject;
 	
 	import mx.collections.ArrayCollection;
+	import mx.messaging.channels.StreamingAMFChannel;
 
 
 	public class PagesManager extends EventDispatcher
@@ -78,9 +79,9 @@ package com.graffix.drawingTool.view.drawing.managers
 			{
 				if(_drawArea.pagesStack.length == 0)
 				{
-					_drawArea.addPage();
+					savePage(_drawArea.addPage().pageUID, {type:Page.PAGE_TYPE});
 				}
-				dispatchEvent( PageManagerEvent(PageManagerEvent.INIT_COMPLETE));
+				dispatchEvent( new PageManagerEvent(PageManagerEvent.INIT_COMPLETE));
 				_firstTime = false;
 			}
 		}

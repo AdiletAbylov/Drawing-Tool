@@ -72,7 +72,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		
 		public function get type():int
 		{
-			return shapeDrawData.shapeType;
+			return shapeDrawData.type;
 		}
 		
 		//

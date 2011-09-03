@@ -321,7 +321,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			for(var i:int = 0; i < shapes.length; ++i)
 			{
 				var shapeData:ShapeDrawData = new ShapeDrawData( shapes[i] );
-				var shape:BaseShape = ShapesFactory.createTool( shapeData.shapeType );
+				var shape:BaseShape = ShapesFactory.createTool( shapeData.type );
 				if(shape)
 				{
 					shape.id = shapeData.shapeID;
@@ -354,7 +354,7 @@ package com.graffix.drawingTool.view.drawing.managers
 					}
 					else
 					{
-						shape = ShapesFactory.createTool( shapeData.shapeType );
+						shape = ShapesFactory.createTool( shapeData.type );
 						if(shape)
 						{
 							shape.id = shapeData.shapeID;

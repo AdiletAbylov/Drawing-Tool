@@ -25,7 +25,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		{
 			super();
 			this.doubleClickEnabled = true;	
-			_shapeDrawData.shapeType = TEXT_SHAPE;
+			_shapeDrawData.type = TEXT_SHAPE;
 			_label = new RichText();
 			_label.text = "Text Label";
 		}

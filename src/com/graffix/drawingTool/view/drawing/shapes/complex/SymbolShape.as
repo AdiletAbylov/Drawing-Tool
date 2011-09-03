@@ -14,7 +14,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		public function SymbolShape()
 		{
 			super();
-			_shapeDrawData.shapeType = SYMBOL_SHAPE;
+			_shapeDrawData.type = SYMBOL_SHAPE;
 			_label = new Label();
 			_label.maxDisplayedLines = 1;
 			_label.text = " ";

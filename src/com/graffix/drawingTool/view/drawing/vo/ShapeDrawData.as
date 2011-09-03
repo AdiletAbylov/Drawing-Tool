@@ -14,7 +14,7 @@ package com.graffix.drawingTool.view.drawing.vo
 		}
 		
 		public var shapeID:String;
-		public var shapeType:int;
+		public var type:int;
 		public var drawData:Object;
 		public var x:Number;
 		public var y:Number;
@@ -36,7 +36,7 @@ package com.graffix.drawingTool.view.drawing.vo
 			try
 			{
 				shapeID = data.shapeID;
-				shapeType = data.shapeType;
+				type = data.type;
 				x = data.x;
 				y = data.y;
 				drawData = data.drawData;

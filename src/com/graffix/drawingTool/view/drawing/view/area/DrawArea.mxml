@@ -128,7 +128,7 @@
 				}
 				dispatchEvent(new Event("pagesChangeEvent"));
 				selectPage( pagesStack.length - 1);
-				page.label = "Page " + ( pagesStack.length - 1);
+				page.label = "Page " + ( pagesStack.length );
 				return page;
 			}
 			
@@ -214,7 +214,7 @@
 	<s:ButtonBar
 		id="pagesBar"
 		change="buttonbar1_changeHandler(event)"
-		selectedItem="{currentPage}"
+		
 		left="5" bottom="5" 
 		dataProvider="{pagesStack}" labelField="label">
 	</s:ButtonBar>

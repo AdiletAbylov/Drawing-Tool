@@ -18,7 +18,7 @@ package com.graffix.drawingTool.view.drawing.shapes.complex
 		public function ImageShape()
 		{
 			super();
-			_shapeDrawData.shapeType = IMAGE_SHAPE;
+			_shapeDrawData.type = IMAGE_SHAPE;
 		}
 		
 		override protected function createChildren():void

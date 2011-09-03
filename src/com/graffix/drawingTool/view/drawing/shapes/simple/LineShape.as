@@ -10,7 +10,7 @@ package com.graffix.drawingTool.view.drawing.shapes.simple
 		public function LineShape()
 		{
 			super();
-			_shapeDrawData.shapeType = LINE_SHAPE;
+			_shapeDrawData.type = LINE_SHAPE;
 		}
 		
 		override public function setProperty(name:String, value:Object):void

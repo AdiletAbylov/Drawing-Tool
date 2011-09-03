@@ -9,7 +9,7 @@ package com.graffix.drawingTool.view.drawing.shapes.closed
 		public function RectShape()
 		{
 			super();
-			_shapeDrawData.shapeType = RECT_SHAPE;
+			_shapeDrawData.type = RECT_SHAPE;
 		}
 		
 		public static const RECT_SHAPE:int = 1;
