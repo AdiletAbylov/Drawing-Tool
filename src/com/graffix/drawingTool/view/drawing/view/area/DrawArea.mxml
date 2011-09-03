@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="pageAdded", type="com.graffix.drawingTool.view.drawing.events.pages.PageEvent")]
+		[Event(name="pageRemoved", type="com.graffix.drawingTool.view.drawing.events.pages.PageEvent")]
+		[Event(name="pageSelected", type="com.graffix.drawingTool.view.drawing.events.pages.PageEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.view.drawing.events.pages.PageEvent;
+			
+			import mx.core.IVisualElement;
+			import mx.events.IndexChangedEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			
+			private const CELL_WIDTH:Number = 25;
+			private const CELL_HEIGHT:Number = 25;
+			
+			private var _drawGrid:Boolean;
+			private var _drawGridChanged:Boolean;
+			
+			private var _currentPage:Page;
+			
+			[Bindable (event="currentPageChange")]
+			public function get currentPage():Page
+			{
+				return _currentPage;
+			}
+			
+			public function set currentPage(value:Page):void
+			{
+				_currentPage = value;
+			}
+			
+			public function set drawGrid(value:Boolean):void
+			{
+				_drawGrid = value;
+				_drawGridChanged = true;
+				invalidateDisplayList();
+			}
+			
+			
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				if(_drawGridChanged)
+				{
+					if(_drawGrid)
+					{
+						drawingGrid();
+					}else
+					{
+						graphics.clear();
+					}
+					_drawGridChanged = false;
+				}
+				
+			}
+			
+			private function drawingGrid():void
+			{
+				graphics.clear();
+				
+				graphics.lineStyle(1, 0x000000, 0.1);
+				var position:int = 0;
+				for(position = CELL_WIDTH; position <= this.width; position += CELL_WIDTH )
+				{
+					this.graphics.moveTo(position, 0);
+					this.graphics.lineTo(position, this.height);
+				}
+				
+				for(position = CELL_HEIGHT; position <= this.height; position += CELL_HEIGHT )
+				{
+					this.graphics.moveTo(0, position);
+					this.graphics.lineTo(this.width, position);
+				}
+			}
+			
+			
+			//
+			//-------- PAGES
+			//
+			
+			private function onViewStackChange(event:IndexChangedEvent):void
+			{
+				_currentPage = pagesStack.selectedChild as Page;
+			}
+			
+			public function addChildToCurrentPage(child:IVisualElement):void
+			{
+				if(_currentPage)
+				{
+					_currentPage.addElement(child);
+				}
+			}
+			
+			public function removeChildFromCurrentPage(child:IVisualElement):void
+			{
+				if(_currentPage)
+				{
+					_currentPage.removeElement(child);
+				}
+			}
+			
+			private function createPage():Page
+			{
+				var page:Page = new Page();
+				page.percentWidth = 100;
+				page.percentHeight = 100;
+				return page;
+			}
+			
+			public function addPage(uid:String = null):Page
+			{
+				var page:Page = createPage();
+				pagesStack.addChild(page);
+				if(uid)
+				{
+					page.pageUID = uid;
+				}
+				dispatchEvent(new Event("pagesChangeEvent"));
+				selectPage( pagesStack.length - 1);
+				page.label = "Page " + ( pagesStack.length - 1);
+				return page;
+			}
+			
+			
+			/**
+			 * returns selected page uid
+			 * */
+			public function selectPage(index:int):String
+			{
+				pagesStack.selectedIndex = index;
+				_currentPage = pagesStack.selectedChild as Page;
+				dispatchEvent(new Event("currentPageChange"));
+				dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, _currentPage));
+				return _currentPage.uid;
+			}
+			
+			/**
+			 * Removes curent page from DrawArea
+			 * Returns removed page uid
+			 * */
+			private function removeCurrentPage():Page
+			{
+				if(pagesStack.length > 1)
+				{
+					var currentIndex:int = pagesStack.selectedIndex;
+					_currentPage.destroy();
+					pagesStack.removeChild(_currentPage);
+					dispatchEvent(new Event("pagesChangeEvent"));
+					selectPage( pagesStack.length - 1);
+					return _currentPage;
+				}
+				return null;
+			}
+			
+			public function removePageByUID(uid:String):void
+			{
+				var page:Page = getPageByUID(uid);
+				if(page)
+				{	
+					page.destroy();
+					var pageIndex:int = pagesStack.getChildIndex( page );
+					pagesStack.removeChild( page );
+					selectPage( pageIndex - 1 );
+				}
+			}
+			
+			
+			public function getPageByUID(uid:String):Page
+			{
+				var length:int = pagesStack.numChildren;
+				var page:Page;
+				for(var i:int = 0; i < length; ++i)
+				{
+					page = pagesStack.getChildAt( i ) as Page;
+					if(page.pageUID == uid)
+					{
+						return page;
+					}
+				}
+				return null;
+			}
+			
+			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
+			{
+				selectPage( pagesBar.selectedIndex );
+			}
+			
+			protected function addPageButton_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent( new PageEvent(PageEvent.PAGE_ADDED, addPage() ));
+			}
+			
+			
+			protected function removePageButton_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent( new PageEvent(PageEvent.PAGE_REMOVED, removeCurrentPage() ));
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:ViewStack id="pagesStack" left="0" right="0" top="0" bottom="0"
+				  change="onViewStackChange(event)"/>
+	<s:ButtonBar
+		id="pagesBar"
+		change="buttonbar1_changeHandler(event)"
+		selectedItem="{currentPage}"
+		left="5" bottom="5" 
+		dataProvider="{pagesStack}" labelField="label">
+	</s:ButtonBar>
+	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>
+	<s:Button id="removePageButton"
+			  enabled="{pagesStack.length > 1}"
+			  right="75" bottom="5" label="- Page" click="removePageButton_clickHandler(event)"/>
+</s:Group>
