@@ -10,13 +10,16 @@ package com.graffix.drawingTool.view.drawing.managers
 	import com.graffix.drawingTool.view.drawing.shapes.factory.ShapesFactory;
 	import com.graffix.drawingTool.view.drawing.shapes.selection.SelectTool;
 	import com.graffix.drawingTool.view.drawing.view.area.DrawArea;
+	import com.graffix.drawingTool.view.drawing.view.area.Page;
 	import com.graffix.drawingTool.view.drawing.view.editors.ImagesGallery;
 	import com.graffix.drawingTool.view.drawing.vo.ShapeDrawData;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
+	import flash.events.SyncEvent;
 	import flash.geom.Point;
+	import flash.net.SharedObject;
 	
 	import mx.core.IVisualElement;
 	import mx.events.CloseEvent;
@@ -24,7 +27,7 @@ package com.graffix.drawingTool.view.drawing.managers
 	
 	public class DrawManager extends EventDispatcher
 	{
-		public function DrawManager(drawArea:DrawArea)
+		public function DrawManager(drawArea:DrawArea, so:SharedObject)
 		{
 			_drawArea = drawArea;
 			_drawArea.addEventListener(DrawAreaEvent.CLICK, onMouseClick );
@@ -39,8 +42,13 @@ package com.graffix.drawingTool.view.drawing.managers
 			// transforming mode is default 
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
 			drawMode = DrawMode.TRANSFROM_MODE;
+			_so = so;
+			_so.addEventListener(SyncEvent.SYNC, onSync);
 		}
 		
+		
+		
+		private var _so:SharedObject;
 		protected function onMouseOut(event:MouseEvent):void
 		{
 			if(_drawMode == DrawMode.DRAW_MODE)
@@ -307,32 +315,52 @@ package com.graffix.drawingTool.view.drawing.managers
 			}
 		}
 		
+		
+		public function updateShapes(shapes:Array):void
+		{
+			for(var i:int = 0; i < shapes.length; ++i)
+			{
+				var shapeData:ShapeDrawData = new ShapeDrawData( shapes[i] );
+				var shape:BaseShape = ShapesFactory.createTool( shapeData.shapeType );
+				if(shape)
+				{
+					shape.id = shapeData.shapeID;
+					shape.shapeDrawData = shapeData;
+					_drawArea.currentPage.addElement( shape );
+				}
+			}
+		}
+		
 		/**
 		 * Redraws and transforms shape
 		 * if shape doesn't exists creates new one and applys all transformation data
 		 * */
-		public function updateShape(shapeData:ShapeDrawData):void
+		public function updateShapeOnPage(shapeData:ShapeDrawData):void
 		{
 			if(shapeData)
 			{
-				var shape:BaseShape = _drawArea.currentPage.getShapeByID(shapeData.shapeID);
-				if(shape)
+				var page:Page = _drawArea.getPageByUID(shapeData.pageUID);
+				if(page)
 				{
-					shape.shapeDrawData = shapeData;
-					_drawArea.currentPage.updateElementLayout(shape as IVisualElement);
-					if(shape.transforming)
-					{
-						shape.hideTransformControls();
-					}
-				}
-				else
-				{
-					shape = ShapesFactory.createTool( shapeData.shapeType );
+					var shape:BaseShape = page.getShapeByID(shapeData.shapeID);
 					if(shape)
 					{
-						shape.id = shapeData.shapeID;
 						shape.shapeDrawData = shapeData;
-						_drawArea.currentPage.addElement( shape );
+						page.updateElementLayout(shape as IVisualElement);
+						if(shape.transforming)
+						{
+							shape.hideTransformControls();
+						}
+					}
+					else
+					{
+						shape = ShapesFactory.createTool( shapeData.shapeType );
+						if(shape)
+						{
+							shape.id = shapeData.shapeID;
+							shape.shapeDrawData = shapeData;
+							page.addElement( shape );
+						}
 					}
 				}
 			}
@@ -341,6 +369,33 @@ package com.graffix.drawingTool.view.drawing.managers
 		public function eraseShape(shapeID:String):void
 		{
 			_drawArea.currentPage.removeShapeByID(shapeID);
+		}
+		
+		
+		
+		private function onSync(event:SyncEvent):void
+		{
+			for (var i:int = 0; i<event.changeList.length; ++i) 
+			{				
+				var uid:String = event.changeList[i].name;
+				var dataObject:Object = _so.data[uid];
+				if(dataObject.type == Page.PAGE_TYPE)
+				{
+					//
+					// do not process pages data
+					continue;
+				}
+				switch(event.changeList[i].code)
+				{
+					case "delete":
+						eraseShape(uid);
+						break;
+					
+					case "change":
+						updateShapeOnPage( new ShapeDrawData(dataObject) );
+						break;
+				}
+			}
 		}
 	}
 }
