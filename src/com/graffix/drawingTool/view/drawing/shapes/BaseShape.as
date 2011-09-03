@@ -54,6 +54,7 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function get shapeDrawData():ShapeDrawData
 		{
 			_shapeDrawData.shapeID = id;
+			_shapeDrawData.pageUID = _pageUID;
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
 			_shapeDrawData.zIndex = zIndex;
@@ -287,6 +288,21 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.zIndex = value;
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
 		}
+		
+		//
+		// uid of page shape in
+		private var _pageUID:String;
 
+		public function get pageUID():String
+		{
+			return _pageUID;
+		}
+
+		public function set pageUID(value:String):void
+		{
+			_pageUID = value;
+		}
+
+		
 	}
 }
