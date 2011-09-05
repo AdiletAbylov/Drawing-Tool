@@ -176,7 +176,13 @@
 					_currentPage.destroy();
 					pagesStack.removeChild(_currentPage);
 					dispatchEvent(new Event("pagesChangeEvent"));
-					selectPageByID( currentIndex - 1);
+					if(currentIndex > 0)
+					{
+						selectPageByID( currentIndex - 1);
+					}else
+					{
+						selectPageByID( currentIndex);
+					}
 					return _currentPage;
 				}
 				return null;
@@ -190,7 +196,13 @@
 					page.destroy();
 					var pageIndex:int = pagesStack.getChildIndex( page );
 					pagesStack.removeChild( page );
-					selectPageByID( pageIndex - 1 );
+					if(pageIndex > 0)
+					{
+						selectPageByID( pageIndex - 1 );
+					}else
+					{
+						selectPageByID( pageIndex );
+					}
 				}
 			}
 			
