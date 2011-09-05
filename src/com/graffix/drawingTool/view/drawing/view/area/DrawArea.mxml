@@ -120,11 +120,20 @@
 			
 			public function addPage(uid:String = null):Page
 			{
-				var page:Page = createPage();
-				pagesStack.addChild(page);
+				var page:Page;
 				if(uid)
 				{
+					page = getPageByUID( uid );
+					if(!page)
+					{
+						page = createPage();
+						pagesStack.addChild(page);
+					}
 					page.pageUID = uid;
+				}else
+				{
+					page = createPage();
+					pagesStack.addChild(page);
 				}
 				dispatchEvent(new Event("pagesChangeEvent"));
 				selectPage( pagesStack.length - 1);
@@ -201,7 +210,6 @@
 				dispatchEvent( new PageEvent(PageEvent.PAGE_ADDED, addPage() ));
 			}
 			
-			
 			protected function removePageButton_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent( new PageEvent(PageEvent.PAGE_REMOVED, removeCurrentPage() ));
@@ -220,6 +228,6 @@
 	</s:ButtonBar>
 	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>
 	<s:Button id="removePageButton"
-			  enabled="{pagesStack.length > 1}"
+			  
 			  right="75" bottom="5" label="- Page" click="removePageButton_clickHandler(event)"/>
 </s:Group>

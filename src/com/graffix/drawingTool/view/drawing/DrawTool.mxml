@@ -105,6 +105,15 @@
 				_drawManager.startListen();
 			}
 			
+			protected function resetButton_clickHandler(event:MouseEvent):void
+			{
+				for(var id:String in _so.data)
+				{
+					_so.setProperty(id, null);
+					_so.setDirty(id);
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -129,5 +138,6 @@
 									 
 									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
+		<s:Button id="resetButton" label="reset" click="resetButton_clickHandler(event)"/>
 	</s:HGroup>
 </s:Group>

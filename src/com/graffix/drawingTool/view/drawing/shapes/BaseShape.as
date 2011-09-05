@@ -58,8 +58,8 @@ package com.graffix.drawingTool.view.drawing.shapes
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
 			_shapeDrawData.zIndex = zIndex;
-			_shapeDrawData.width = width;
-			_shapeDrawData.height = height;
+			_shapeDrawData.width = _spriteToDraw.width;
+			_shapeDrawData.height = _spriteToDraw.height;
 			if(viewObject)
 			{
 				_shapeDrawData.matrix = viewObject.transform.matrix;
@@ -213,6 +213,9 @@ package com.graffix.drawingTool.view.drawing.shapes
 		public function destroy():void
 		{
 			clear();
+			
+			removeEventListener(MouseEvent.CLICK, onMouseClick);
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_REMOVED, shapeDrawData));
 			if(_spriteToDraw)
 			{
 				removeChild(_spriteToDraw);
@@ -223,8 +226,6 @@ package com.graffix.drawingTool.view.drawing.shapes
 				removeChild(_transformTool);
 				_transformTool = null;
 			}
-			removeEventListener(MouseEvent.CLICK, onMouseClick);
-			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_REMOVED, shapeDrawData));
 		}
 		
 		

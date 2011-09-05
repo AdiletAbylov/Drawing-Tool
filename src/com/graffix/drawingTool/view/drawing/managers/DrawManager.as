@@ -381,7 +381,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			{				
 				var uid:String = event.changeList[i].name;
 				var dataObject:Object = _so.data[uid];
-				if(dataObject.type == Page.PAGE_TYPE)
+				if(dataObject && dataObject.type == Page.PAGE_TYPE)
 				{
 					//
 					// do not process pages data
