@@ -28,10 +28,14 @@ package com.graffix.drawingTool.view.drawing.managers
 			_drawArea.addEventListener(PageEvent.PAGE_SELECTED, onPageSelect);
 		}
 		
+		private function saveSelectedPage(uid:String):void
+		{
+			_so.setProperty("selectedPage", uid );
+			_so.setDirty( "selectedPage" );
+		}
 		protected function onPageSelect(event:PageEvent):void
 		{
-			// TODO Auto-generated method stub
-			
+			saveSelectedPage( event.page.pageUID );		
 		}
 		
 		protected function onPageRemoved(event:PageEvent):void
@@ -54,6 +58,17 @@ package com.graffix.drawingTool.view.drawing.managers
 			{
 				var uid:String = event.changeList[i].name;
 				var dataObject:Object = _so.data[uid];
+				
+				if(dataObject && uid == "selectedPage")
+				{
+					//
+					// handle selected page changing
+					if(event.changeList[i].code == "change" && !_firstTime )
+					{
+						_drawArea.selectPageByUID(dataObject as String);
+					}
+					continue;
+				}
 				
 				if(dataObject && dataObject.type != Page.PAGE_TYPE)
 				{
@@ -79,7 +94,11 @@ package com.graffix.drawingTool.view.drawing.managers
 			{
 				if(_drawArea.pagesStack.length == 0)
 				{
-					savePage(_drawArea.addPage().pageUID, {type:Page.PAGE_TYPE});
+					var newPageUID:String = _drawArea.addPage().pageUID;
+					savePage(newPageUID, {type:Page.PAGE_TYPE});
+					saveSelectedPage( newPageUID ); 
+				}else{
+					_drawArea.selectPageByUID(_so.data["selectedPage"] as String);
 				}
 				dispatchEvent( new PageManagerEvent(PageManagerEvent.INIT_COMPLETE));
 				_firstTime = false;

@@ -321,7 +321,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			for(var uid:String in _so.data)
 			{
 				dataObject = _so.data[uid];
-				if(dataObject.type != Page.PAGE_TYPE)
+				if(uid != "selectedPage" && dataObject.type != Page.PAGE_TYPE)
 				{
 					updateShapeOnPage( new ShapeDrawData(dataObject));
 				}
@@ -381,7 +381,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			{				
 				var uid:String = event.changeList[i].name;
 				var dataObject:Object = _so.data[uid];
-				if(dataObject && dataObject.type == Page.PAGE_TYPE)
+				if(uid == "selectedPage" || (dataObject && dataObject.type == Page.PAGE_TYPE))
 				{
 					//
 					// do not process pages data

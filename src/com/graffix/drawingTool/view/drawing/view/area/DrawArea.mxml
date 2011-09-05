@@ -136,21 +136,31 @@
 					pagesStack.addChild(page);
 				}
 				dispatchEvent(new Event("pagesChangeEvent"));
-				selectPage( pagesStack.length - 1);
+				selectPageByID( pagesStack.length - 1);
 				page.label = "Page " + ( pagesStack.length );
 				return page;
 			}
 			
 			
+			public function selectPageByUID(uid:String):void
+			{
+				var page:Page = getPageByUID(uid);
+				if(page)
+				{
+					pagesStack.selectedChild = page;
+					_currentPage = page;
+					dispatchEvent(new Event("currentPageChange"));
+				}
+			}
+			
 			/**
 			 * returns selected page uid
 			 * */
-			public function selectPage(index:int):String
+			public function selectPageByID(index:int):String
 			{
 				pagesStack.selectedIndex = index;
 				_currentPage = pagesStack.selectedChild as Page;
 				dispatchEvent(new Event("currentPageChange"));
-				dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, _currentPage));
 				return _currentPage.uid;
 			}
 			
@@ -166,7 +176,7 @@
 					_currentPage.destroy();
 					pagesStack.removeChild(_currentPage);
 					dispatchEvent(new Event("pagesChangeEvent"));
-					selectPage( pagesStack.length - 1);
+					selectPageByID( pagesStack.length - 1);
 					return _currentPage;
 				}
 				return null;
@@ -180,7 +190,7 @@
 					page.destroy();
 					var pageIndex:int = pagesStack.getChildIndex( page );
 					pagesStack.removeChild( page );
-					selectPage( pageIndex - 1 );
+					selectPageByID( pageIndex - 1 );
 				}
 			}
 			
@@ -202,7 +212,8 @@
 			
 			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
 			{
-				selectPage( pagesBar.selectedIndex );
+				selectPageByID( pagesBar.selectedIndex );
+				dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, _currentPage));
 			}
 			
 			protected function addPageButton_clickHandler(event:MouseEvent):void
