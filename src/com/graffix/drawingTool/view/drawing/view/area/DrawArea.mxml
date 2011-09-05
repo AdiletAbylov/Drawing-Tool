@@ -58,7 +58,7 @@
 						drawingGrid();
 					}else
 					{
-						graphics.clear();
+						background.graphics.clear();
 					}
 					_drawGridChanged = false;
 				}
@@ -67,20 +67,20 @@
 			
 			private function drawingGrid():void
 			{
-				graphics.clear();
+				background.graphics.clear();
 				
-				graphics.lineStyle(1, 0x000000, 0.1);
+				background.graphics.lineStyle(1, 0x000000, 0.1);
 				var position:int = 0;
 				for(position = CELL_WIDTH; position <= this.width; position += CELL_WIDTH )
 				{
-					this.graphics.moveTo(position, 0);
-					this.graphics.lineTo(position, this.height);
+					background.graphics.moveTo(position, 0);
+					background.graphics.lineTo(position, this.height);
 				}
 				
 				for(position = CELL_HEIGHT; position <= this.height; position += CELL_HEIGHT )
 				{
-					this.graphics.moveTo(0, position);
-					this.graphics.lineTo(this.width, position);
+					background.graphics.moveTo(0, position);
+					background.graphics.lineTo(this.width, position);
 				}
 			}
 			
@@ -208,7 +208,7 @@
 			}
 		]]>
 	</fx:Script>
-	
+	<s:Group id="background" width="100%" height="100%"/>
 	<mx:ViewStack id="pagesStack" left="0" right="0" top="0" bottom="0"
 				  change="onViewStackChange(event)"/>
 	<s:ButtonBar
