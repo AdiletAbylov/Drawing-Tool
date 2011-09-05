@@ -216,6 +216,7 @@
 					page = pagesStack.getChildAt( i ) as Page;
 					if(page.pageUID == uid)
 					{
+						trace("page label " + page.label);
 						return page;
 					}
 				}
@@ -225,17 +226,18 @@
 			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
 			{
 				selectPageByID( pagesBar.selectedIndex );
-				dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, _currentPage));
+				dispatchEvent(new PageEvent(PageEvent.PAGE_SELECTED, _currentPage.pageUID));
 			}
 			
 			protected function addPageButton_clickHandler(event:MouseEvent):void
 			{
-				dispatchEvent( new PageEvent(PageEvent.PAGE_ADDED, addPage() ));
+				dispatchEvent( new PageEvent(PageEvent.PAGE_ADDED, addPage().pageUID ));
 			}
 			
 			protected function removePageButton_clickHandler(event:MouseEvent):void
 			{
-				dispatchEvent( new PageEvent(PageEvent.PAGE_REMOVED, removeCurrentPage() ));
+				dispatchEvent( new PageEvent(PageEvent.PAGE_REMOVED, _currentPage.pageUID));
+				removeCurrentPage()
 			}
 		]]>
 	</fx:Script>

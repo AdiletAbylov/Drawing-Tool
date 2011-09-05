@@ -9,16 +9,16 @@ package com.graffix.drawingTool.view.drawing.events.pages
 		public static const PAGE_ADDED:String = "pageAdded";
 		public static const PAGE_REMOVED:String = "pageRemoved";
 		public static const PAGE_SELECTED:String = "pageSelected";
-		public var page:Page;
-		public function PageEvent(type:String, page:Page)
+		public var pageUID:String;
+		public function PageEvent(type:String, pageUID:String)
 		{
 			super(type, bubbles, cancelable);
-			this.page = page;
+			this.pageUID = pageUID;
 		}
 		
 		override public function clone():Event
 		{
-			return new PageEvent(type, page);
+			return new PageEvent(type, pageUID);
 		}
 		
 		override public function toString():String

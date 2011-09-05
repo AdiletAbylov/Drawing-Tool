@@ -35,17 +35,17 @@ package com.graffix.drawingTool.view.drawing.managers
 		}
 		protected function onPageSelect(event:PageEvent):void
 		{
-			saveSelectedPage( event.page.pageUID );		
+			saveSelectedPage( event.pageUID );		
 		}
 		
 		protected function onPageRemoved(event:PageEvent):void
 		{
-			savePage(event.page.pageUID, null);
+			savePage(event.pageUID, null);
 		}
 		
 		protected function onPageAdded(event:PageEvent):void
 		{
-			savePage(event.page.pageUID, {type:Page.PAGE_TYPE});
+			savePage(event.pageUID, {type:Page.PAGE_TYPE});
 		}
 		
 		private var _drawArea:DrawArea;

@@ -184,6 +184,10 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		private function endDraw():void
 		{
+			if(!_currentShape)
+			{
+				return;
+			}
 			switch(_drawMode)
 			{
 				case DrawMode.DRAW_MODE:
