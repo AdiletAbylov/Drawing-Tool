@@ -98,7 +98,6 @@ package com.graffix.drawingTool.view.drawing.managers
 			{
 				_drawArea.addPage(uid); 
 			}
-			savePage(uid, {type:Page.PAGE_TYPE});
 		}
 		
 		
