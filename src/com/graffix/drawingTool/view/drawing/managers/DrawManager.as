@@ -43,7 +43,6 @@ package com.graffix.drawingTool.view.drawing.managers
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
 			drawMode = DrawMode.TRANSFROM_MODE;
 			_so = so;
-			_so.addEventListener(SyncEvent.SYNC, onSync);
 		}
 		
 		
@@ -316,17 +315,15 @@ package com.graffix.drawingTool.view.drawing.managers
 		}
 		
 		
-		public function updateShapes(shapes:Array):void
+		public function processShapes():void
 		{
-			for(var i:int = 0; i < shapes.length; ++i)
+			var dataObject:Object;
+			for(var uid:String in _so.data)
 			{
-				var shapeData:ShapeDrawData = new ShapeDrawData( shapes[i] );
-				var shape:BaseShape = ShapesFactory.createTool( shapeData.type );
-				if(shape)
+				dataObject = _so.data[uid];
+				if(dataObject.type != Page.PAGE_TYPE)
 				{
-					shape.id = shapeData.shapeID;
-					shape.shapeDrawData = shapeData;
-					_drawArea.currentPage.addElement( shape );
+					updateShapeOnPage( new ShapeDrawData(dataObject));
 				}
 			}
 		}
@@ -372,6 +369,11 @@ package com.graffix.drawingTool.view.drawing.managers
 		}
 		
 		
+		public function startListen():void
+		{
+			
+			_so.addEventListener(SyncEvent.SYNC, onSync);
+		}
 		
 		private function onSync(event:SyncEvent):void
 		{

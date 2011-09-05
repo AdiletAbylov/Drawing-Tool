@@ -86,6 +86,7 @@ package com.graffix.drawingTool.view.drawing.managers
 			}
 		}
 		
+		
 		/**
 		 * 
 		 * adds page to page stack of draw area

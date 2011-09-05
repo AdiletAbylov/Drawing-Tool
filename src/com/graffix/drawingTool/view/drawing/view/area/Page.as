@@ -200,6 +200,7 @@ package com.graffix.drawingTool.view.drawing.view.area
 			{
 				(element as BaseShape).pageUID = pageUID;
 				_elementsByID[ (element as BaseShape).id ] = element;
+				
 				callLater(updateElementLayout, [ element ]);
 			}
 			return el;

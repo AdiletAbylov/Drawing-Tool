@@ -101,6 +101,8 @@
 			protected function onPagesInitComplete(event:PageManagerEvent):void
 			{
 				_drawManager = new DrawManager( drawArea, _so );
+				_drawManager.processShapes();
+				_drawManager.startListen();
 			}
 			
 		]]>
