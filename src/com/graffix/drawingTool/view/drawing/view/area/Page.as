@@ -235,8 +235,14 @@ package com.graffix.drawingTool.view.drawing.view.area
 		
 		public function updateElementLayout(element:IVisualElement):void
 		{
-			setElementIndex( element, (element as BaseShape).zIndex);
-			setElementIndex(_background, 0);
+			try{
+				setElementIndex( element, (element as BaseShape).zIndex);
+				setElementIndex(_background, 0);
+			}catch(e:Error)
+			{
+				// donothing
+				trace("updateElementLayout error: " + e.toString());
+			}
 		}
 		
 		private var _uid:String;
