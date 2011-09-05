@@ -176,7 +176,7 @@
 					_currentPage.destroy();
 					pagesStack.removeChild(_currentPage);
 					dispatchEvent(new Event("pagesChangeEvent"));
-					selectPageByID( pagesStack.length - 1);
+					selectPageByID( currentIndex - 1);
 					return _currentPage;
 				}
 				return null;
