@@ -40,7 +40,7 @@ package com.graffix.drawingTool.view.drawing.managers
 		
 		protected function onPageRemoved(event:PageEvent):void
 		{
-			savePage(event.pageUID, null);
+			delete _so.data[event.pageUID];
 		}
 		
 		protected function onPageAdded(event:PageEvent):void

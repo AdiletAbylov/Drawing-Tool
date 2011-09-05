@@ -395,6 +395,7 @@ package com.graffix.drawingTool.view.drawing.managers
 				{
 					case "delete":
 						eraseShape(uid);
+						_so.addEventListener(SyncEvent.SYNC, onSync );
 						break;
 					
 					case "change":

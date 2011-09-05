@@ -2,6 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 creationComplete="init()"
+		 enabled="false"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="com.graffix.drawingTool.view.drawing.view.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:toolbars="com.graffix.drawingTool.view.drawing.view.toolbars.*" xmlns:services="com.graffix.drawingTool.business.services.*" >
 	<fx:Declarations>
 		
@@ -65,8 +66,12 @@
 			private function onShapeRemoved(event:ShapeChangedEvent):void
 			{
 				trace("shapeRemoved");
-				_so.setProperty(event.shapeData.shapeID, null);
-				_so.setDirty(event.shapeData.shapeID);
+				if(_so.data.hasOwnProperty(event.shapeData.shapeID))
+				{
+					_so.setProperty(event.shapeData.shapeID, null);
+				}
+				//delete _so.data[event.shapeData.shapeID];
+				//_so.setDirty(event.shapeData.shapeID);
 			}
 			
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
@@ -103,6 +108,7 @@
 				_drawManager = new DrawManager( drawArea, _so );
 				_drawManager.processShapes();
 				_drawManager.startListen();
+				enabled = true;
 			}
 			
 			protected function resetButton_clickHandler(event:MouseEvent):void

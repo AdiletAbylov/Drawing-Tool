@@ -71,11 +71,16 @@ package com.graffix.drawingTool.business.services
 			if(!_boardSO)
 			{
 				_boardSO = SharedObject.getRemote("FCWhiteBoard.ololo.1", _netConnection.uri, true );
+				_boardSO.addEventListener(NetStatusEvent.NET_STATUS, onBoardSONetStatus);
 				_boardSO.connect( _netConnection );
 			}
 			return _boardSO;
 		}
 		
+		protected function onBoardSONetStatus(event:NetStatusEvent):void
+		{
+			trace("board net status " + event.info.code);
+		}		
 		
 		//
 		// SharedObject for members list
