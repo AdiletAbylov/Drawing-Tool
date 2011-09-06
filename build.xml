@@ -8,9 +8,8 @@
 	
 	<target name="buildSWC" depends="clear">
 		<compc output="${BUILD_DIR}/drawr.swc">
-			
-			<source-path path-element="${SRC_DIR}/org/graffix/drawr" />
-			<include-sources dir="${SRC_DIR}" includes="org.graffix.drawr.*" />
+			<source-path path-element="${SRC_DIR}" />
+			<include-sources dir="${SRC_DIR}" includes="org/graffix/drawr/*" />
 			<include-libraries file="${LIBRARY_DIR}/TLFTextEditor.swc" />
 		</compc>
 	</target>
