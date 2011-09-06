@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   close="closeHandler(event)"
+			   width="706" height="564">
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.model.ModelLocator;
+			import org.graffix.drawr.events.ImageShapeEvent;
+			import org.graffix.drawr.view.renderers.ImagesItemRenderer;
+			
+			import flash.net.navigateToURL;
+			
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			protected function closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function insertButton_clickHandler(event:MouseEvent):void
+			{
+				var insertEvent:ImageShapeEvent = new ImageShapeEvent(ImageShapeEvent.INSERT_IMAGE, imagesList.selectedItem.source, 100, 100);
+				dispatchEvent( insertEvent );
+				//dispatchEvent( new CloseEvent(CloseEvent.CLOSE));
+			}
+
+			protected function uploadButton_clickHandler(event:MouseEvent):void
+			{
+				var formurl:String = "upload.php?roomname=" + ModelLocator.getInstance().settings.roomID;
+				var request:URLRequest = new URLRequest("javascript:NewWindow(\'"+formurl+"\',\'uploadwin\',\'580\',\'580\',\'no\',\'center\',\'no\');");
+				navigateToURL( request);
+				
+			}
+			
+			protected function deleteButton_clickHandler(event:MouseEvent):void
+			{
+				var formurl:String = "delete.php?roomname=" + ModelLocator.getInstance().settings.roomID + "&filename="+imagesList.selectedItem.data;
+				var request:URLRequest = new URLRequest("javascript:NewWindow(\'"+formurl+"\',\'delwin\',\'580\',\'430\',\'no\',\'center\',\'no\');");
+				navigateToURL(request);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="imagesList" 
+			dataProvider="{ModelLocator.getInstance().imagesList}"
+			selectedIndex="-1"
+			left="5" right="5" top="5" bottom="5" itemRenderer="org.graffix.drawr.view.renderers.ImagesItemRenderer">
+		<s:layout>
+			<s:TileLayout/>
+		</s:layout>
+	</s:List>
+	<s:controlBarContent>
+		<s:Button label="Upload" id="uploadButton" click="uploadButton_clickHandler(event)"/>
+		
+		<s:Spacer width="100%"/>
+		<s:Button label="Delete" id="deleteButton"
+				  enabled="{imagesList.selectedIndex != -1}"
+				  click="deleteButton_clickHandler(event)"/>
+		<s:Button id="insertButton" 
+				  click="insertButton_clickHandler(event)"
+				  label="Insert" enabled="{imagesList.selectedIndex != -1}"/>
+	</s:controlBarContent>
+</s:TitleWindow>

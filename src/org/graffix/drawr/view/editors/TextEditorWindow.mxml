@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:tlf="net.asciiworks.tlf.*"
+		
+		 width="476" height="222" add="titlewindow1_addedHandler(event)"
+		 creationComplete="panel1_creationCompleteHandler(event)" title="Insert text">
+	<fx:Metadata>
+		[Event(name="finishEdit", type="org.graffix.drawr.events.TextEditorEvent")]
+		[Event(name="inputText", type="org.graffix.drawr.events.TextEditorEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		
+		<![CDATA[
+			import org.graffix.drawr.events.TextEditorEvent;
+			
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.events.UpdateCompleteEvent;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.FlexMouseEvent;
+			import mx.managers.PopUpManager;
+			
+			
+			public function set textFlow(flow:String):void
+			{
+				richTextEditor.textFlow = TextConverter.importToFlow(flow,  TextConverter.TEXT_LAYOUT_FORMAT );
+			}
+			
+			protected function titlewindow1_addedHandler(event:Event):void
+			{
+				if(richTextEditor)
+				{
+					richTextEditor.textFlow = null;
+				}
+			}
+			
+			protected function panel1_creationCompleteHandler(event:FlexEvent):void
+			{
+				richTextEditor.display.addEventListener(TextEvent.TEXT_INPUT, onTextValueCommit);
+			}
+			
+			private function onTextValueCommit(event:TextEvent):void
+			{
+				dispatchEvent( new TextEditorEvent(TextEditorEvent.INPUT_TEXT, richTextEditor.textFlow) );
+			}
+			
+			
+			
+			protected function saveButton_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent( new TextEditorEvent(TextEditorEvent.FINISH_EDIT, richTextEditor.textFlow) );
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:controlBarContent>
+		<s:Button label="Save" id="saveButton" click="saveButton_clickHandler(event)"/>
+	</s:controlBarContent>
+	
+	<tlf:TLFTextEditor id="richTextEditor"
+					   
+					   left="0" top="0" right="0" bottom="0">
+	</tlf:TLFTextEditor>
+</s:Panel>

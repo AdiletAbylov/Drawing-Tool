@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   height="30" cornerRadius="5" xmlns:editors="org.graffix.drawr.view.editors.*">
+	<s:states>
+		<s:State name="ClosedFigureState"/>
+		<s:State name="LineState"/>
+		<s:State name="TextState"/>
+		<s:State name="EmptyState"/>
+	</s:states>
+	<fx:Declarations>
+		<s:Parallel id="transitionEffect" targets="{[lineControls, fillControls, this, layoutControls]}">
+			<s:Fade/>
+			<s:Resize/>
+		</s:Parallel>
+	</fx:Declarations>
+	<s:transitions>
+		<s:Transition fromState="*" toState="*" effect="{transitionEffect}"/>
+	</s:transitions>
+	<fx:Script>
+		<![CDATA[
+			import org.graffix.drawr.events.TextEditorEvent;
+			import org.graffix.drawr.managers.DrawMode;
+			import org.graffix.drawr.shapes.BaseShape;
+			import org.graffix.drawr.shapes.IPropertyChangable;
+			import org.graffix.drawr.shapes.closed.EllipseShape;
+			import org.graffix.drawr.shapes.closed.RectShape;
+			import org.graffix.drawr.shapes.complex.SymbolShape;
+			import org.graffix.drawr.shapes.complex.TextShape;
+			import org.graffix.drawr.shapes.selection.SelectTool;
+			import org.graffix.drawr.shapes.simple.FreehandShape;
+			import org.graffix.drawr.shapes.simple.LineShape;
+			
+			import flashx.textLayout.conversion.ConversionType;
+			import flashx.textLayout.conversion.TextConverter;
+			
+			import mx.events.CloseEvent;
+			import mx.events.ColorPickerEvent;
+			import mx.events.FlexMouseEvent;
+			import mx.messaging.AbstractConsumer;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var _currentShape:BaseShape;
+			
+			public function get currentShape():BaseShape
+			{
+				return _currentShape;
+			}
+			
+			public function set currentShape(value:BaseShape):void
+			{
+				_currentShape = value;
+				setState(_currentShape.type);
+			}
+			
+			
+			private function setState(type:int):void
+			{
+				switch(type)
+				{
+					case LineShape.LINE_SHAPE:
+						currentState = "LineState";
+						break;
+					
+					case FreehandShape.FREEHAND_SHAPE:
+						currentState = "LineState";
+						break;
+					
+					case EllipseShape.ELLIPSE_SHAPE:
+						currentState = "ClosedFigureState";
+						break;
+					
+					case RectShape.RECT_SHAPE:
+						currentState = "ClosedFigureState";
+						break;
+					case TextShape.TEXT_SHAPE:
+						currentState = "TextState";
+						if(!_currentShape.shapeDrawData.text)
+						{
+							showTextEditor();
+						}
+						break;
+					
+					default:
+						currentState = "EmptyState"
+						break;
+				}
+			}
+			
+			
+			protected function lineSizeCombo_changeHandler(event:IndexChangeEvent):void
+			{
+				if(_currentShape)
+				{
+					_currentShape.setProperty(BaseShape.PROPERTY_LINE_SIZE, event.newIndex + 2);
+				}
+			}
+			
+			
+			protected function lineColorPicker_changeHandler(event:ColorPickerEvent):void
+			{
+				if(_currentShape)
+				{
+					_currentShape.setProperty(BaseShape.PROPERTY_LINE_COLOR, event.color);
+				}
+			}
+			
+			
+			protected function fillColorPicker_changeHandler(event:ColorPickerEvent):void
+			{
+				if(_currentShape)
+				{
+					_currentShape.setProperty(BaseShape.PROPERTY_FILL_COLOR, event.color);
+				}
+			}
+			
+			
+			protected function fillCheckbox_changeHandler(event:Event):void
+			{
+				if(_currentShape)
+				{
+					_currentShape.setProperty(BaseShape.PROPERTY_FILL_ENABLED, fillCheckbox.selected);
+				}
+			}
+			
+			protected function layoutUpButton_clickHandler(event:MouseEvent):void
+			{
+				if(_currentShape)
+				{
+					(currentShape as BaseShape).changeOrder( "up" );
+				}
+			}
+			
+			
+			protected function layoutBottomButton_clickHandler(event:MouseEvent):void
+			{
+				if(_currentShape)
+				{
+					(currentShape as BaseShape).changeOrder( "down" );
+				}
+			}
+			
+			protected function onTextEdit(event:TextEditorEvent):void
+			{
+				//textEditButton.selected = false;
+				//textEditPopup.displayPopUp = false;
+				if(_currentShape)
+				{
+					var formattedString:String = TextConverter.export(event.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
+					(_currentShape as TextShape).setText(formattedString);
+				}
+			}
+			
+			protected function textEditButton_clickHandler(event:MouseEvent):void
+			{
+				if(textEditButton.selected)
+				{
+					showTextEditor();
+				}else
+				{
+					hideTextEditor();
+				}
+			}
+			
+			private function showTextEditor():void
+			{
+				textEditButton.selected = true;
+				textEditPopup.displayPopUp = true;
+				textEditor.textFlow = _currentShape.shapeDrawData.text;
+				//(_currentShape as TextShape).showHighlight();
+			}
+			
+			protected function textEditor_mouseDownOutsideHandler(event:FlexMouseEvent):void
+			{
+				hideTextEditor();
+			}
+			
+			private function hideTextEditor():void
+			{
+				textEditButton.selected = false;
+				textEditPopup.displayPopUp = false;
+				//(_currentShape as TextShape).hideHighlight();
+			}
+			
+			protected function textEditor_finishEditHandler(event:TextEditorEvent):void
+			{
+				hideTextEditor();
+				if(_currentShape)
+				{
+					var formattedString:String = TextConverter.export(event.textFlow, TextConverter.TEXT_LAYOUT_FORMAT, ConversionType.STRING_TYPE).toString();
+					(_currentShape as TextShape).setText(formattedString);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout  paddingLeft="5" paddingRight="5" verticalAlign="middle"
+							 gap="15"/>
+	</s:layout>
+	<s:Group includeIn="TextState"
+			 >
+		<s:ToggleButton
+			
+			id="textEditButton"
+			click="textEditButton_clickHandler(event)"
+			label="Edit text" />
+		<s:PopUpAnchor
+			width="50"
+			height="20"
+			id="textEditPopup"
+			popUpPosition="below">
+			<editors:TextEditorWindow
+				finishEdit = "textEditor_finishEditHandler(event)"
+				inputText="onTextEdit(event)"
+				id="textEditor"
+				/>
+		</s:PopUpAnchor>
+	</s:Group>
+	
+	
+	<s:HGroup id="lineControls" verticalAlign="middle" includeIn="LineState, ClosedFigureState">
+		<s:Label text="Line size:"/>
+		<s:ComboBox width="40" selectedIndex="{_currentShape.lineSize - 2}" id="lineSizeCombo" change="lineSizeCombo_changeHandler(event)">
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:String>1</fx:String>
+					<fx:String>2</fx:String>
+					<fx:String>3</fx:String>
+					<fx:String>4</fx:String>
+					<fx:String>5</fx:String>
+					<fx:String>6</fx:String>
+					<fx:String>7</fx:String>
+					<fx:String>8</fx:String>
+					<fx:String>9</fx:String>
+					<fx:String>10</fx:String>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:ComboBox>	
+		<s:Label text="Line color:"/>
+		<mx:ColorPicker selectedColor="{_currentShape.lineColor}" id="lineColorPicker" change="lineColorPicker_changeHandler(event)"/>		
+	</s:HGroup>
+	
+	<mx:VRule height="80%" includeIn="ClosedFigureState"/>
+	
+	<s:HGroup id="fillControls" includeIn="ClosedFigureState" verticalAlign="middle">
+		<s:Label text="Fill shape with color:"/>
+		<s:CheckBox id="fillCheckbox" selected="{_currentShape.hasFill}" change="fillCheckbox_changeHandler(event)"/>
+		<s:Label text="Fill color:"/>
+		<mx:ColorPicker enabled="{fillCheckbox.selected}" selectedColor="{_currentShape.fillColor}" id="fillColorPicker" change="fillColorPicker_changeHandler(event)"/>		
+	</s:HGroup>
+	<mx:VRule height="80%" />
+	<s:HGroup id="layoutControls" verticalAlign="middle">
+		<s:Button id="layoutUpButton" label="Up" click="layoutUpButton_clickHandler(event)"/>
+		<s:Button id="layoutBottomButton" label="Down" click="layoutBottomButton_clickHandler(event)"/>
+	</s:HGroup>
+</s:BorderContainer>

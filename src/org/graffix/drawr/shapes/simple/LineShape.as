@@ -1,0 +1,70 @@
+package org.graffix.drawr.shapes.simple
+{
+	import org.graffix.drawr.events.ShapeChangedEvent;
+	import org.graffix.drawr.shapes.BaseShape;
+
+	public class LineShape extends BaseShape
+	{
+		public static const LINE_SHAPE:int = 2;
+		
+		public function LineShape()
+		{
+			super();
+			_shapeDrawData.type = LINE_SHAPE;
+		}
+		
+		override public function setProperty(name:String, value:Object):void
+		{
+			switch(name)
+			{
+				case PROPERTY_LINE_SIZE:
+					_shapeDrawData.lineSize = value as int;
+					_lineSizeChanged = true;
+					break;
+				case PROPERTY_LINE_COLOR:
+					_shapeDrawData.lineColor = value as uint;
+					_lineSizeChanged = true;
+					break;
+			}
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			invalidateDisplayList();
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			var redrawed:Boolean = _lineSizeChanged || _lineColorChanged || _drawDataChanged;
+			if(_lineSizeChanged)
+			{
+				//redraw
+				draw();
+				_lineSizeChanged = false;
+			}
+			if(_lineColorChanged)
+			{
+				draw();
+				_lineColorChanged = false;
+			}
+			
+			
+			if(redrawed)
+			{
+				//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
+			}
+		}
+		
+		override public function draw():void
+		{
+			try
+			{
+				_spriteToDraw.graphics.clear();
+				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
+				_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
+				_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
+			}catch(e:Error)
+			{
+				_spriteToDraw.graphics.clear();
+			}
+		}
+	}
+}
