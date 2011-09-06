@@ -87,7 +87,7 @@
 				//_so.clear();
 			}
 			
-			[Embed("com/graffix/drawingTool/view/assets/remove.png")]
+			[Embed("/org/graffix/drawr/view/assets/remove.png")]
 			protected const ICON:Class;
 			
 			[Bindable]

@@ -68,25 +68,25 @@
 					<!--<fx:Object label="Select" data="{SelectTool.SELECT_TOOL}"/>-->
 					<fx:Object label="Select" 
 							   data="{SelectTool.TRANSFORM_TOOL}" 
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/select.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/select.png')"/>
 					<fx:Object label="Line" data = "{LineShape.LINE_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/line.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/line.png')"/>
 					<fx:Object label="Rectangle" data = "{RectShape.RECT_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/rectangle.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/rectangle.png')"/>
 					<fx:Object label="Ellipse" data = "{EllipseShape.ELLIPSE_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/circle.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/circle.png')"/>
 					<fx:Object label="Free Draw" data = "{FreehandShape.FREEHAND_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/freeform-line.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/freeform-line.png')"/>
 					<fx:Object label="Insert text" data = "{TextShape.TEXT_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/text.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/text.png')"/>
 					<fx:Object label="Insert image" data = "{ImageShape.IMAGE_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/image.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/image.png')"/>
 					
 					<fx:Object label="Insert symbol" data = "{SymbolShape.SYMBOL_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/special.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/special.png')"/>
 					
 					<fx:Object label="Erase" data = "{EraserShape.ERASER_SHAPE}"
-							   icon="@Embed(source='com/graffix/drawingTool/view/assets/eraser.png')"/>
+							   icon="@Embed(source='/org/graffix/drawr/view/assets/eraser.png')"/>
 				</s:ArrayList>
 			</s:dataProvider>
 		</s:ButtonBar>
