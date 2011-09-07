@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:toolbars="org.graffix.drawr.view.toolbars.*">
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
+			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.events.SymbolSelectEvent;
 			import org.graffix.drawr.managers.DrawMode;
 			import org.graffix.drawr.shapes.closed.EllipseShape;
@@ -50,7 +50,7 @@
 		]]>
 	</fx:Script>
 	<fx:Metadata>
-		[Event(name="TOOL_SELECT", type="com.graffix.drawingTool.events.drawing.ToolSelectEvent")]
+		[Event(name="TOOL_SELECT", type="org.graffix.drawr.events.ToolSelectEvent")]
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -58,7 +58,7 @@
 		
 		<s:ButtonBar id="buttonBar"
 					 requireSelection="true"
-					 skinClass="com.graffix.drawingTool.view.skins.ButtonBarSkin"
+					 skinClass="org.graffix.drawr.view.skins.ButtonBarSkin"
 					 selectedIndex="0" change="buttonbar1_changeHandler(event)" >
 			<s:layout>
 				<s:VerticalLayout gap="0"/>

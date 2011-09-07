@@ -9,7 +9,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.events.drawing.ToolSelectEvent;
+			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.events.ShapeChangedEvent;
 			import org.graffix.drawr.events.pages.PageManagerEvent;
 			import org.graffix.drawr.managers.DrawManager;

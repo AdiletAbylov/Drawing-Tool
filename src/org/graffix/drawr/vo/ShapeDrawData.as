@@ -59,5 +59,6 @@ package org.graffix.drawr.vo
 				trace("serialize error");
 			}
 		}
+		
 	}
 }
