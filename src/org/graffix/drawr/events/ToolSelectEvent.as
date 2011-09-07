@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.events.drawing
+package org.graffix.drawr.events
 {
 	import flash.events.Event;
 	
