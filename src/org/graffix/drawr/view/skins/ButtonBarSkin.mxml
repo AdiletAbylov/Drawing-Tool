@@ -18,7 +18,7 @@
 	
 	<fx:Declarations>
 		<fx:Component id="middleButton">
-			<s:ButtonBarButton skinClass="com.graffix.drawingTool.view.skins.ButtonBarButtonSkin" />
+			<s:ButtonBarButton skinClass="org.graffix.drawr.view.skins.ButtonBarButtonSkin" />
 		</fx:Component>
 	</fx:Declarations>
 	
