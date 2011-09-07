@@ -27,7 +27,7 @@ package org.graffix.drawr.managers
 	
 	public class DrawManager extends EventDispatcher
 	{
-		public function DrawManager(drawArea:DrawArea, so:SharedObject)
+		public function DrawManager(drawArea:DrawArea)
 		{
 			_drawArea = drawArea;
 			_drawArea.addEventListener(DrawAreaEvent.CLICK, onMouseClick );
@@ -42,12 +42,10 @@ package org.graffix.drawr.managers
 			// transforming mode is default 
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
 			drawMode = DrawMode.TRANSFROM_MODE;
-			_so = so;
 		}
 		
 		
 		
-		private var _so:SharedObject;
 		protected function onMouseOut(event:MouseEvent):void
 		{
 			if(_drawMode == DrawMode.DRAW_MODE)
@@ -319,18 +317,6 @@ package org.graffix.drawr.managers
 		}
 		
 		
-		public function processShapes():void
-		{
-			var dataObject:Object;
-			for(var uid:String in _so.data)
-			{
-				dataObject = _so.data[uid];
-				if(uid != "selectedPage" && dataObject.type != Page.PAGE_TYPE)
-				{
-					updateShapeOnPage( new ShapeDrawData(dataObject));
-				}
-			}
-		}
 		
 		/**
 		 * Redraws and transforms shape
@@ -372,37 +358,5 @@ package org.graffix.drawr.managers
 			_drawArea.currentPage.removeShapeByID(shapeID);
 		}
 		
-		
-		public function startListen():void
-		{
-			
-			_so.addEventListener(SyncEvent.SYNC, onSync);
-		}
-		
-		private function onSync(event:SyncEvent):void
-		{
-			for (var i:int = 0; i<event.changeList.length; ++i) 
-			{				
-				var uid:String = event.changeList[i].name;
-				var dataObject:Object = _so.data[uid];
-				if(uid == "selectedPage" || (dataObject && dataObject.type == Page.PAGE_TYPE))
-				{
-					//
-					// do not process pages data
-					continue;
-				}
-				switch(event.changeList[i].code)
-				{
-					case "delete":
-						eraseShape(uid);
-						_so.addEventListener(SyncEvent.SYNC, onSync );
-						break;
-					
-					case "change":
-						updateShapeOnPage( new ShapeDrawData(dataObject) );
-						break;
-				}
-			}
-		}
 	}
 }

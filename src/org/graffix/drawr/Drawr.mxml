@@ -9,8 +9,9 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.events.ShapeChangedEvent;
+			import org.graffix.drawr.events.ToolSelectEvent;
+			import org.graffix.drawr.events.pages.PageEvent;
 			import org.graffix.drawr.events.pages.PageManagerEvent;
 			import org.graffix.drawr.managers.DrawManager;
 			import org.graffix.drawr.managers.PagesManager;
@@ -31,47 +32,26 @@
 				_so = value;
 			}
 			
+			[Embed("/org/graffix/drawr/view/assets/remove.png")]
+			protected const ICON:Class;
+			
 			[Bindable]
 			private var _drawManager:DrawManager;
 			
 			protected function init():void
 			{
-				
 				addEventListener(ShapeChangedEvent.SHAPE_ADDED, onShapeAdded);
 				addEventListener(ShapeChangedEvent.SHAPE_CHANGED, onShapeChanged);
 				addEventListener(ShapeChangedEvent.SHAPE_REMOVED, onShapeRemoved);
-				if(_so)
-				{
-					_pagesManager = new PagesManager( _so, drawArea );
-					_pagesManager.addEventListener(PageManagerEvent.INIT_COMPLETE, onPagesInitComplete);
-				}
-			}
-			
-			
-			
-			private function  onShapeAdded(event:ShapeChangedEvent):void
-			{
-				trace("shapeAdded");
-				_so.setProperty(event.shapeData.shapeID, event.shapeData);
-				_so.setDirty(event.shapeData.shapeID);
-			}
-			
-			private function onShapeChanged(event:ShapeChangedEvent):void
-			{
-				trace("shapeChanged");
-				_so.setProperty(event.shapeData.shapeID, event.shapeData);
-				_so.setDirty(event.shapeData.shapeID);
-			}
-			
-			private function onShapeRemoved(event:ShapeChangedEvent):void
-			{
-				trace("shapeRemoved");
-				if(_so.data.hasOwnProperty(event.shapeData.shapeID))
-				{
-					_so.setProperty(event.shapeData.shapeID, null);
-				}
-				//delete _so.data[event.shapeData.shapeID];
-				//_so.setDirty(event.shapeData.shapeID);
+				
+				drawArea.addEventListener(PageEvent.PAGE_ADDED, onPageAdded);
+				drawArea.addEventListener(PageEvent.PAGE_REMOVED, onPageRemoved);
+				drawArea.addEventListener(PageEvent.PAGE_SELECTED, onPageSelect);
+				
+				
+				_so.addEventListener(SyncEvent.SYNC, onSync);
+				_drawManager = new DrawManager(drawArea);
+				
 			}
 			
 			protected function toolsview1_TOOL_SELECTHandler(event:ToolSelectEvent):void
@@ -84,31 +64,13 @@
 			protected function clearButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.currentPage.clear();
-				//_so.clear();
 			}
 			
-			[Embed("/org/graffix/drawr/view/assets/remove.png")]
-			protected const ICON:Class;
-			
-			[Bindable]
 			private var _pagesManager:PagesManager;
-			
-			
-			
 			
 			protected function screenshotButton_clickHandler(event:MouseEvent):void
 			{
 				drawArea.currentPage.makeScreenshot();
-			}
-			
-			//
-			// start to draw only after pages initialization complete
-			protected function onPagesInitComplete(event:PageManagerEvent):void
-			{
-				_drawManager = new DrawManager( drawArea, _so );
-				_drawManager.processShapes();
-				_drawManager.startListen();
-				enabled = true;
 			}
 			
 			protected function resetButton_clickHandler(event:MouseEvent):void
@@ -117,6 +79,172 @@
 				{
 					_so.setProperty(id, null);
 					_so.setDirty(id);
+				}
+			}
+			
+			private var _firstTime:Boolean = true;
+			
+			private function processSelectedPageSync(code:String, dataObject:String):void
+			{
+				if(code == "change" && !_firstTime )
+				{
+					drawArea.selectPageByUID(dataObject);
+				}
+			}
+			
+			protected function onSync(event:SyncEvent):void
+			{
+				trace("Sync");
+				for (var i:int = 0; i<event.changeList.length; ++i) 
+				{
+					var uid:String = event.changeList[i].name;
+					var dataObject:Object = _so.data[uid];
+					var code:String = event.changeList[i].code;
+					trace(code + " " + uid);
+					if(dataObject && uid == "selectedPage")
+					{
+						processSelectedPageSync(code, dataObject as String)
+						continue;
+					}
+					
+					if(dataObject && dataObject.type != Page.PAGE_TYPE)
+					{
+						if(!_firstTime)
+						{
+							processShapesSync(code, uid, dataObject);
+						}
+						continue;
+					}
+					
+					if(dataObject && dataObject.type == Page.PAGE_TYPE)
+					{
+						processPagesSync(code, uid);
+						continue;
+					}
+					
+					if(code == "delete")
+					{
+						_drawManager.eraseShape( uid);
+						drawArea.removePageByUID( uid );
+					}
+					
+				}
+				
+				if(_firstTime)
+				{
+					if(drawArea.pagesStack.length == 0)
+					{
+						var newPageUID:String = drawArea.addPage().pageUID;
+						savePage(newPageUID, {type:Page.PAGE_TYPE});
+						saveSelectedPage( newPageUID ); 
+					}else
+					{
+						drawArea.selectPageByUID( _so.data["selectedPage"] as String );
+					}
+					
+					addShapesToPages();
+					
+					_firstTime = false;
+					enabled = true;
+				}
+			}
+			
+			//
+			//	------------ SHAPES ---------------------
+			//
+			private function processShapesSync(code:String, uid:String, dataObject:Object):void
+			{
+				switch(code)
+				{
+					case "delete":
+						_drawManager.eraseShape(uid);
+						break;
+					
+					case "change":
+						_drawManager.updateShapeOnPage( new ShapeDrawData(dataObject) );
+						break;
+				}
+			}
+			
+			public function addShapesToPages():void
+			{
+				var dataObject:Object;
+				for(var uid:String in _so.data)
+				{
+					dataObject = _so.data[uid];
+					if(uid != "selectedPage" && dataObject.type != Page.PAGE_TYPE)
+					{
+						_drawManager.updateShapeOnPage( new ShapeDrawData(dataObject));
+					}
+				}
+			}
+			
+			private function  onShapeAdded(event:ShapeChangedEvent):void
+			{
+				_so.setProperty(event.shapeData.shapeID, event.shapeData);
+				_so.setDirty(event.shapeData.shapeID);
+			}
+			
+			private function onShapeChanged(event:ShapeChangedEvent):void
+			{
+				_so.setProperty(event.shapeData.shapeID, event.shapeData);
+				_so.setDirty(event.shapeData.shapeID);
+			}
+			
+			private function onShapeRemoved(event:ShapeChangedEvent):void
+			{
+				if(_so.data.hasOwnProperty(event.shapeData.shapeID))
+				{
+					_so.setProperty(event.shapeData.shapeID, null);
+					_so.setDirty(event.shapeData.shapeID);
+				}
+			}
+			
+			//
+			//	------------ PAGES ---------------------
+			//
+			protected function onPageSelect(event:PageEvent):void
+			{
+				saveSelectedPage( event.pageUID );		
+			}
+			
+			protected function onPageRemoved(event:PageEvent):void
+			{
+				_so.setProperty(event.pageUID, null);
+			}
+			
+			protected function onPageAdded(event:PageEvent):void
+			{
+				savePage(event.pageUID, {type:Page.PAGE_TYPE});
+			}
+			
+			private function saveSelectedPage(uid:String):void
+			{
+				_so.setProperty("selectedPage", uid );
+				_so.setDirty( "selectedPage" );
+			}
+			
+			private function savePage(uid:String, typeObject:Object):void
+			{
+				_so.setProperty(uid, typeObject );
+				_so.setDirty(uid);
+			}
+			
+			private function processPagesSync(code:String, uid:String):void
+			{
+				switch(code)
+				{
+					case "delete":
+						if(uid)
+						{
+							drawArea.removePageByUID( uid );
+						}
+						savePage(uid, null);
+						break;
+					
+					case "change":
+						drawArea.addPage(uid); 
+						break;
 				}
 			}
 			
