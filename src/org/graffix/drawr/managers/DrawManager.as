@@ -1,8 +1,22 @@
 package org.graffix.drawr.managers
 {
+	import com.roguedevelopment.objecthandles.Flex4ChildManager;
+	import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+	import com.roguedevelopment.objecthandles.ObjectHandles;
+	import com.roguedevelopment.objecthandles.SelectionEvent;
+	import com.roguedevelopment.objecthandles.VisualElementHandle;
+	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	
+	import mx.core.IVisualElement;
+	import mx.events.CloseEvent;
+	import mx.managers.PopUpManager;
+	
 	import org.graffix.drawr.events.DrawAreaEvent;
 	import org.graffix.drawr.events.ImageShapeEvent;
-	import org.graffix.drawr.events.ShapeSelectEvent;
 	import org.graffix.drawr.shapes.BaseShape;
 	import org.graffix.drawr.shapes.complex.EraserShape;
 	import org.graffix.drawr.shapes.complex.ImageShape;
@@ -14,38 +28,25 @@ package org.graffix.drawr.managers
 	import org.graffix.drawr.view.editors.ImagesGallery;
 	import org.graffix.drawr.vo.ShapeDrawData;
 	
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.MouseEvent;
-	import flash.events.SyncEvent;
-	import flash.geom.Point;
-	import flash.net.SharedObject;
-	
-	import mx.core.IVisualElement;
-	import mx.events.CloseEvent;
-	import mx.managers.PopUpManager;
-	
 	public class DrawManager extends EventDispatcher
 	{
 		public function DrawManager(drawArea:DrawArea)
 		{
 			_drawArea = drawArea;
-			_drawArea.addEventListener(DrawAreaEvent.CLICK, onMouseClick );
+			_drawArea.addEventListener(MouseEvent.CLICK, onMouseClick );
 			_drawArea.addEventListener(DrawAreaEvent.MOVE, onMouseMove );
 			_drawArea.addEventListener(DrawAreaEvent.DOWN, onMouseDown );
 			_drawArea.addEventListener( DrawAreaEvent.UP, onMouseUp);
 			_drawArea.addEventListener( MouseEvent.ROLL_OUT, onMouseOut);
-			
-			_drawArea.addEventListener(ShapeSelectEvent.SHAPE_SELECT, onShapeSelect);
 			_drawArea.addEventListener(ImageShapeEvent.SHOW_GALLERY, onShowGalleryEvent);
 			//
 			// transforming mode is default 
 			_selectedTool = SelectTool.TRANSFORM_TOOL;
 			drawMode = DrawMode.TRANSFROM_MODE;
+			_objectHandles = new ObjectHandles( _drawArea, null, new Flex4HandleFactory(), new Flex4ChildManager());
+			_objectHandles.selectionManager.addEventListener(SelectionEvent.ADDED_TO_SELECTION, onShapeSelect);
 		}
-		
-		
-		
+	
 		protected function onMouseOut(event:MouseEvent):void
 		{
 			if(_drawMode == DrawMode.DRAW_MODE)
@@ -76,7 +77,6 @@ package org.graffix.drawr.managers
 			_selectedTool = value;
 			if( _currentShape )
 			{
-				_currentShape.hideTransformControls();
 				_currentShape = null;
 			}
 			
@@ -134,6 +134,10 @@ package org.graffix.drawr.managers
 			{
 				_drawMode = value;
 				dispatchEvent(new Event("changeDrawMode"));
+				if(_drawMode == DrawMode.DRAW_MODE)
+				{
+					_objectHandles.selectionManager.clearSelection();
+				}
 			}
 		}
 		
@@ -179,7 +183,7 @@ package org.graffix.drawr.managers
 			}
 		}
 		
-		
+		private var _objectHandles:ObjectHandles;
 		private function endDraw():void
 		{
 			if(!_currentShape)
@@ -195,9 +199,11 @@ package org.graffix.drawr.managers
 						{
 							(_currentShape as SymbolShape).symbol = _toolData as String;
 						}
+						
+						_objectHandles.registerComponent(_currentShape.shapeDrawData, _currentShape);
 						_currentShape.finishDraw();
+						_objectHandles.selectionManager.setSelected(_currentShape.shapeDrawData);
 						drawMode = DrawMode.TRANSFROM_MODE;
-						_currentShape.showTransformControls();
 					}
 					break;
 				
@@ -245,13 +251,14 @@ package org.graffix.drawr.managers
 		
 		
 		
-		protected function onMouseClick(event:DrawAreaEvent):void
+		protected function onMouseClick(event:MouseEvent):void
 		{
-//			if(_currentShape && _currentShape.transforming)
-//			{
-//				_currentShape.hideTransformControls();
-//				_currentShape = null;
-//			}
+			if(drawMode == DrawMode.TRANSFROM_MODE)
+			{
+				if(event.target is BaseShape) return;
+				if(event.target is VisualElementHandle) return;
+				_objectHandles.selectionManager.clearSelection();
+			}
 		}
 		
 		//
@@ -303,20 +310,15 @@ package org.graffix.drawr.managers
 		}
 		
 		
-		protected function onShapeSelect(event:ShapeSelectEvent):void
+		protected function onShapeSelect(event:SelectionEvent):void
 		{
-			if( _drawMode != DrawMode.DRAW_MODE)
+			if( _drawMode == DrawMode.TRANSFROM_MODE)
 			{
-				if( _currentShape )
-				{
-					_currentShape.hideTransformControls();
-				}
-				_currentShape = event.target as BaseShape;
-				_currentShape.showTransformControls();
+				var shapeData:ShapeDrawData = event.targets[0] as ShapeDrawData;
+				_currentShape = _drawArea.currentPage.getShapeByID(shapeData.shapeID);
 			}
+			
 		}
-		
-		
 		
 		/**
 		 * Redraws and transforms shape
@@ -327,17 +329,13 @@ package org.graffix.drawr.managers
 			if(shapeData)
 			{
 				var page:Page = _drawArea.getPageByUID(shapeData.pageUID);
-				if(page)
+				if(page)	
 				{
 					var shape:BaseShape = page.getShapeByID(shapeData.shapeID);
 					if(shape)
 					{
 						shape.shapeDrawData = shapeData;
 						page.updateElementLayout(shape as IVisualElement);
-						if(shape.transforming)
-						{
-							shape.hideTransformControls();
-						}
 					}
 					else
 					{
@@ -355,8 +353,13 @@ package org.graffix.drawr.managers
 		
 		public function eraseShape(shapeID:String):void
 		{
+			_objectHandles.selectionManager.clearSelection();
+			var shape:BaseShape = _drawArea.currentPage.getShapeByID(shapeID);
+			if(shape)
+			{
+				_objectHandles.unregisterComponent(shape);
+			}
 			_drawArea.currentPage.removeShapeByID(shapeID);
 		}
-		
 	}
 }
