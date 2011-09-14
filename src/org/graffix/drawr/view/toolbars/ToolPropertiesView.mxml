@@ -20,25 +20,19 @@
 	</s:transitions>
 	<fx:Script>
 		<![CDATA[
-			import org.graffix.drawr.events.TextEditorEvent;
-			import org.graffix.drawr.managers.DrawMode;
-			import org.graffix.drawr.shapes.BaseShape;
-			import org.graffix.drawr.shapes.IPropertyChangable;
-			import org.graffix.drawr.shapes.closed.EllipseShape;
-			import org.graffix.drawr.shapes.closed.RectShape;
-			import org.graffix.drawr.shapes.complex.SymbolShape;
-			import org.graffix.drawr.shapes.complex.TextShape;
-			import org.graffix.drawr.shapes.selection.SelectTool;
-			import org.graffix.drawr.shapes.simple.FreehandShape;
-			import org.graffix.drawr.shapes.simple.LineShape;
-			
 			import flashx.textLayout.conversion.ConversionType;
 			import flashx.textLayout.conversion.TextConverter;
 			
-			import mx.events.CloseEvent;
 			import mx.events.ColorPickerEvent;
 			import mx.events.FlexMouseEvent;
-			import mx.messaging.AbstractConsumer;
+			
+			import org.graffix.drawr.events.TextEditorEvent;
+			import org.graffix.drawr.shapes.BaseShape;
+			import org.graffix.drawr.shapes.closed.EllipseShape;
+			import org.graffix.drawr.shapes.closed.RectShape;
+			import org.graffix.drawr.shapes.complex.FreehandShape;
+			import org.graffix.drawr.shapes.complex.TextShape;
+			import org.graffix.drawr.shapes.simple.LineShape;
 			
 			import spark.events.IndexChangeEvent;
 			

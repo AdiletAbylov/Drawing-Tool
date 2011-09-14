@@ -4,20 +4,18 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:toolbars="org.graffix.drawr.view.toolbars.*">
 	<fx:Script>
 		<![CDATA[
-			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.events.SymbolSelectEvent;
+			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.managers.DrawMode;
 			import org.graffix.drawr.shapes.closed.EllipseShape;
 			import org.graffix.drawr.shapes.closed.RectShape;
 			import org.graffix.drawr.shapes.complex.EraserShape;
+			import org.graffix.drawr.shapes.complex.FreehandShape;
 			import org.graffix.drawr.shapes.complex.ImageShape;
 			import org.graffix.drawr.shapes.complex.SymbolShape;
 			import org.graffix.drawr.shapes.complex.TextShape;
 			import org.graffix.drawr.shapes.selection.SelectTool;
-			import org.graffix.drawr.shapes.simple.FreehandShape;
 			import org.graffix.drawr.shapes.simple.LineShape;
-			
-			import mx.controls.List;
 			
 			import spark.events.IndexChangeEvent;
 			
