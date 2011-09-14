@@ -4,6 +4,7 @@ package org.graffix.drawr.shapes
 	import flash.geom.Point;
 	
 	import mx.binding.utils.ChangeWatcher;
+	import mx.events.FlexEvent;
 	import mx.utils.UIDUtil;
 	
 	import org.graffix.drawr.events.LayoutOrderEvent;
@@ -23,6 +24,12 @@ package org.graffix.drawr.shapes
 		{
 			id = UIDUtil.createUID();
 			_shapeDrawData = new ShapeDrawData();
+			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
+		}
+		
+		protected function onCreationComplete(event:FlexEvent):void
+		{
+			startWatchModel();
 		}
 		
 		private var _watchersArray:Array = [];
@@ -141,7 +148,6 @@ package org.graffix.drawr.shapes
 		public function finishDraw():void
 		{	
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
-			startWatchModel();
 		}
 		
 		public function clear():void

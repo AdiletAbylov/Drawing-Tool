@@ -345,10 +345,16 @@ package org.graffix.drawr.managers
 							shape.id = shapeData.shapeID;
 							shape.shapeDrawData = shapeData;
 							page.addElement( shape );
+							page.callLater(registerShape, [shape]);
 						}
 					}
 				}
 			}
+		}
+		
+		private function registerShape(shape:BaseShape):void
+		{
+			_objectHandles.registerComponent(shape.shapeDrawData, shape);
 		}
 		
 		public function eraseShape(shapeID:String):void
