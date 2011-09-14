@@ -15,7 +15,7 @@ package org.graffix.drawr.shapes.complex
 		{
 			super();
 			_shapeDrawData.type = ERASER_SHAPE;
-			_shapeDrawData.lineColor = 0x000000;
+			_shapeDrawData.lineColor = 0xFFFFFF;
 			_shapeDrawData.lineSize = 80;
 		}
 		
