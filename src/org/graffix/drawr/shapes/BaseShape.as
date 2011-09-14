@@ -1,23 +1,18 @@
 package org.graffix.drawr.shapes
 {	
+	import flash.events.Event;
+	import flash.geom.Point;
+	
+	import mx.binding.utils.ChangeWatcher;
+	import mx.utils.UIDUtil;
+	
 	import org.graffix.drawr.events.LayoutOrderEvent;
 	import org.graffix.drawr.events.ShapeChangedEvent;
-	import org.graffix.drawr.events.ShapeSelectEvent;
-	import org.graffix.drawr.shapes.selection.ISelectable;
 	import org.graffix.drawr.vo.ShapeDrawData;
-	import com.senocular.display.TransformTool;
 	
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import flash.utils.setTimeout;
+	import spark.components.Group;
 	
-	import mx.core.UIComponent;
-	import mx.utils.UIDUtil;
-
-	public class BaseShape extends UIComponent implements IDrawable, ISelectable
+	public class BaseShape extends Group implements IDrawable
 	{
 		public static const PROPERTY_LINE_SIZE:String = "lineSize";
 		public static const PROPERTY_LINE_COLOR:String = "lineColor";
@@ -26,24 +21,38 @@ package org.graffix.drawr.shapes
 		
 		public function BaseShape()
 		{
-			_transformTool = new TransformTool();
-			_spriteToDraw = new Sprite();
 			id = UIDUtil.createUID();
 			_shapeDrawData = new ShapeDrawData();
-			addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 		
-		override protected function createChildren():void
+		private var _watchersArray:Array = [];
+		private function startWatchModel():void
 		{
-			addChild( _spriteToDraw );
-			addChild( _transformTool );
+			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "x", onDrawDataChange));
+			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "y", onDrawDataChange));
+			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "width", onDrawDataChange));
+			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "height", onDrawDataChange));
+			_watchersArray.push( ChangeWatcher.watch(_shapeDrawData, "rotation", onDrawDataChange));
 		}
 		
+		private function stopWatchModel():void
+		{
+			for(var i:int=0; i < _watchersArray.length; ++i)
+			{
+				(_watchersArray[i] as ChangeWatcher).unwatch();
+			}
+		}
 		
-		protected var _spriteToDraw:Sprite;
+		protected function onDrawDataChange(event:Event):void
+		{
+			_redrawAll = true;
+			invalidateDisplayList();
+			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, _shapeDrawData));
+		}
+		
 		protected var _shapeDrawData:ShapeDrawData;
 		
-		[Bindable]	
+		[Bindable]
 		public function set shapeDrawData(value:ShapeDrawData):void
 		{
 			_shapeDrawData = value;
@@ -58,12 +67,9 @@ package org.graffix.drawr.shapes
 			_shapeDrawData.x = x;
 			_shapeDrawData.y = y;
 			_shapeDrawData.zIndex = zIndex;
-			_shapeDrawData.width = _spriteToDraw.width;
-			_shapeDrawData.height = _spriteToDraw.height;
-			if(viewObject)
-			{
-				_shapeDrawData.matrix = viewObject.transform.matrix;
-			}
+			_shapeDrawData.width = width;
+			_shapeDrawData.height = height;
+			_shapeDrawData.rotation = rotation;
 			return _shapeDrawData;
 		}
 		
@@ -83,13 +89,13 @@ package org.graffix.drawr.shapes
 		{
 			return _shapeDrawData.lineSize;
 		}
-
+		
 		protected var _lineColorChanged:Boolean;
 		public function get lineColor():uint
 		{
 			return _shapeDrawData.lineColor;
 		}
-			
+		
 		
 		protected var _hasFillChanged:Boolean;
 		[Bindable]
@@ -104,7 +110,7 @@ package org.graffix.drawr.shapes
 		{
 			return _shapeDrawData.fillColor;
 		}
-
+		
 		public function set hasFill(value:Boolean):void
 		{
 			_shapeDrawData.hasFill = value;
@@ -116,17 +122,13 @@ package org.graffix.drawr.shapes
 			/*override in childs*/
 		}
 		
-		
-
-		public function get transforming():Boolean
-		{
-			return _transforming;
-		}
-
 		public function setPoints(startPoint:Point, endPoint:Point):void
 		{
 			_shapeDrawData.drawData = {startPoint:startPoint, endPoint:endPoint};
-			_drawDataChanged = true;
+			width = _shapeDrawData.drawData.startPoint.x - _shapeDrawData.drawData.endPoint.x * -1;
+			height = _shapeDrawData.drawData.startPoint.y - _shapeDrawData.drawData.endPoint.y * -1;
+			_shapeDrawData.width = width;
+			_shapeDrawData.height = height;
 			invalidateDisplayList();
 		}
 		
@@ -139,68 +141,12 @@ package org.graffix.drawr.shapes
 		public function finishDraw():void
 		{	
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
+			startWatchModel();
 		}
 		
 		public function clear():void
 		{
-			if(_spriteToDraw)
-			{
-				_spriteToDraw.graphics.clear();
-			}
-		}
-
-		
-		//
-		// TRANSFORM AND SELECTION
-		//
-		protected var _transformTool:TransformTool;
-		protected var _transforming:Boolean;
-		
-		public function showTransformControls():void
-		{
-			_transforming = true;
-			invalidateDisplayList();
-		}
-		
-		protected function showTransform():void
-		{
-			_transformTool.target = viewObject;
-			_transformTool.registration = _transformTool.boundsCenter;
-			_transformTool.addEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
-		}
-		
-		private function onTransformTarget(event:Event):void
-		{
-			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
-		}
-		
-		public function hideTransformControls():void
-		{
-			_transforming = false;
-			invalidateDisplayList();
-		}
-		
-		protected function hideTransform():void
-		{
-			_transformTool.target = null;
-			_transformTool.removeEventListener(TransformTool.TRANSFORM_TARGET, onTransformTarget);
-		}
-		
-		protected function onMouseClick(event:MouseEvent):void
-		{
-			// !!!!!!!!!!
-			// workaround 
-			// because dispathing event here
-			// stops of dispatching dblClick event
-			if(!transforming)
-			{
-				setTimeout( dispatchSelectEvent, 200);
-			}
-		}
-		
-		private function dispatchSelectEvent():void
-		{
-			dispatchEvent(new ShapeSelectEvent(ShapeSelectEvent.SHAPE_SELECT));
+			graphics.clear();
 		}
 		
 		
@@ -213,29 +159,17 @@ package org.graffix.drawr.shapes
 		public function destroy():void
 		{
 			clear();
+			stopWatchModel();
 			
-			removeEventListener(MouseEvent.CLICK, onMouseClick);
 			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_REMOVED, shapeDrawData));
-			if(_spriteToDraw)
-			{
-				removeChild(_spriteToDraw);
-				_spriteToDraw = null;
-			}
-			if(_transformTool)
-			{
-				removeChild(_transformTool);
-				_transformTool = null;
-			}
 		}
 		
-		
 		private var _toRemove:Boolean;
-
 		public function get toRemove():Boolean
 		{
 			return _toRemove;
 		}
-
+		
 		public function set toRemove(value:Boolean):void
 		{
 			_toRemove = value;
@@ -244,46 +178,25 @@ package org.graffix.drawr.shapes
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			if(_drawDataChanged)
-			{
-				_drawDataChanged = false;
-				draw();
-			}
+			
 			
 			if(_redrawAll)
 			{
-				draw();
-				if(_shapeDrawData.matrix)
-				{
-					viewObject.transform.matrix = _shapeDrawData.matrix;
-				}
+				width = _shapeDrawData.width;
+				height = _shapeDrawData.height;
 				x = _shapeDrawData.x;
 				y = _shapeDrawData.y;
+				rotation = _shapeDrawData.rotation;
 				_redrawAll = false;
 			}
-			
-			if(transforming)
-			{
-				showTransform();
-			}else
-			{
-				hideTransform();
-			}
-			
+			draw();
 		}
 		
-		protected function get viewObject():DisplayObject
-		{
-			return _spriteToDraw;
-		}
-		
-		
-
 		public function get zIndex():uint
 		{
 			return _shapeDrawData.zIndex;
 		}
-
+		
 		public function set zIndex(value:uint):void
 		{
 			_shapeDrawData.zIndex = value;
@@ -293,17 +206,15 @@ package org.graffix.drawr.shapes
 		//
 		// uid of page shape in
 		private var _pageUID:String;
-
+		
 		public function get pageUID():String
 		{
 			return _pageUID;
 		}
-
+		
 		public function set pageUID(value:String):void
 		{
 			_pageUID = value;
 		}
-
-		
 	}
 }

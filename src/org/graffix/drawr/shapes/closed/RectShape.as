@@ -19,20 +19,20 @@ package org.graffix.drawr.shapes.closed
 		{
 			try
 			{
-				_spriteToDraw.graphics.clear();
+				graphics.clear();
 				if(_shapeDrawData.hasFill)
 				{
-					_spriteToDraw.graphics.beginFill(_shapeDrawData.fillColor);
+					graphics.beginFill(_shapeDrawData.fillColor);
 				}else
 				{
-					_spriteToDraw.graphics.beginFill(_shapeDrawData.fillColor, 0);
+					graphics.beginFill(_shapeDrawData.fillColor, 0);
 				}
 				
-				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
-				_spriteToDraw.graphics.drawRect( _shapeDrawData.drawData.x, _shapeDrawData.drawData.y, _shapeDrawData.drawData.width, _shapeDrawData.drawData.height );
+				graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
+				graphics.drawRect( 0, 0, width, height );
 			}catch(e:Error)
 			{
-				_spriteToDraw.graphics.clear();
+				graphics.clear();
 			}
 		}
 	}

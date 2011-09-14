@@ -2,7 +2,7 @@ package org.graffix.drawr.shapes.simple
 {
 	import org.graffix.drawr.events.ShapeChangedEvent;
 	import org.graffix.drawr.shapes.BaseShape;
-
+	
 	public class LineShape extends BaseShape
 	{
 		public static const LINE_SHAPE:int = 2;
@@ -21,6 +21,7 @@ package org.graffix.drawr.shapes.simple
 					_shapeDrawData.lineSize = value as int;
 					_lineSizeChanged = true;
 					break;
+				
 				case PROPERTY_LINE_COLOR:
 					_shapeDrawData.lineColor = value as uint;
 					_lineSizeChanged = true;
@@ -33,7 +34,6 @@ package org.graffix.drawr.shapes.simple
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			var redrawed:Boolean = _lineSizeChanged || _lineColorChanged || _drawDataChanged;
 			if(_lineSizeChanged)
 			{
 				//redraw
@@ -45,26 +45,14 @@ package org.graffix.drawr.shapes.simple
 				draw();
 				_lineColorChanged = false;
 			}
-			
-			
-			if(redrawed)
-			{
-				//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
-			}
 		}
 		
 		override public function draw():void
 		{
-			try
-			{
-				_spriteToDraw.graphics.clear();
-				_spriteToDraw.graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
-				_spriteToDraw.graphics.moveTo( _shapeDrawData.drawData.startPoint.x, _shapeDrawData.drawData.startPoint.y );
-				_spriteToDraw.graphics.lineTo( _shapeDrawData.drawData.endPoint.x, _shapeDrawData.drawData.endPoint.y );
-			}catch(e:Error)
-			{
-				_spriteToDraw.graphics.clear();
-			}
+			graphics.clear();
+			graphics.lineStyle( _shapeDrawData.lineSize, _shapeDrawData.lineColor );
+			graphics.moveTo( 0, 0 );
+			graphics.lineTo( width, height );
 		}
 	}
 }

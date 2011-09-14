@@ -8,7 +8,7 @@ package org.graffix.drawr.shapes.factory
 	import org.graffix.drawr.shapes.complex.SymbolShape;
 	import org.graffix.drawr.shapes.complex.TextShape;
 	import org.graffix.drawr.shapes.selection.SelectTool;
-	import org.graffix.drawr.shapes.simple.FreehandShape;
+	import org.graffix.drawr.shapes.complex.FreehandShape;
 	import org.graffix.drawr.shapes.simple.LineShape;
 	
 	public class ShapesFactory

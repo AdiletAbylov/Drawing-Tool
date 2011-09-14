@@ -1,18 +1,15 @@
 package org.graffix.drawr.shapes.complex
 {
-	import org.graffix.drawr.events.ShapeChangedEvent;
-	import org.graffix.drawr.events.TextEditorEvent;
-	import org.graffix.drawr.shapes.BaseShape;
-	
-	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.text.TextLineMetrics;
 	
 	import flashx.textLayout.conversion.TextConverter;
 	
-	import mx.controls.Label;
+	import mx.states.OverrideBase;
 	
-	import spark.components.Group;
+	import org.graffix.drawr.events.ShapeChangedEvent;
+	import org.graffix.drawr.shapes.BaseShape;
+	
 	import spark.components.RichText;
 	
 	
@@ -28,26 +25,21 @@ package org.graffix.drawr.shapes.complex
 			_shapeDrawData.type = TEXT_SHAPE;
 			_label = new RichText();
 			_label.text = "Text Label";
-		}
-		
-		
-		override protected function createChildren():void
-		{
-			super.createChildren();
-			addChild( _label );
+			_label.mouseEnabled = false;
 			
+			width = 120;
+			height = 25;
+			_shapeDrawData.width = width;
+			_shapeDrawData.height = height;
+			addElement( _label );
 		}
+		
 		
 		override public function finishDraw():void
 		{
 			super.finishDraw();
-			addEventListener(MouseEvent.DOUBLE_CLICK, onDoubleClick );
 		}
 		
-		private function onDoubleClick(event:MouseEvent):void
-		{
-			editText();
-		}
 		
 		public function editText():void
 		{
@@ -62,36 +54,21 @@ package org.graffix.drawr.shapes.complex
 			invalidateDisplayList();
 		}
 		
-		
-		
 		private var _textChanged:Boolean;
+		
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			if(_textChanged)
-			{
-				draw();
-				_textChanged = false;
-			}
-			meauserLabel();
+			_label.width = width
+			_label.height = height;
 		}
 		
 		override public function draw():void
 		{
-			
+			_label.cacheAsBitmap = false;
 			_label.textFlow = TextConverter.importToFlow(_shapeDrawData.text, TextConverter.TEXT_LAYOUT_FORMAT );
-		
-			
-		}
-		
-		private function meauserLabel():void
-		{
-			var lineMetrics:TextLineMetrics = _label.measureText(_label.text);
-			_label.width = lineMetrics.width+40;
-			_label.height = 100;
-//			textContainer.width = lineMetrics.width+40;
-//			textContainer.height = 100;
+			_label.cacheAsBitmap = true;
 		}
 		
 		override public function destroy():void
@@ -100,13 +77,6 @@ package org.graffix.drawr.shapes.complex
 			
 			_label.textFlow = null;
 			_label = null;
-			
-			removeEventListener(MouseEvent.DOUBLE_CLICK, onDoubleClick);
-		}
-		
-		override protected function get viewObject():DisplayObject
-		{
-			return _label;
 		}
 	}
 }

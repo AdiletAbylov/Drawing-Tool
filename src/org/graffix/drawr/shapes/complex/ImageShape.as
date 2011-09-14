@@ -46,14 +46,6 @@ package org.graffix.drawr.shapes.complex
 			_image.height = _image.content.loaderInfo.height;
 		}
 		
-	
-		override protected function showTransform():void
-		{
-			_transformTool.target = _image;
-			_transformTool.registration = _transformTool.boundsCenter;
-			_transforming = true;
-		}
-		
 		override public function destroy():void
 		{
 			super.destroy();

@@ -50,7 +50,6 @@ package org.graffix.drawr.shapes.closed
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			var redrawed:Boolean = _lineSizeChanged || _lineColorChanged || _drawDataChanged || _hasFillChanged || _fillColorChanged;
 			if(_lineSizeChanged)
 			{
 				//redraw
@@ -74,21 +73,15 @@ package org.graffix.drawr.shapes.closed
 				_fillColorChanged = false;
 			}
 			
-			
-			if(redrawed)
-			{
-				//dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_CHANGED, shapeDrawData ));
-			}
 		}
 		
 		override public function setPoints(startPoint:Point, endPoint:Point):void
 		{
+			super.setPoints(startPoint, endPoint);
 			var rectWidth:Number = endPoint.x - startPoint.x;
 			var rectHeight:Number = endPoint.y - startPoint.y;
-			var rectStartPoint:Point = findTopLeftCorner(startPoint, endPoint);
-			_shapeDrawData.drawData = new Rectangle(rectStartPoint.x, rectStartPoint.y, Math.abs(rectWidth), Math.abs(rectHeight));
-			_drawDataChanged = true;
-			invalidateDisplayList();
+			//var rectStartPoint:Point = findTopLeftCorner(startPoint, endPoint);
+			//_shapeDrawData.drawData = new Rectangle(rectStartPoint.x, rectStartPoint.y, Math.abs(rectWidth), Math.abs(rectHeight));
 		}
 		
 		protected function findTopLeftCorner(startPoint:Point, endPoint:Point):Point
