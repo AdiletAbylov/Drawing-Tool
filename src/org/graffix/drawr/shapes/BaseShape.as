@@ -13,7 +13,7 @@ package org.graffix.drawr.shapes
 	
 	import spark.components.Group;
 	
-	public class BaseShape extends Group implements IDrawable
+	public class BaseShape extends Group
 	{
 		public static const PROPERTY_LINE_SIZE:String = "lineSize";
 		public static const PROPERTY_LINE_COLOR:String = "lineColor";
@@ -24,17 +24,12 @@ package org.graffix.drawr.shapes
 		{
 			id = UIDUtil.createUID();
 			_shapeDrawData = new ShapeDrawData();
-			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
-		}
-		
-		protected function onCreationComplete(event:FlexEvent):void
-		{
-			startWatchModel();
 		}
 		
 		private var _watchersArray:Array = [];
 		private function startWatchModel():void
 		{
+			trace("start watch model");
 			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "x", onDrawDataChange));
 			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "y", onDrawDataChange));
 			_watchersArray.push(ChangeWatcher.watch(_shapeDrawData, "width", onDrawDataChange));
@@ -145,9 +140,13 @@ package org.graffix.drawr.shapes
 		public function startDraw():void
 		{/*override in childs*/}
 		
-		public function finishDraw():void
+		public function finishDraw(dispatchAddedEvent:Boolean = true):void
 		{	
-			dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
+			if(dispatchAddedEvent)
+			{
+				dispatchEvent( new ShapeChangedEvent(ShapeChangedEvent.SHAPE_ADDED, shapeDrawData ));
+			}
+			startWatchModel();
 		}
 		
 		public function clear():void
