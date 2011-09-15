@@ -35,11 +35,6 @@ package org.graffix.drawr.shapes.complex
 		}
 		
 		
-		override public function finishDraw():void
-		{
-			super.finishDraw();
-		}
-		
 		
 		public function editText():void
 		{

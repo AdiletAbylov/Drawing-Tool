@@ -44,10 +44,11 @@ package org.graffix.drawr.shapes.complex
 			}
 		}
 		
-		override public function finishDraw():void
+		override public function finishDraw(dispatchAddedEvent:Boolean=false):void
 		{
 			//clear();
 			dispatchEvent(new EraseEvent(this));
+			super.finishDraw(dispatchAddedEvent);
 		}
 		
 		override public function destroy():void

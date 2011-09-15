@@ -79,12 +79,12 @@ package org.graffix.drawr.shapes.complex
 		private var maxy:Number = 0;
 		
 		
-		override public function finishDraw():void
+		override public function finishDraw(dispatchAddedEvent:Boolean=false):void
 		{
 			compensateShift();
 			shapeDrawData.width = width;	
 			shapeDrawData.height = height;
-			super.finishDraw();
+			super.finishDraw(dispatchAddedEvent);
 		}
 		
 		private function compensateShift():void
@@ -115,6 +115,7 @@ package org.graffix.drawr.shapes.complex
 				
 				_groupToDraw.scaleX = xratio;
 				_groupToDraw.scaleY = yratio;
+				rrr = false;
 			}
 		}
 		override public function draw():void
@@ -132,14 +133,20 @@ package org.graffix.drawr.shapes.complex
 		
 		override public function set shapeDrawData(value:ShapeDrawData):void
 		{	
-			_commands = value.drawData.commands as Vector.<int>;
-			_coords = value.drawData.coords as Vector.<Number>;
-			var length:int = _coords.length;
-			for(var i:int = 1; i < length; i+=2)
+			try
 			{
-				findMaxMinPoints( new Point(_coords[i -1], _coords[i]));
+				_commands = value.drawData.commands as Vector.<int>;
+				_coords = value.drawData.coords as Vector.<Number>;
+				var length:int = _coords.length;
+				for(var i:int = 1; i < length; i+=2)
+				{
+					findMaxMinPoints( new Point(_coords[i -1], _coords[i]));
+				}
+				compensateShift();
+			}catch(e:Error)
+			{
+				trace("Freehand error");
 			}
-			compensateShift();
 			super.shapeDrawData = value;
 		}
 		
