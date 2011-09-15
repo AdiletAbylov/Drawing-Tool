@@ -44,7 +44,7 @@ package com.graffix.drawingTool.commands.application
 		{
 			var usersListPopup:IFlexDisplayObject = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UsersListView );
 			usersListPopup.x = FlexGlobals.topLevelApplication.width - usersListPopup.width -10; 
-			usersListPopup.y =  FlexGlobals.topLevelApplication.height - usersListPopup.height -10;
+			usersListPopup.y =  10;
 			
 			__model.chatView = PopUpManager.createPopUp( FlexGlobals.topLevelApplication as DisplayObject, ChatView);
 			__model.chatView.x =  usersListPopup.x - __model.chatView.width - 10;
