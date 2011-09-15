@@ -153,9 +153,9 @@
 					{
 						drawArea.selectPageByUID( _so.data["selectedPage"] as String );
 					}
-					
+					_alertMessage = "Shapes processing."
 					addShapesToPages();
-					_alertMessage = "Shapes processed."
+					
 					_firstTime = false;
 
 					_alertMessage = "Intialization complete."
@@ -287,7 +287,7 @@
 									 
 									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
-		<s:Button id="resetButton" visible="false" label="reset" click="resetButton_clickHandler(event)"/>
+		<s:Button id="resetButton" label="reset" click="resetButton_clickHandler(event)"/>
 	</s:HGroup>
 	<s:BorderContainer visible="{!_toolsEnabled}"
 					   enabled="{!_toolsEnabled}"
