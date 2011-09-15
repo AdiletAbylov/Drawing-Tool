@@ -7,6 +7,7 @@
 		<s:State name="ConnectState"/>
 		<s:State name="LoginState"/>
 		<s:State name="ErrorState"/>
+		<s:State name="LoginWaitState"/>
 	</s:states>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -16,9 +17,12 @@
 			import com.graffix.drawingTool.commands.application.LoginCommand;
 			import com.graffix.drawingTool.events.application.LoginEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
+			
+			import mx.events.FlexEvent;
 			public static const CONNECTING:String = "connecting";
 			public static const ERROR:String = "error";
 			public static const LOGIN:String = "login";
+			public static const WAIT:String = "loginWait";
 			
 			public function set status(value:String):void
 			{
@@ -35,6 +39,9 @@
 					case LOGIN:
 						currentState = "LoginState";
 						break;
+					case WAIT:
+						currentState = "LoginWaitState";
+						break;
 				}
 			}
 
@@ -44,21 +51,33 @@
 				loginEvent.dispatch();
 			}
 
+			protected function nameInput_enterHandler(event:FlexEvent):void
+			{
+				if(nameInput.text.length > 0)
+				{
+					var loginEvent:LoginEvent = new LoginEvent(nameInput.text);
+					loginEvent.dispatch();
+
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<s:BorderContainer left="0" right="0" top="0" height="46" cornerRadius="5">
 		<s:Label x="43" y="10" text="E-Meeting"/>
 	</s:BorderContainer>
 	<s:BorderContainer left="0" right="0" top="54" bottom="0" cornerRadius="5">
-		<s:Group includeIn="LoginState" right="5" top="10" width="258" height="73">
+		<s:Group includeIn="LoginState,LoginWaitState" right="5" top="10" width="258" height="73">
 			<s:layout>
 				<s:VerticalLayout/>
 			</s:layout>
-			<s:Label text="Please enter your name"/>
-			<s:TextInput width="250" id="nameInput"/>
+			<s:Label text="Please enter your name"
+					 text.LoginWaitState="Logging in. Please wait..."/>
+			<s:TextInput id="nameInput" width="250" enter="nameInput_enterHandler(event)"
+						 enabled.LoginWaitState="false"/>
 			<s:Button id="loginButton" 
 					  click="loginButton_clickHandler(event)"
-					  label="Enter" enabled="{nameInput.text != ''}"/>
+					  label="Enter" enabled="{nameInput.text != ''}" enabled.LoginWaitState="false"/>
 		</s:Group>
 		<s:Label includeIn="ConnectState" y="50" horizontalCenter="0"
 				 text="Connecting to server... Please wait..."/>

@@ -18,6 +18,7 @@ package com.graffix.drawingTool.commands.application
 		private var __model:ModelLocator = ModelLocator.getInstance();
 		public function execute(event:CairngormEvent):void
 		{
+			__model.initStatus = "loginWait";
 			var delegate:LoginDelegate = new LoginDelegate(this);
 			delegate.login( __model.settings.roomInstance, (event as LoginEvent).username);
 			__model.user.username = (event as LoginEvent).username;
