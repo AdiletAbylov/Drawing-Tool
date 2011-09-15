@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 creationComplete="init()"
-		 enabled="false"
+		 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:area="org.graffix.drawr.view.area.*" xmlns:view="com.graffix.drawingTool.view.*" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:toolbars="org.graffix.drawr.view.toolbars.*" xmlns:services="com.graffix.drawingTool.business.services.*" >
 	<fx:Declarations>
 		
@@ -19,6 +19,12 @@
 			import org.graffix.drawr.vo.ShapeDrawData;
 			
 			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var _alertMessage:String = ""; 
+			
+			[Bindable]
+			private var _toolsEnabled:Boolean;
 			
 			private var _so:SharedObject;
 			
@@ -40,6 +46,8 @@
 			
 			protected function init():void
 			{
+				_toolsEnabled = false;
+				_alertMessage = "Start intialization."
 				addEventListener(ShapeChangedEvent.SHAPE_ADDED, onShapeAdded);
 				addEventListener(ShapeChangedEvent.SHAPE_CHANGED, onShapeChanged);
 				addEventListener(ShapeChangedEvent.SHAPE_REMOVED, onShapeRemoved);
@@ -95,6 +103,7 @@
 			protected function onSync(event:SyncEvent):void
 			{
 				trace("Sync");
+				_alertMessage = "Synchronize objects."
 				for (var i:int = 0; i<event.changeList.length; ++i) 
 				{
 					var uid:String = event.changeList[i].name;
@@ -103,7 +112,8 @@
 					trace(code + " " + uid);
 					if(dataObject && uid == "selectedPage")
 					{
-						processSelectedPageSync(code, dataObject as String)
+						processSelectedPageSync(code, dataObject as String);
+						_alertMessage = "Process selected page."
 						continue;
 					}
 					
@@ -119,6 +129,7 @@
 					if(dataObject && dataObject.type == Page.PAGE_TYPE)
 					{
 						processPagesSync(code, uid);
+						_alertMessage = "Process pages."
 						continue;
 					}
 					
@@ -137,15 +148,18 @@
 						var newPageUID:String = drawArea.addPage().pageUID;
 						savePage(newPageUID, {type:Page.PAGE_TYPE});
 						saveSelectedPage( newPageUID ); 
+						_alertMessage = "Create page."
 					}else
 					{
 						drawArea.selectPageByUID( _so.data["selectedPage"] as String );
 					}
 					
 					addShapesToPages();
-					
+					_alertMessage = "Shapes processed."
 					_firstTime = false;
-					enabled = true;
+
+					_alertMessage = "Intialization complete."
+					_toolsEnabled = true;
 				}
 			}
 			
@@ -256,10 +270,11 @@
 	</s:BorderContainer>
 	
 	<toolbars:ToolsView id="toolbar" left="10" top="10"
+						enabled="{_toolsEnabled}"
 						drawMode="{_drawManager.drawMode}"
 						TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
 	</toolbars:ToolsView>
-	<s:HGroup left="55" top="5">
+	<s:HGroup left="55" top="5" enabled="{_toolsEnabled}">
 		<s:Button id="clearButton" 
 				  click="clearButton_clickHandler(event)"
 				  label="Clear"
@@ -272,6 +287,15 @@
 									 
 									 currentShape="{_drawManager._currentShape}">
 		</toolbars:ToolPropertiesView>
-		<s:Button id="resetButton" label="reset" click="resetButton_clickHandler(event)"/>
+		<s:Button id="resetButton" visible="false" label="reset" click="resetButton_clickHandler(event)"/>
 	</s:HGroup>
+	<s:BorderContainer visible="{!_toolsEnabled}"
+					   enabled="{!_toolsEnabled}"
+						width="247" cornerRadius="5" dropShadowVisible="true" horizontalCenter="0"
+					   verticalCenter="0">
+		<s:Label top="5" fontWeight="bold" horizontalCenter="0"
+				 text="Drawing tool intitialization. Please wait." verticalAlign="middle"/>
+		<s:Label left="10" right="10" top="25" bottom="10" text="{_alertMessage}"/>
+		
+	</s:BorderContainer>
 </s:Group>
