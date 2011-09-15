@@ -355,6 +355,7 @@ package org.graffix.drawr.managers
 		private function registerShape(shape:BaseShape):void
 		{
 			_objectHandles.registerComponent(shape.shapeDrawData, shape);
+			shape.finishDraw(false);
 		}
 		
 		public function eraseShape(shapeID:String):void
