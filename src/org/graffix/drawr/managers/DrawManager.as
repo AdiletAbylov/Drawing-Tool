@@ -134,9 +134,31 @@ package org.graffix.drawr.managers
 			{
 				_drawMode = value;
 				dispatchEvent(new Event("changeDrawMode"));
-				if(_drawMode == DrawMode.DRAW_MODE)
+				
+				
+				switch(_drawMode)
 				{
-					_objectHandles.selectionManager.clearSelection();
+					case DrawMode.DRAW_MODE:
+						_objectHandles.selectionManager.clearSelection();
+						if(_drawArea.currentPage)
+						{
+							_drawArea.currentPage.setLockToShapes(true);
+						}
+						break;
+						
+					case DrawMode.TRANSFROM_MODE:
+						if(_drawArea.currentPage)
+						{
+							_drawArea.currentPage.setLockToShapes(false);
+						}
+						break;
+					
+					case DrawMode.ERASE_MODE:
+						if(_drawArea.currentPage)
+						{
+							_drawArea.currentPage.setLockToShapes(true);
+						}
+						break;
 				}
 			}
 		}
@@ -202,8 +224,9 @@ package org.graffix.drawr.managers
 						
 						_objectHandles.registerComponent(_currentShape.shapeDrawData, _currentShape);
 						_currentShape.finishDraw();
-						_objectHandles.selectionManager.setSelected(_currentShape.shapeDrawData);
 						drawMode = DrawMode.TRANSFROM_MODE;
+						_objectHandles.selectionManager.setSelected(_currentShape.shapeDrawData);
+						
 					}
 					break;
 				

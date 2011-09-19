@@ -1,12 +1,5 @@
 package org.graffix.drawr.view.area
 {
-	import org.graffix.drawr.events.DrawAreaEvent;
-	import org.graffix.drawr.events.EraseEvent;
-	import org.graffix.drawr.events.LayoutOrderEvent;
-	import org.graffix.drawr.managers.LayoutOrderManager;
-	import org.graffix.drawr.shapes.BaseShape;
-	import org.graffix.drawr.shapes.complex.EraserShape;
-	
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
@@ -22,6 +15,13 @@ package org.graffix.drawr.view.area
 	import mx.events.ResizeEvent;
 	import mx.graphics.ImageSnapshot;
 	import mx.utils.UIDUtil;
+	
+	import org.graffix.drawr.events.DrawAreaEvent;
+	import org.graffix.drawr.events.EraseEvent;
+	import org.graffix.drawr.events.LayoutOrderEvent;
+	import org.graffix.drawr.managers.LayoutOrderManager;
+	import org.graffix.drawr.shapes.BaseShape;
+	import org.graffix.drawr.shapes.complex.EraserShape;
 	
 	import spark.components.NavigatorContent;
 	
@@ -257,5 +257,14 @@ package org.graffix.drawr.view.area
 			_uid = value;
 		}
 		
+		
+		public function setLockToShapes(locked:Boolean):void
+		{
+			for(var id:String in _elementsByID)
+			{
+				(_elementsByID[id] as BaseShape).mouseEnabled = !locked;
+				(_elementsByID[id] as BaseShape).mouseChildren = !locked;
+			}
+		}
 	}
 }
