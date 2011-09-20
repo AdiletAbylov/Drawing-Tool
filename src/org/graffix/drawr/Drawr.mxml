@@ -9,6 +9,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.business.services.NetConnectionServices;
+			
 			import org.graffix.drawr.events.ShapeChangedEvent;
 			import org.graffix.drawr.events.ToolSelectEvent;
 			import org.graffix.drawr.events.pages.PageEvent;
@@ -38,6 +40,21 @@
 				_so = value;
 			}
 			
+			
+			private var _netConnection:NetConnection;
+			
+			public function get netConnection():NetConnection
+			{
+				return _netConnection;
+			}
+			
+			public function set netConnection(value:NetConnection):void
+			{
+				_netConnection = value;
+			}
+			
+			
+			
 			[Embed("/org/graffix/drawr/view/assets/remove.png")]
 			protected const ICON:Class;
 			
@@ -55,9 +72,22 @@
 				drawArea.addEventListener(PageEvent.PAGE_ADDED, onPageAdded);
 				drawArea.addEventListener(PageEvent.PAGE_REMOVED, onPageRemoved);
 				drawArea.addEventListener(PageEvent.PAGE_SELECTED, onPageSelect);
-				
-				
-				_so.addEventListener(SyncEvent.SYNC, onSync);
+				_so = NetConnectionServices.instance.boardSO;
+				if(_so)
+				{
+					try
+					{
+						_so.connect( NetConnectionServices.instance.netConnection );
+						_so.addEventListener(SyncEvent.SYNC, onSync);
+					}catch(e:Error)
+					{
+						_alertMessage = "Shared object error: " + e.toString();
+					}
+					
+				}else
+				{
+					_alertMessage = "Error shared object initialization."
+				}
 				_drawManager = new DrawManager(drawArea);
 				
 			}
@@ -157,7 +187,7 @@
 					addShapesToPages();
 					
 					_firstTime = false;
-
+					
 					_alertMessage = "Intialization complete."
 					_toolsEnabled = true;
 				}
@@ -291,7 +321,7 @@
 	</s:HGroup>
 	<s:BorderContainer visible="{!_toolsEnabled}"
 					   enabled="{!_toolsEnabled}"
-						width="247" cornerRadius="5" dropShadowVisible="true" horizontalCenter="0"
+					   width="247" cornerRadius="5" dropShadowVisible="true" horizontalCenter="0"
 					   verticalCenter="0">
 		<s:Label top="5" fontWeight="bold" horizontalCenter="0"
 				 text="Drawing tool intitialization. Please wait." verticalAlign="middle"/>

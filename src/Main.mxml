@@ -37,6 +37,7 @@
 		]]>
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
-	<drawr:Drawr includeIn="MainState" left="5" right="5" top="5" bottom="5" sharedObject="{NetConnectionServices.instance.boardSO}"/>
+	<drawr:Drawr includeIn="MainState" left="5" right="5" top="5" bottom="5"
+				 />
 
 </s:Application>

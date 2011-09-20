@@ -1,6 +1,7 @@
 package com.graffix.drawingTool.business.services
 {
 	import com.demonsters.debugger.MonsterDebugger;
+	import com.graffix.drawingTool.events.application.MyErrorEvent;
 	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
@@ -44,7 +45,6 @@ package com.graffix.drawingTool.business.services
 				_netConnection = new NetConnection();
 				_netConnection.client = this;
 				_netConnection.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus );
-				
 			}
 			
 			return _netConnection;
@@ -70,18 +70,19 @@ package com.graffix.drawingTool.business.services
 			
 			if(!_boardSO)
 			{
-				_boardSO = SharedObject.getRemote("FCWhiteBoard.ololo.1", _netConnection.uri, true );
-				_boardSO.addEventListener(NetStatusEvent.NET_STATUS, onBoardSONetStatus);
-				_boardSO.connect( _netConnection );
+				try
+				{
+					_boardSO = SharedObject.getRemote("FCWhiteBoard.ololo.1", _netConnection.uri, true );
+				}catch(e:Error)
+				{
+					var errorEvent:MyErrorEvent = new MyErrorEvent(e);
+					errorEvent.dispatch();
+				}
 			}
 			return _boardSO;
 		}
 		
-		protected function onBoardSONetStatus(event:NetStatusEvent):void
-		{
-			trace("board net status " + event.info.code);
-		}		
-		
+	
 		//
 		// SharedObject for members list
 		private var _membersSO:SharedObject;
