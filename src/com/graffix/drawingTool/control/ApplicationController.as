@@ -1,6 +1,7 @@
 package com.graffix.drawingTool.control
 {
 	import com.adobe.cairngorm.control.FrontController;
+	import com.graffix.drawingTool.commands.application.ErrorsHandleCommand;
 	import com.graffix.drawingTool.commands.application.InitCommand;
 	import com.graffix.drawingTool.commands.application.LoginCommand;
 	import com.graffix.drawingTool.commands.application.StartApplicationCommand;
@@ -12,6 +13,7 @@ package com.graffix.drawingTool.control
 	import com.graffix.drawingTool.events.StartApllicationEvent;
 	import com.graffix.drawingTool.events.application.InitEvent;
 	import com.graffix.drawingTool.events.application.LoginEvent;
+	import com.graffix.drawingTool.events.application.MyErrorEvent;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
 	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.ChangeStatusEvent;
@@ -36,6 +38,7 @@ package com.graffix.drawingTool.control
 			addCommand(InitEvent.INIT, InitCommand );
 			addCommand(LoginEvent.LOGIN, LoginCommand);
 			addCommand(StartApllicationEvent.START_APPLICATION, StartApplicationCommand);
+			addCommand(MyErrorEvent.ERROR_HAPPENED, ErrorsHandleCommand);
 		}
 		private function netCommands():void
 		{
