@@ -33,23 +33,26 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<s:controlBarContent>
+		
+		
+		<s:DropDownList  width="140"
+						labelField="label"
+						id="statusDDList"
+						change="statusChangeHandler(event)"
+						selectedIndex="0">
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:Object data="{Statuses.STATUS_DATA_ONLINE}" label="{Statuses.STATUS_LABEL_ONLINE}"/>
+					<fx:Object data="{Statuses.STATUS_DATA_AWAY}" label="{Statuses.STATUS_LABEL_AWAY}"/>
+					<fx:Object data="{Statuses.STATUS_DATA_RIGHTBACK}" label="{Statuses.STATUS_LABEL_RIGHTBACK}"/>
+					<fx:Object data="{Statuses.STATUS_DATA_LUNCH}" label="{Statuses.STATUS_LABEL_LUNCH}"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:DropDownList>
+	</s:controlBarContent>
 	
-	<s:DropDownList left="4" top="318" width="140"
-					labelField="label"
-					id="statusDDList"
-					change="statusChangeHandler(event)"
-					selectedIndex="0">
-		<s:dataProvider>
-			<s:ArrayList>
-				<fx:Object data="{Statuses.STATUS_DATA_ONLINE}" label="{Statuses.STATUS_LABEL_ONLINE}"/>
-				<fx:Object data="{Statuses.STATUS_DATA_AWAY}" label="{Statuses.STATUS_LABEL_AWAY}"/>
-				<fx:Object data="{Statuses.STATUS_DATA_RIGHTBACK}" label="{Statuses.STATUS_LABEL_RIGHTBACK}"/>
-				<fx:Object data="{Statuses.STATUS_DATA_LUNCH}" label="{Statuses.STATUS_LABEL_LUNCH}"/>
-			</s:ArrayList>
-		</s:dataProvider>
-	</s:DropDownList>
-	
- 	<s:List left="0" right="0" top="0" bottom="25"
+ 	<s:List left="0" right="0" top="0" bottom="0"
 			itemRenderer="com.graffix.drawingTool.view.renderers.MemberItemRenderer"
 			dataProvider="{ModelLocator.getInstance().membersList}"
 			/>
