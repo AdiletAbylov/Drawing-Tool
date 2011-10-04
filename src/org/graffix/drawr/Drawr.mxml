@@ -55,8 +55,11 @@
 			
 			
 			
-			[Embed("/org/graffix/drawr/view/assets/remove.png")]
-			protected const ICON:Class;
+			[Embed("/org/graffix/drawr/view/assets/clear.png")]
+			protected const CLEAR_ICON:Class;
+			
+			[Embed("/org/graffix/drawr/view/assets/screenshot.png")]
+			protected const SCREENSHOT_ICON:Class;
 			
 			[Bindable]
 			private var _drawManager:DrawManager;
@@ -305,12 +308,14 @@
 						TOOL_SELECT="toolsview1_TOOL_SELECTHandler(event)">
 	</toolbars:ToolsView>
 	<s:HGroup left="55" top="5" enabled="{_toolsEnabled}">
-		<s:Button id="clearButton" 
-				  click="clearButton_clickHandler(event)"
-				  label="Clear"
-				  icon="{ICON}"/>
+		<s:Button id="clearButton" width="26" height="25" click="clearButton_clickHandler(event)"
+				  toolTip="Clear draw area"
+				  icon="{CLEAR_ICON}"/>
 		<s:Button id="screenshotButton"
-				  label="Snapshot"
+				  toolTip="Take draw area screenshot"
+				  width="26"
+				  height="25"
+				  icon="{SCREENSHOT_ICON}"
 				  click="screenshotButton_clickHandler(event)"
 				  />
 		<toolbars:ToolPropertiesView id="toolProperties" left="130" top="10"
