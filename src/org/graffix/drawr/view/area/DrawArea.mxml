@@ -239,20 +239,34 @@
 				dispatchEvent( new PageEvent(PageEvent.PAGE_REMOVED, _currentPage.pageUID));
 				removeCurrentPage()
 			}
+			
+			
+			[Embed("/org/graffix/drawr/view/assets/add.png")]
+			protected const ADD_ICON:Class;
+			
+			[Embed("/org/graffix/drawr/view/assets/remove.png")]
+			protected const REMOVE_ICON:Class;
 		]]>
 	</fx:Script>
 	<s:Group id="background" width="100%" height="100%"/>
 	<mx:ViewStack id="pagesStack" left="0" right="0" top="0" bottom="0"
 				  change="onViewStackChange(event)"/>
-	<s:ButtonBar
-		id="pagesBar"
-		change="buttonbar1_changeHandler(event)"
+	<s:HGroup left="5" bottom="5" >
+		<s:Button id="removePageButton"
+				  bottom="5"
+				  width="26"
+				  height="26"
+				  icon="{REMOVE_ICON}"
+				  toolTip="Remove page"
+				  click="removePageButton_clickHandler(event)"/>
+		<s:ButtonBar id="pagesBar" height="26" change="buttonbar1_changeHandler(event)"
+					 dataProvider="{pagesStack}" labelField="label">
+		</s:ButtonBar>
+		<s:Button
+			width="26"
+			height="26"
+			id="addPageButton" icon="{ADD_ICON}" toolTip="Add new page" click="addPageButton_clickHandler(event)"/>
 		
-		left="5" bottom="5" 
-		dataProvider="{pagesStack}" labelField="label">
-	</s:ButtonBar>
-	<s:Button id="addPageButton" right="5" bottom="5" label="+ Page" click="addPageButton_clickHandler(event)"/>
-	<s:Button id="removePageButton"
-			  
-			  right="75" bottom="5" label="- Page" click="removePageButton_clickHandler(event)"/>
+	</s:HGroup>
+	
 </s:Group>
