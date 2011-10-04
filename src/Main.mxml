@@ -8,7 +8,7 @@
 			   applicationComplete="init(event)"
 			   currentState="{__model.currentState}"
 			   
-			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="org.graffix.drawr.view.area.*" xmlns:services="com.graffix.drawingTool.business.services.*" xmlns:drawr="org.graffix.drawr.*">
+			   minWidth="955" minHeight="600" xmlns:drawing="com.graffix.drawingTool.view.drawing.*" xmlns:area="org.graffix.drawr.view.area.*" xmlns:services="com.graffix.drawingTool.business.services.*" xmlns:drawr="org.graffix.drawr.*" xmlns:containers="org.flexlayouts.containers.*">
 	<s:states>
 		<s:State name="MainState"/>
 		<s:State name="InitState"/>
@@ -26,18 +26,29 @@
 			
 			[Bindable]
 			private var __model:ModelLocator = ModelLocator.getInstance();
-
+			
 			protected function init(event:FlexEvent):void
 			{
 				var initEvent:InitEvent = new InitEvent();
 				initEvent.dispatch();
 			}
-
+			
 			
 		]]>
 	</fx:Script>
 	<view:LoginView includeIn="InitState" horizontalCenter="0" verticalCenter="0" status="{ModelLocator.getInstance().initStatus}"/>
-	<drawr:Drawr includeIn="MainState" left="5" right="5" top="5" bottom="5"
-				 />
-
+	
+	<drawr:Drawr  width="100%" height="100%" left="5" right="5" top="5"
+				  includeIn="MainState"
+				  bottom="5"/>
+	<containers:Drawer includeIn="MainState" bottom="5" horizontalCenter="0"
+					   width="450"
+					   opened="true" skinClass="org.flexlayouts.skins.DrawerSkin">
+		<view:ChatView id="chatView" width="450" height="300"/>
+	</containers:Drawer>
+	<containers:Drawer includeIn="MainState" right="5" top="5" bottom="5" openButtonPosition="left"
+					   opened="true" skinClass="org.flexlayouts.skins.DrawerSkin">
+		<view:UsersListView height="100%"  width="250"/>
+	</containers:Drawer>
+	
 </s:Application>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	alpha.disabled="0.5"
+	minWidth="15" minHeight="15">
+	
+	<fx:Metadata>
+		[HostComponent("org.flexlayouts.containers.Drawer")]
+	</fx:Metadata>	
+	<s:states>
+		<s:State name="normal" stateGroups="normalGroup"/>
+		<s:State name="opened" stateGroups="openedGroup"/>
+		
+		<s:State name="normalBottom" stateGroups="normalGroup"/>
+		<s:State name="openedBottom" stateGroups="openedGroup"/>
+		
+		
+		
+		<s:State name="disabled" />
+		<s:State name="normalLeft"/>
+		<s:State name="openedLeft"/>
+		<s:State name="normalRight"/>
+		<s:State name="openedRight"/>
+	</s:states>
+	
+	<s:transitions>
+		<s:Transition fromState="normal" toState="opened">
+			<s:Resize target="{this}" duration="600" />
+		</s:Transition>
+		<s:Transition fromState="opened" toState="normal">
+			<s:Sequence>
+				<s:Resize target="{this}" duration="600" />
+				<s:RemoveAction target="{contentGroup}" />
+			</s:Sequence>
+		</s:Transition>
+		
+		<s:Transition fromState="normalLeft" toState="openedLeft">
+			<s:Resize target="{this}" duration="600" />
+		</s:Transition>
+		<s:Transition fromState="openedLeft" toState="normalLeft">
+			<s:Sequence>
+				<s:Resize target="{this}" duration="600" />
+				<s:RemoveAction target="{contentGroup}" />
+			</s:Sequence>
+		</s:Transition>
+	</s:transitions>
+	
+	<!-- bg -->
+	<!--<s:Rect left="0" right="0" top="12" bottom="-6" radiusX="6">
+	<s:fill>
+	<s:SolidColor color="#dddddd" />
+	</s:fill>
+	</s:Rect>-->
+	
+	
+	
+	<s:Group id="contentGroup" includeIn="opened,openedBottom,openedLeft,openedRight" left="12" right="0" top="12" bottom="0" minWidth="0" minHeight="0"
+			 left.normal="0" right.normal="0" top.normal="12" bottom.normal="0"
+			 left.normalLeft="12" right.normalLeft="0" top.normalLeft="0" bottom.normalLeft="0"
+			 left.normalRight="0" right.normalRight="12" top.normalRight="0" bottom.normalRight="0"
+			 left.opened="0" right.opened="0" top.opened="12" bottom.opened="0"
+			 left.openedBottom="0" right.openedBottom="0" top.openedBottom="12"
+			 bottom.openedBottom="0"
+			 left.openedLeft="12" right.openedLeft="0" top.openedLeft="0" bottom.openedLeft="0"
+			 left.openedRight="0" right.openedRight="12" top.openedRight="0" bottom.openedRight="0">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+	</s:Group>
+	<s:Button id="openButton" width="32" height="12" label=""
+			  skinClass="org.flexlayouts.skins.DrawerButtonSkin"
+			  horizontalCenter.disabled="0"
+			  horizontalCenter.normal="0"
+			  top.normalBottom="0" horizontalCenter.normalBottom="0" rotation.normalBottom="180"
+			  left.normalLeft="0" rotation.normalLeft="-90" verticalCenter.normalLeft="0"
+			  right.normalRight="0" rotation.normalRight="90" verticalCenter.normalRight="0"
+			  horizontalCenter.opened="0"
+			  top.openedBottom="0" horizontalCenter.openedBottom="0"
+			  rotation.openedBottom="180"
+			  left.openedLeft="0" rotation.openedLeft="-90" verticalCenter.openedLeft="0"
+			  right.openedRight="0" rotation.openedRight="90" verticalCenter.openedRight="0"/>
+</s:Skin>

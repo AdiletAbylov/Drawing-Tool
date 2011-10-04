@@ -36,8 +36,8 @@ package com.graffix.drawingTool.commands.application
 			imageGalleryEvent.dispatch();
 			
 			__model.currentState = "MainState";
-			
-			createPopups();
+			__model.chatView = (FlexGlobals.topLevelApplication as Main).chatView;
+			//createPopups();
 		}
 		
 		private function createPopups():void

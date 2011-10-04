@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 
 		 creationComplete="creationCompleteHandler(event)"
-		 width="464" height="292" title="Chat">
+		 width="464" height="224" title="Chat">
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.chat.ChatEvent;
