@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="330" height="280" xmlns:video="com.graffix.drawingTool.view.video.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.graffix.drawingTool.events.video.BroadcastEvent;
+			import com.graffix.drawingTool.model.ModelLocator;
+			protected function playButton_clickHandler(event:MouseEvent):void
+			{
+				var broabcastEvent:BroadcastEvent;
+				
+				if(playButton.selected)
+				{
+					broabcastEvent = new BroadcastEvent(BroadcastEvent.START_BROADCAST);
+				}else
+				{
+					broabcastEvent = new BroadcastEvent(BroadcastEvent.STOP_BROADCAST);
+				}
+				broabcastEvent.dispatch();
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<video:VideoContainer width="320" height="240" 
+							   video="{ModelLocator.getInstance().video}"
+							   horizontalCenter="0" verticalCenter="0"/>
+	<s:VSlider x="307" y="10" height="227" id="micSlider"/>
+	<s:ToggleButton x="10" y="216" width="31" id="playButton"
+			  click="playButton_clickHandler(event)"
+			  skinClass="spark.skins.spark.mediaClasses.normal.PlayPauseButtonSkin"/>
+</s:TitleWindow>

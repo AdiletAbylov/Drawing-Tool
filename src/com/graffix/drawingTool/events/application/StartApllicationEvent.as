@@ -1,4 +1,4 @@
-package com.graffix.drawingTool.events
+package com.graffix.drawingTool.events.application
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	
