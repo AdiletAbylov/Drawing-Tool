@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 
-		 creationComplete="creationCompleteHandler(event)"
-		 width="464" height="224" title="Chat">
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:video="com.graffix.drawingTool.view.video.*"
+			   width="400" height="256" creationComplete="creationCompleteHandler(event)"
+			   title="Communication panel"
+			   width.VideoState="720" height.VideoState="273">
 	<fx:Script>
 		<![CDATA[
 			import com.graffix.drawingTool.events.chat.ChatEvent;
@@ -44,13 +45,62 @@
 				messagesTextArea.appendText("");
 			}
 			
+			[Bindable]
+			private var _canBroadcast:Boolean;
+			public function set canBroadcast(value:Boolean):void
+			{
+				_canBroadcast = value
+				if(value)
+				{
+					currentState = "VideoState";
+				}else
+				{
+					currentState = "ChatState";
+				}
+			}
+			
+			
+			private var _isBroadcasting:Boolean;
+
+			public function set isBroadcasting(value:Boolean):void
+			{
+				_isBroadcasting = value;
+				if(!_canBroadcast)
+				{
+					if(_isBroadcasting)
+					{
+						currentState = "VideoState";
+					}else
+					{
+						currentState = "ChatState";
+					}
+				}
+			}
+
 		]]>
 	</fx:Script>
+	<s:states>
+		<s:State name="ChatState"/>
+		<s:State name="VideoState"/>
+	</s:states>
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
-	<s:controlBarContent>
+	<s:transitions>
+		<s:Transition fromState="*" toState="*" >
+			<s:Parallel >
+				<s:Move />
+				<s:Resize />
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	<s:TextArea id="messagesTextArea" right="0" top="0" bottom="54" width="400" editable="false"
+				width.ChatState="398"
+				right.VideoState="0" top.VideoState="0" bottom.VideoState="46"/>
+	<s:TextInput id="messageInput" right="0" bottom="30" width="400" enter="sendMessage()"
+				 width.ChatState="398"
+				 right.VideoState="0" bottom.VideoState="22"/>
+	<s:HGroup right="0" bottom="0" width="400" gap="2"
+			  width.ChatState="398">
 		<s:DropDownList id="membersList1"
 						labelField="usuario"
 						dataProvider="{ModelLocator.getInstance().membersList}"/>
@@ -61,7 +111,8 @@
 						requireSelection="true"
 						dataProvider="{ModelLocator.getInstance().membersListWithEveryOne}"/>
 		<s:Button label="Send" enabled="{(messageInput.text != '')}" click="sendMessage()"/>
-	</s:controlBarContent>
-	<s:TextArea left="0" right="0" top="0" bottom="23" editable="false" id="messagesTextArea"/>
-	<s:TextInput left="0" right="0" bottom="0" id="messageInput" enter="sendMessage()"/>
+	</s:HGroup>
+	<video:VideoWindow includeIn="VideoState" left="0" top="0" width="315"
+					   canBroadcast="{_canBroadcast}">
+	</video:VideoWindow>
 </s:TitleWindow>

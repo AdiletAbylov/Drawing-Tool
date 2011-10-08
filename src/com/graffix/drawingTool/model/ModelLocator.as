@@ -57,5 +57,7 @@ package com.graffix.drawingTool.model
 		public var imagesList:ArrayCollection;
 		
 		public var video:Video;
+		
+		public var isBroadcasting:Boolean;
 	}
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" width="330" height="280" xmlns:video="com.graffix.drawingTool.view.video.*">
-	
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="320" height="240" xmlns:video="com.graffix.drawingTool.view.video.*">
 	<fx:Script>
 		<![CDATA[
+			import com.graffix.drawingTool.business.managers.DeviceManager;
+			import com.graffix.drawingTool.business.services.NetConnectionServices;
 			import com.graffix.drawingTool.events.video.BroadcastEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
 			protected function playButton_clickHandler(event:MouseEvent):void
@@ -20,17 +21,50 @@
 				}
 				broabcastEvent.dispatch();
 			}
+			
+			protected function micSlider_changeHandler(event:Event):void
+			{
+				DeviceManager.instance.setMicrophoneGain(micSlider.value);
+			}
+			
+			public function set canBroadcast(value:Boolean):void
+			{
+				if(value)
+				{
+					currentState = "BroadcastState";
+				}else
+				{
+					currentState = "PlayState";
+				}
+			}
+			
+			protected function volumeSlider_changeHandler(event:Event):void
+			{
+				NetConnectionServices.instance.videoStream.soundTransform = new SoundTransform(volumeSlider.value/100);
+			}
+			
 		]]>
 	</fx:Script>
+	<s:states>
+		<s:State name="BroadcastState"/>
+		<s:State name="PlayState"/>
+	</s:states>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<video:VideoContainer width="320" height="240" 
-							   video="{ModelLocator.getInstance().video}"
-							   horizontalCenter="0" verticalCenter="0"/>
-	<s:VSlider x="307" y="10" height="227" id="micSlider"/>
-	<s:ToggleButton x="10" y="216" width="31" id="playButton"
-			  click="playButton_clickHandler(event)"
-			  skinClass="spark.skins.spark.mediaClasses.normal.PlayPauseButtonSkin"/>
-</s:TitleWindow>
+	<video:VideoContainer left="0" right="0" top="0" bottom="0"
+						  video="{ModelLocator.getInstance().video}"/>
+	<s:VSlider id="micSlider" includeIn="BroadcastState" right="5" top="5" bottom="5"
+			   change="micSlider_changeHandler(event)" maximum="100" minimum="0"
+			   toolTip="Microphone gain" value="50"/>
+	<s:ToggleButton id="playButton" includeIn="BroadcastState" left="5" bottom="5" width="31"
+					click="playButton_clickHandler(event)"
+					skinClass="spark.skins.spark.mediaClasses.normal.PlayPauseButtonSkin"/>
+	<s:VSlider id="volumeSlider"
+			   change="volumeSlider_changeHandler(event)"
+			   includeIn="PlayState" 
+			   maximum="100"
+			   minimum="0"
+			   right="5" top="5" bottom="5" value="100"/>
+</s:Group>
