@@ -27,7 +27,7 @@ package com.graffix.drawingTool.commands.application
 		public function result(data:Object):void
 		{
 			var delegate:RoomNetConnectionDelegate = new RoomNetConnectionDelegate();
-			delegate.connect(__model.settings.roomInstance, __model.user.username, __model.user.role);
+			delegate.connect(__model.settings.roomInstance, __model.user.username, __model.user.isAdmin ? "admin" : "guest");
 		}
 		
 		public function fault(info:Object):void

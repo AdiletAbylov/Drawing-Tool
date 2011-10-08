@@ -10,7 +10,9 @@ package com.graffix.drawingTool.control
 	import com.graffix.drawingTool.commands.members.MembersCommand;
 	import com.graffix.drawingTool.commands.net.NetStatusCommand;
 	import com.graffix.drawingTool.commands.net.TestConnectionCommand;
-	import com.graffix.drawingTool.events.StartApllicationEvent;
+	import com.graffix.drawingTool.commands.video.VideoCommand;
+	import com.graffix.drawingTool.events.application.StartApllicationEvent;
+	import com.graffix.drawingTool.events.video.BroadcastEvent;
 	import com.graffix.drawingTool.events.application.InitEvent;
 	import com.graffix.drawingTool.events.application.LoginEvent;
 	import com.graffix.drawingTool.events.application.MyErrorEvent;
@@ -31,6 +33,15 @@ package com.graffix.drawingTool.control
 			membersCommand();
 			chatCommand();
 			drawingCommands();
+			videoCommands();
+		}
+		
+		private function videoCommands():void
+		{
+			addCommand(BroadcastEvent.PLAY_STREAM, VideoCommand);
+			addCommand(BroadcastEvent.STOP_STREAM, VideoCommand);
+			addCommand(BroadcastEvent.START_BROADCAST, VideoCommand);
+			addCommand(BroadcastEvent.STOP_BROADCAST, VideoCommand);
 		}
 		
 		private function appCommands():void

@@ -2,7 +2,7 @@ package com.graffix.drawingTool.commands.net
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.graffix.drawingTool.events.StartApllicationEvent;
+	import com.graffix.drawingTool.events.application.StartApllicationEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	
 	public class NetStatusCommand implements ICommand

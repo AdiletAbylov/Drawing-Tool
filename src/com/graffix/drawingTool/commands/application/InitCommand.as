@@ -33,10 +33,13 @@ package com.graffix.drawingTool.commands.application
 				return;
 			}
 			
-			__model.user.role = FlexGlobals.topLevelApplication.parameters.role;
-			if(!__model.user.role || __model.user.role == "")
+			var role:String = FlexGlobals.topLevelApplication.parameters.role;
+			if(!role || role == "" || role == "guest")
 			{
-				__model.user.role = "guest";
+				__model.user.isAdmin = false;
+			}else
+			{
+				__model.user.isAdmin = true;
 			}
 			
 			//__model.settings.rtmpServerUrl = FlexGlobals.topLevelApplication.parameters.serveraddress;

@@ -5,8 +5,10 @@ package com.graffix.drawingTool.vo
 	{
 		public function User()
 		{
+			
 		}
-		public var role:String = "guest";
+		public var isAdmin:Boolean;
 		public var username:String;
+		
 	}
 }

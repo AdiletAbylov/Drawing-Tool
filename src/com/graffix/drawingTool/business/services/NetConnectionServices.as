@@ -6,11 +6,11 @@ package com.graffix.drawingTool.business.services
 	import com.graffix.drawingTool.events.members.MembersListEvent;
 	import com.graffix.drawingTool.events.net.NCStatusEvent;
 	
-	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.NetStatusEvent;
 	import flash.events.SyncEvent;
 	import flash.net.NetConnection;
+	import flash.net.NetStream;
 	import flash.net.SharedObject;
 
 	public class NetConnectionServices extends EventDispatcher
@@ -152,5 +152,19 @@ package com.graffix.drawingTool.business.services
 			var imageEvent:ImageGalleryEvent  = new ImageGalleryEvent(ImageGalleryEvent.IMAGES_SYNC);
 			imageEvent.dispatch();
 		}
+		
+		
+		
+		private var _videoStream:NetStream;
+
+		public function get videoStream():NetStream
+		{
+			if(!_videoStream)
+			{
+				_videoStream = new NetStream(netConnection);
+			}
+			return _videoStream;
+		}
+		
 	}
 }

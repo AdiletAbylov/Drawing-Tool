@@ -4,6 +4,8 @@ package com.graffix.drawingTool.model
 	import com.graffix.drawingTool.vo.Settings;
 	import com.graffix.drawingTool.vo.User;
 	
+	import flash.media.Video;
+	
 	import mx.collections.ArrayCollection;
 	import mx.core.IFlexDisplayObject;
 
@@ -53,5 +55,7 @@ package com.graffix.drawingTool.model
 		public var chatView:IFlexDisplayObject;
 		
 		public var imagesList:ArrayCollection;
+		
+		public var video:Video;
 	}
 }

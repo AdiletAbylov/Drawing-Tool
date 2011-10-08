@@ -18,11 +18,13 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.graffix.drawingTool.business.services.NetConnectionServices;
 			import com.graffix.drawingTool.events.application.InitEvent;
 			import com.graffix.drawingTool.model.ModelLocator;
+			import com.graffix.drawingTool.view.video.VideoWindow;
 			
+			import mx.core.IFlexDisplayObject;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			
 			[Bindable]
 			private var __model:ModelLocator = ModelLocator.getInstance();
@@ -33,6 +35,11 @@
 				initEvent.dispatch();
 			}
 			
+			private var videoWindow:IFlexDisplayObject;
+			protected function videoButton_clickHandler(event:MouseEvent):void
+			{
+				videoWindow = PopUpManager.createPopUp(this, VideoWindow);
+			}
 			
 		]]>
 	</fx:Script>
@@ -50,5 +57,8 @@
 					   opened="true" skinClass="org.flexlayouts.skins.DrawerSkin">
 		<view:UsersListView height="100%"  width="250"/>
 	</containers:Drawer>
+	<s:Button includeIn="MainState" x="18" y="295" width="25"
+			  click="videoButton_clickHandler(event)"
+			  id="videoButton" label="Video"/>
 	
 </s:Application>
