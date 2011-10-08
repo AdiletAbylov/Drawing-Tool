@@ -55,11 +55,12 @@
 	
 	
 	
-	<s:Group id="contentGroup" includeIn="opened,openedBottom,openedLeft,openedRight" left="12" right="0" top="12" bottom="0" minWidth="0" minHeight="0"
-			 left.normal="0" right.normal="0" top.normal="12" bottom.normal="0"
+	<s:Group id="contentGroup" includeIn="opened,openedBottom,openedLeft,openedRight" top="12"
+			 bottom="0" minWidth="0" minHeight="0"
+			 top.normal="12" bottom.normal="0" horizontalCenter.normal="0"
 			 left.normalLeft="12" right.normalLeft="0" top.normalLeft="0" bottom.normalLeft="0"
 			 left.normalRight="0" right.normalRight="12" top.normalRight="0" bottom.normalRight="0"
-			 left.opened="0" right.opened="0" top.opened="12" bottom.opened="0"
+			 top.opened="12" bottom.opened="0" horizontalCenter.opened="0"
 			 left.openedBottom="0" right.openedBottom="0" top.openedBottom="12"
 			 bottom.openedBottom="0"
 			 left.openedLeft="12" right.openedLeft="0" top.openedLeft="0" bottom.openedLeft="0"
