@@ -122,9 +122,10 @@ package com.graffix.drawingTool.business.services
 		public function createChatSO(prefix:String=""):void
 		{
 			_chatSO = SharedObject.getRemote(prefix + "message", netConnection.uri );
-			_chatSO.connect( _netConnection);
 			var clientObject:ChatSOClientListener = new ChatSOClientListener();
 			_chatSO.client = clientObject;
+			_chatSO.addEventListener(SyncEvent.SYNC, clientObject.syncDataHandler);
+			_chatSO.connect( _netConnection);
 		}
 		
 		//
@@ -152,7 +153,6 @@ package com.graffix.drawingTool.business.services
 			var imageEvent:ImageGalleryEvent  = new ImageGalleryEvent(ImageGalleryEvent.IMAGES_SYNC);
 			imageEvent.dispatch();
 		}
-		
 		
 		
 		private var _videoStream:NetStream;

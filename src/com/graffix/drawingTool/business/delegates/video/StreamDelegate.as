@@ -42,6 +42,7 @@ package com.graffix.drawingTool.business.delegates.video
 			}
 			stream.attachAudio(DeviceManager.instance.microphone);
 			stream.attachCamera(DeviceManager.instance.camera);
+			stream.publish(streamName);
 			var video:Video = new Video();
 			video.attachCamera(DeviceManager.instance.camera);
 			return video;

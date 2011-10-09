@@ -87,7 +87,7 @@
 	</fx:Declarations>
 	<s:transitions>
 		<s:Transition fromState="*" toState="*" >
-			<s:Parallel >
+			<s:Parallel target="{this}">
 				<s:Move />
 				<s:Resize />
 			</s:Parallel>

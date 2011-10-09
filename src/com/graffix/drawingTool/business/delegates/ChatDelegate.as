@@ -3,6 +3,7 @@ package com.graffix.drawingTool.business.delegates
 	import com.graffix.drawingTool.business.services.NetConnectionServices;
 	
 	import flash.net.NetConnection;
+	import flash.net.SharedObject;
 
 	public class ChatDelegate
 	{
@@ -29,6 +30,13 @@ package com.graffix.drawingTool.business.delegates
 		{
 			var nc:NetConnection = NetConnectionServices.instance.netConnection;
 			nc.call(prefix+"changeName", null);
+		}
+		
+		public function setBroadcastStream(streamname:String):void
+		{
+			var so:SharedObject = NetConnectionServices.instance.chatSO;
+			so.setProperty("broadcast", streamname);
+			so.setDirty("broadcast");
 		}
 	}
 }
