@@ -2,6 +2,7 @@ package com.graffix.drawingTool.commands.application
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
+	import com.graffix.drawingTool.business.delegates.BroadcastDelegate;
 	import com.graffix.drawingTool.events.chat.ChatEvent;
 	import com.graffix.drawingTool.events.drawing.ImageGalleryEvent;
 	import com.graffix.drawingTool.events.members.MembersListEvent;
@@ -34,6 +35,9 @@ package com.graffix.drawingTool.commands.application
 			
 			var imageGalleryEvent:ImageGalleryEvent = new ImageGalleryEvent(ImageGalleryEvent.CONNECT_IMAGE_SO);
 			imageGalleryEvent.dispatch();
+			
+			var broadcastDelegate:BroadcastDelegate = new BroadcastDelegate();
+			broadcastDelegate.connect();
 			
 			__model.currentState = "MainState";
 			__model.chatView = (FlexGlobals.topLevelApplication as Main).chatView;

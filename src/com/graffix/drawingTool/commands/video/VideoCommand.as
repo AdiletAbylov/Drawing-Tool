@@ -2,6 +2,7 @@ package com.graffix.drawingTool.commands.video
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
+	import com.graffix.drawingTool.business.delegates.BroadcastDelegate;
 	import com.graffix.drawingTool.business.delegates.ChatDelegate;
 	import com.graffix.drawingTool.business.delegates.video.StreamDelegate;
 	import com.graffix.drawingTool.events.video.BroadcastEvent;
@@ -18,7 +19,7 @@ package com.graffix.drawingTool.commands.video
 		public function execute(event:CairngormEvent):void
 		{
 			var streamDelegate:StreamDelegate = new StreamDelegate();
-			var chatDelegate:ChatDelegate = new ChatDelegate();
+			var chatDelegate:BroadcastDelegate = new BroadcastDelegate();
 			var __model:ModelLocator = ModelLocator.getInstance();
 			switch(event.type)
 			{
@@ -34,7 +35,6 @@ package com.graffix.drawingTool.commands.video
 					__model.video = null;
 					__model.isBroadcasting = false;
 					break;
-				
 				
 				case BroadcastEvent.START_BROADCAST:
 					var streamname:String = __model.user.username + UIDUtil.createUID();

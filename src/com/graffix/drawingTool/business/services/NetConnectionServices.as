@@ -124,7 +124,7 @@ package com.graffix.drawingTool.business.services
 			_chatSO = SharedObject.getRemote(prefix + "message", netConnection.uri );
 			var clientObject:ChatSOClientListener = new ChatSOClientListener();
 			_chatSO.client = clientObject;
-			_chatSO.addEventListener(SyncEvent.SYNC, clientObject.syncDataHandler);
+			
 			_chatSO.connect( _netConnection);
 		}
 		
@@ -165,6 +165,23 @@ package com.graffix.drawingTool.business.services
 			}
 			return _videoStream;
 		}
+		
+		
+		private var _broadcastSO:SharedObject;
+
+		public function get broadcastSO():SharedObject
+		{
+			if(!_broadcastSO)
+			{
+				_broadcastSO = SharedObject.getRemote("_DEFAULT_" + "av", _netConnection.uri);
+				var clientListener:BroadcastSOClientListener = new BroadcastSOClientListener();
+				_broadcastSO.addEventListener(SyncEvent.SYNC, clientListener.syncDataHandler);
+				_broadcastSO.connect(_netConnection);
+				
+			}
+			return _broadcastSO;
+		}
+		
 		
 	}
 }
